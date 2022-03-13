@@ -19,7 +19,7 @@ function AddFood() {
     const results = filtered.map(food => <div key={food[0]}>{food.name}</div>)
     
     const [selectedArray, setSelectedArray] = React.useState([])
-
+    //This is stuff
     function selectedFood(e) {
         let selected = e.target.textContent
         setSelectedArray(prevState => prevState + selected + " ")
