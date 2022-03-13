@@ -3,7 +3,7 @@ import foodData from './foodData';
 import React from 'react'
 
 function AddFood() {
-
+    //dummby data from foodData.js - will mimic database data
     console.log(foodData)
     
     const [foodOptions, setFoodOptions] = React.useState("")
@@ -24,7 +24,6 @@ function AddFood() {
         let selected = e.target.textContent
         setSelectedArray(prevState => prevState + selected + " ")
     }
-
     console.log(selectedArray)
     
     function handleSubmit(e) {
