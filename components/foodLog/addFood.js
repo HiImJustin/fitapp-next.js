@@ -25,7 +25,7 @@ function AddFood() {
         setSelectedArray(prevState => prevState + selected + " ")
     }
     console.log(selectedArray)
-    
+    //
     function handleSubmit(e) {
             e.preventDefault();
             
