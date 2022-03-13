@@ -1,0 +1,41 @@
+.appContainer {
+    position: relative;
+    width: 400px;
+    height: 712px;
+    border: solid 2px black;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 10px;
+    align-items: center;
+    background-color: white;
+}
+.header {
+    width: calc(100% + 1px);
+    border-bottom: solid 2px black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0px;
+}
+.header button {
+    position: absolute;
+    left: 8px;
+    margin-top: 8px;
+    height: 30px;
+    width: 70px;
+}
+.footer {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 0;
+    border-top: solid 2px black;
+    width: calc(100% + 1px);
+    height: 80px;
+    justify-content: center;
+}
+.footer p {
+    padding: 20px;
+}
