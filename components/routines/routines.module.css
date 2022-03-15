@@ -1,0 +1,18 @@
+.title {
+    margin-top: 10px;
+}
+.routinesGrid{
+    width: 80%;
+    display: grid;
+    grid-template: auto  auto / auto  auto;
+    margin-top: 20px;
+}
+.routines {
+    border: solid 2px black;
+    margin: 10px;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

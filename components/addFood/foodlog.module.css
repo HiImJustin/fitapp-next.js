@@ -1,0 +1,49 @@
+.title {
+    width: calc(100% + 1px);
+    border-bottom: solid 2px black;
+    padding: 10px 0px 10px 6px;
+}
+.searchBar {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 6px;
+}
+.searchBar label {
+    margin-top: 4px;
+    font-size: 18px;
+    font-weight: 500;
+    padding-left: 4px;
+}
+.searchBar input {
+    height: 40px;
+    font-size: 16px;
+    border: solid 2px black;
+    border-radius: 4px;
+    text-indent: 4px;
+    margin-bottom: 6px;
+    margin-top: 8px;
+}
+.addToLog{
+    height: 45px;
+    margin-top: 20px;
+    border: solid 1px black;
+    border-radius: 4px;
+    background: #1976d2;
+    font-size: 18px;
+    font-weight: 600;
+    box-shadow: 1px 4px 1px -1px rgba(0, 0, 0, 0.2);
+}
+.foodOptions {
+    padding: 4px 0px 4px 4px;
+}
+.selectedFoods {
+    border: solid 2px black;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    margin-top: 6px;
+}
+.selected {
+    padding: 5px 2px;
+}

@@ -13,19 +13,19 @@ function Home() {
             </section>
 
             <section className={classes.links}>
-                <h3><Link href='/Food'>Food log</Link></h3>
+                <h3><Link href='/addFood'>Add Food</Link></h3>
             </section>
             <section className={classes.links}>
-                <h3><Link href='/Settings'>Add Food</Link></h3>
+                <h3><Link href='/foodLog'>Food log</Link></h3>
             </section>
             <section className={classes.links}>
                 <h3><Link href='/Routines'>Routines</Link></h3>
             </section>
             <section className={classes.links}>
-                <h3><Link href='/Settings'>Profile</Link></h3>
+                <h3><Link href='/profile'>Profile</Link></h3>
             </section>
             <section className={classes.links}>
-                <h3><Link href='/Settings'>Settings</Link></h3>
+                <h3><Link href='/settings'>Settings</Link></h3>
             </section>
         </>
     )

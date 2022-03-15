@@ -1,0 +1,18 @@
+.profile {
+ width: 100%;
+ height: 100%;
+ padding: 5px 12px; 
+ display: flex;
+ flex-direction: column;  
+}
+.profile h2 {
+    padding: 10px 0px;
+}
+.profile div {
+    margin: 20px 0px 4px 0px;
+    font-size: 16.5px;
+    font-weight: 500;
+}
+.profile p {
+    font-size: 14px;
+}

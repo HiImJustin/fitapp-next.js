@@ -1,12 +1,12 @@
 import classes from './layout.module.css'
-
+import Link from 'next/link';
 function footer() {
     return (
-        <section className={classes.footer}>
-            <p>Profile</p>
-            <p>Settings</p>
-            <p>Filler</p>
-        </section>
+        <footer className={classes.footer}>
+            <p><Link href="/">Home</Link></p>
+            <p><Link href="/profile">Profile</Link></p>
+            <p><Link href="/settings">Settings</Link></p>
+        </footer>
     )
 }
 export default footer;
