@@ -1,7 +1,7 @@
 import classes from "./login.module.css";
 import React from 'react'
 import {useRouter} from 'next/router'
-
+import Link from "next/link";
 
 export default function Login() {
 
@@ -36,7 +36,7 @@ export default function Login() {
                 <input 
                     id="password" name="password" type="text" placeholder="Password">
                 </input>
-
+                    <p>Dont have an Account? <Link href="/Register">Register here!</Link></p>
                 <button className={classes.loginButton} onClick={handleChange}>Login!</button>
             </form>
         </>

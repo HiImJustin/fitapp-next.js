@@ -35,3 +35,9 @@
     border: solid 2px black;
     border-radius: 4px;
 }
+.login p {
+    margin-top:  10px;
+}
+.login a {
+    text-decoration: underline;
+}
