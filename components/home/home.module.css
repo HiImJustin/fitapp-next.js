@@ -1,5 +1,6 @@
 .h1 {
     font-size: 22;
+    margin: 10px 0px;
 }
 .topUi {
     display: flex;
@@ -8,7 +9,7 @@
     justify-content: center;
     border-top: 2px solid black;
     align-items: center;
-    padding-bottom: 20px;
+    padding-bottom: 28px;
     padding-top: 45px;
 }
 .circle {
@@ -39,7 +40,8 @@
     border-top: solid 2px black;
     width: calc(100% + 1px);
     font-size: 22px;
-    padding: 15px 0px;
+    align-items: center;
+    height: 80px;
 }
 .links h3 {
     margin-left: 6px;

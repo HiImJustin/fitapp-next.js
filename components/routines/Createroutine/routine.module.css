@@ -1,0 +1,44 @@
+.routineBuilder {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    align-items: center;
+}
+.routineBuilder h2 {
+    margin: 10px;
+}
+.routineBuilder label {
+    margin: 8px 0px;
+    font-size: 16.5px;
+}
+.routineBuilder input {
+    height: 40px;
+    width: 100%;
+    border: solid 1px black;
+    border-radius: 4px;
+    text-indent: 4px;
+    font-size: 16px;
+    margin: 10px;
+}
+.routineBuilder button {
+    width: 100%;
+    height: 40px;
+    border: solid 1px black;
+    border-radius: 4px;
+    text-indent: 2px;
+    font-size: 16px;
+    margin: 10px;
+}
+.results {
+    border: solid 2px black;
+    border-radius: 4px;
+    width: 100%;
+    margin: 10px 0px;
+    padding: 4px 0px 4px 2px;
+}
+.selectedExercise {
+    border: solid 2px black;
+    border-radius: 4px;
+    width: 100%;
+    padding: 4px 0px 4px 2px;
+}

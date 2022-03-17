@@ -1,5 +1,7 @@
 import React from "react"
 import classes from "./tdee.module.css"
+import Link from "next/link"
+
 //Function for calculating Total Daily Energy Expenditure
 export default function TDEE() {
 
@@ -87,7 +89,7 @@ function showResults(bmr, tdee) {
             console.log(bmr)
 
             calculateTDEE(bmr);
-            showResults(bmr, tdee);
+            showResults(bmr, results.tdee);
     
         }   else {
             let maleBmr = (10 * formValues.weight) + (6.25 * formValues.height);
@@ -96,15 +98,15 @@ function showResults(bmr, tdee) {
             console.log(bmr);
             
             calculateTDEE(bmr);
-            showResults(bmr, tdee);
+            showResults(bmr, results.tdee);
         }
     }
 
 
     return (
             <>
-            <h2>Personal Information</h2>
             <form className={classes.detailsForm}>
+                <h2>Personal Information</h2>
                 <input 
                     type="text" 
                     name="age"
@@ -148,14 +150,16 @@ function showResults(bmr, tdee) {
                 </select>
                 <button onClick={calculateBMR}>Calculate</button>
 
-                <results className={classes.results}>
+                <section className={classes.results}>
                     <p>Base Metabolic Rate: {results.bmr} Cals</p>
                     <p>Total Daily Energy Expenditure: {results.tdee} Cals</p>
                     <p>To Lose half a Kg a week: {results.loseHalfKg} Cals</p>
                     <p>To Lose one Kg a week: {results.loseKg} Cals</p>
                     <p>To Gain half a Kg a week: {results.gainHalfKg} Cals</p>
                     <p>To maintain: {results.maintain} Cals</p>
-                </results>
+                </section>
+                <Link href='/Home'><button className={classes.button}>Finsh Registration</button></Link>
+
             </form>
             </>
         )

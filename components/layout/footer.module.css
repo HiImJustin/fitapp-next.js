@@ -1,0 +1,10 @@
+.footer {
+    display: flex;
+    flex-direction: row;
+    border-top: solid 2px black;
+    width: calc(100% + 1px);
+    justify-content: center;
+}
+.footer p {
+    padding: 20px;
+}

@@ -1,13 +1,13 @@
 .appContainer {
     position: relative;
-    width: 400px;
-    height: 712px;
+    max-width: 420px;
+    width: 100vw;
+    max-height: -webkit-fill-available;
+    height: 100vh;
     border: solid 2px black;
-    border-radius: 8px;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-    margin-top: 10px;
     align-items: center;
     background-color: white;
 }
@@ -17,6 +17,9 @@
     flex-direction: column;
     background-color: white;
     align-items: center;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
 }
 .header {
     width: calc(100% + 1px);
@@ -33,16 +36,10 @@
     height: 30px;
     width: 70px;
 }
-.footer {
-    display: flex;
-    flex-direction: row;
-    position: absolute;
-    bottom: 0;
-    border-top: solid 2px black;
-    width: calc(100% + 1px);
-    height: 80px;
-    justify-content: center;
-}
-.footer p {
-    padding: 20px;
+@media (min-height: 800px) {
+    .appContainer {
+        height: 800px;
+        margin-top: 10px;
+        border-radius: 8px;
+    }
 }

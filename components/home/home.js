@@ -11,12 +11,14 @@ function Home() {
             <section className={classes.topUi}>
                 <Circle className={classes.circle}/>
             </section>
-
             <section className={classes.links}>
                 <h3><Link href='/addFood'>Add Food</Link></h3>
             </section>
             <section className={classes.links}>
                 <h3><Link href='/foodLog'>Food log</Link></h3>
+            </section>
+            <section className={classes.links}>
+                <h3><Link href='/Routines/Createroutine'>Create Routine</Link></h3>
             </section>
             <section className={classes.links}>
                 <h3><Link href='/Routines'>Routines</Link></h3>

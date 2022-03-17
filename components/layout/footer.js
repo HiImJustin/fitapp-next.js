@@ -1,5 +1,6 @@
-import classes from './layout.module.css'
+import classes from './footer.module.css'
 import Link from 'next/link';
+
 function footer() {
     return (
         <footer className={classes.footer}>
