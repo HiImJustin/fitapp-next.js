@@ -1,0 +1,32 @@
+.workout {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+.exerciseContainer {
+    width: 100%;
+}
+.exerciseContainer div {
+    font-weight: 500;
+}
+.exerciseContainer h2 {
+    text-align: center;
+    padding: 5px 0px;
+}
+.exerciseData {
+    border-top: solid 1px black;
+    width: 100%;
+    padding: 16px 20px
+}
+.exerciseContainer:last-of-type {
+    border-bottom: solid 1px black;
+    margin-bottom: 20px;
+}
+.workout button {
+    width: 80%;
+    height: 40px;
+    border: solid 1px black;
+    border-radius: 4px;
+    margin: 5px 0px;
+}

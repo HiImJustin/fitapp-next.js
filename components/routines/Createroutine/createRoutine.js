@@ -5,7 +5,7 @@ import {useRouter} from 'next/router'
 
 export default function CreateRoutine() {
 
-    const [exerciseOptions, setExercuseOptions] = React.useState() 
+    const [exerciseOptions, setExercuseOptions] = React.useState("") 
 
     function handleChange(e) {
         setExercuseOptions(e.target.value.toLowerCase())
@@ -13,7 +13,7 @@ export default function CreateRoutine() {
     
     const filter = exercises.filter(filter => filter.includes(exerciseOptions))
     const results = filter.map(exercise => <div key={exercise}>{exercise}</div>)
-    console.log(results)
+
     //Manage what has been selected from the results variable
     const [selectedExercise, setSelectedExercise] = React.useState([])
     
@@ -24,7 +24,7 @@ export default function CreateRoutine() {
         })
         console.log(selected)
     }
-    console.log(selectedExercise)
+    console.log(selectedExercise.length)
 
     let selectedExercisesElement = ""
     for(let i=0; i < selectedExercise.length; i++) {
@@ -61,7 +61,10 @@ export default function CreateRoutine() {
                 name="exercise" 
                 onChange={handleChange}
             />
-            <div onClick={selectExercise} className={classes.results}>{results}</div>
+            {exerciseOptions.length > 0 && results.length > 0 && 
+            <div onClick={selectExercise} className={classes.results}>
+                {results}
+            </div>}
 
             {selectedExercise.length > 0 && 
             <div 

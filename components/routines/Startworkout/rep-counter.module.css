@@ -1,0 +1,33 @@
+.button {
+    width: 40px;
+    height: 40px;
+    border: solid 1px black;
+    margin-top: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 8px;
+    font-size: 38px;
+    font-weight: 200;
+}
+.repContainer {
+    display: flex;
+    margin: 2px 0px 4px 0px;
+    width: 100%;
+    justify-content: space-between;
+}
+.repCounter {
+    width: 40px;
+    height: 40px;
+    margin-top: 2px;
+    border: solid 1px black;
+}
+.setCounter {
+    width: 40px;
+    height: 40px;
+    margin-top: 4px;
+    border: solid 1px black;
+}
+.x {
+    text-align: center;
+}

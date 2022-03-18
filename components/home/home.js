@@ -6,8 +6,6 @@ function Home() {
 
     return(
         <>  
-            <h1 className={classes.h1}>Hello home page</h1>
-
             <section className={classes.topUi}>
                 <Circle className={classes.circle}/>
             </section>

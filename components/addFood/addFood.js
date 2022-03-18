@@ -29,10 +29,7 @@ function AddFood() {
                 return filtered
             })
         }
-        console.log(selected)
     }
-    console.log(selectedArray)
-    
 
     let arrayElement = ""        
     for(let i=0; i < selectedArray.length; i++) {
@@ -42,7 +39,6 @@ function AddFood() {
             </p>
         )
     }
-    console.log(arrayElement)
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -55,15 +51,16 @@ function AddFood() {
             <form className={classes.searchBar}>
 
                 <label htmlFor='search'>Search Foods</label>
-                <input type="text" onChange={handleChange}></input>
+                <input type="text" onChange={handleChange} className={classes.input}/>
 
                 { foodOptions.length > 0 && 
                     <div onClick={selectedFood} className={classes.foodOptions}>{results}</div>
                 }
 
-                {foodOptions.length > 0 && arrayElement.length > 0 &&
+                {arrayElement.length > 0 &&
                 <div className={classes.selectedFoods}>
-                   {arrayElement}
+                    <h3>Selected Foods:</h3>
+                    {arrayElement}
                 </div>}
                 
                 <button className={classes.addToLog} onClick={handleSubmit}>Add to log</button>

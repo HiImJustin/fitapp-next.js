@@ -2,12 +2,14 @@
     width: calc(100% + 1px);
     border-bottom: solid 2px black;
     padding: 10px 0px 10px 6px;
+    margin-left: 4px;
 }
 .searchBar {
     display: flex;
     flex-direction: column;
     width: 100%;
     padding: 6px;
+    margin-left: 4px;
 }
 .searchBar label {
     margin-top: 4px;
@@ -15,14 +17,45 @@
     font-weight: 500;
     padding-left: 4px;
 }
-.searchBar input {
+.input {
     height: 40px;
     font-size: 16px;
-    border: solid 2px black;
-    border-radius: 4px;
+    border: solid 1.5px black;
+    border-radius: 3px 3px 3px 3px;
     text-indent: 4px;
-    margin-bottom: 6px;
     margin-top: 8px;
+}
+.input:focus {
+    outline: none;
+    border: solid 2px black;
+}
+.input:focus + .foodOptions{
+    outline: none;
+    border: solid 2px black;
+    border-top: none;
+}
+.foodOptions {
+    border-radius: 0px 0px 2px 2px;
+    border: solid 1.5px black;
+    border-top: none;
+    margin-top: -2px;
+    padding: 6px 0px 8px 4px;
+}
+.selectedFoods {
+    border: solid 2px black;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    margin-top: 10px;
+    padding: 6px 4px;
+}
+.selectedFoods h3 {
+    font-weight: 500;
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+.selected {
+    padding: 1px 0px;
 }
 .addToLog{
     height: 45px;
@@ -33,17 +66,4 @@
     font-size: 18px;
     font-weight: 600;
     box-shadow: 1px 4px 1px -1px rgba(0, 0, 0, 0.2);
-}
-.foodOptions {
-    padding: 4px 0px 4px 4px;
-}
-.selectedFoods {
-    border: solid 2px black;
-    display: flex;
-    flex-direction: column;
-    border-radius: 4px;
-    margin-top: 6px;
-}
-.selected {
-    padding: 5px 2px;
 }
