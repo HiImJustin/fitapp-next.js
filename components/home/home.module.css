@@ -5,16 +5,20 @@
 .topUi {
     display: flex;
     flex-direction: row;
-    width: calc(100% + 1px);
+    width: 92%;
     justify-content: center;
     align-items: center;
-    margin-top: 18px;
-    padding-bottom: 28px;
-    padding-top: 65px;
+    margin-top: 22px;
+    margin-bottom: 10px;
+    padding-bottom: 38px;
+    padding-top: 98px;
+    box-shadow: 0.5px 2px 4px rgb(151, 151, 151);
+    border-radius: 8px;
+    background-color: #ffffff;
 }
 .circle {
-    width: 105px;
-    height: 105px;
+    width: 118px;
+    height: 118px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -24,28 +28,59 @@
 }
 .innerCircle {
     border-radius: 50%;
-    width: 90px;
-    height: 90px;
+    width: 98px;
+    height: 98px;
     display: flex;
+    flex-direction: column;
     background-color: white;
     justify-content: center;
     align-items: center;
+}
+.circle svg {
+    font-size: 24px;
+    margin-bottom: 6px;
 }
 .middleCircle {
     margin-top: -120px;
 }
 .links {
-    min-height: 54px;
-    width: 90%;
+    min-height: 68px;
+    width: 92%;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
     border-radius: 6px;
     font-size: 22px;
     margin: 5px 0px;
     box-shadow: 0.5px 2px 4px rgb(151, 151, 151);
     background-color: white;
 }
-.links h3 {
+.links li {
+    text-decoration: none;
+    list-style: none;
     margin-left: 6px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.links a {
+    min-width: 180px;
+    margin-left: 40px;
+    font-size: 24px;
+    font-weight: 500;
+}
+.links svg {
+    width: 10%;
+    position: absolute;
+    left: 10px;
+    font-size: 28px;
+}
+.links:hover {
+    background-color: #191645; 
+    color: #ffffff;
+
+}
+.links:hover a{
+    color: #ffffff;
 }

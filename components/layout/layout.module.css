@@ -34,10 +34,11 @@
 }
 .header button {
     position: absolute;
-    left: 8px;
+    left: 18px;
     margin-top: 8px;
     height: 30px;
     width: 70px;
+    color: white;
 }
 @media (min-height: 800px) {
     .appContainer {

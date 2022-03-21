@@ -4,10 +4,16 @@
     display: flex;
     justify-content: center;
     flex-direction: row;
-    background-color: white;
+    background-color: #191645;
+    /* background-color: #1976d2; */
     border: solid 1px black;
     border-radius: 4px;
 }
-.footer p {
-    padding: 20px;
+.footer li {
+    list-style: none;
+    margin: 4px 36px;
+    border-radius: 8px;
+    font-size: 22px;
+    padding: 12px;
+    color: white;
 }
