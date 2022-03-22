@@ -6,12 +6,11 @@ function AddFood() {
     //This manages the state for what is being typed into the search bar
     const [foodOptions, setFoodOptions] = React.useState("")
     function handleChange(e) {
-        e.preventDefault();
         setFoodOptions(e.target.value.toLowerCase())
     }
 
-    const filtered = foodData.filter(food => food.name.toLowerCase().includes(foodOptions))
-    const results = filtered.map(food => <div key={food.key}>{food.name}</div>)
+    const filtered = foodData.filter(food => food.name.includes(foodOptions))
+    const results = filtered.map(food => <div key={food.key} onClick={selectedFood}>{food.name}</div>)
 
     //Manage state for the selected food options
     const [selectedArray, setSelectedArray] = React.useState([])
@@ -21,6 +20,7 @@ function AddFood() {
             return [...prevState, selected]
         })
     }
+
     function deleteFood(e) {
         let selected = e.target.textContent
         if(selectedArray.includes(selected)) {
@@ -31,14 +31,11 @@ function AddFood() {
         }
     }
 
-    let arrayElement = ""        
-    for(let i=0; i < selectedArray.length; i++) {
-            arrayElement = selectedArray.map(selected => 
-            <p  className={classes.selected} onClick={deleteFood}
-                key={selected.index}>{selected}
-            </p>
-        )
-    }
+    let arrayElement = selectedArray.map(selected => 
+        <p  className={classes.selected} onClick={deleteFood}
+            key={selected.index}>{selected}
+        </p>
+    )
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -46,15 +43,19 @@ function AddFood() {
         
     return(
         <>
-            <h1 className={classes.title}>Log Food</h1>
+            <h2 className={classes.title}>Log Food</h2>
 
             <form className={classes.searchBar}>
 
-                <label htmlFor='search'>Search Foods</label>
-                <input type="text" onChange={handleChange} className={classes.input}/>
+                <input
+                    type="text" 
+                    onChange={handleChange} 
+                    className={classes.input}
+                    placeholder="Search Foods"
+                />
 
                 { foodOptions.length > 0 && 
-                    <div onClick={selectedFood} className={classes.foodOptions}>{results}</div>
+                    <div className={classes.foodOptions}>{results}</div>
                 }
 
                 {arrayElement.length > 0 &&
@@ -63,9 +64,9 @@ function AddFood() {
                     {arrayElement}
                 </div>}
                 
-                <button className={classes.addToLog} onClick={handleSubmit}>Add to log</button>
                 
             </form>
+            <button className={classes.addToLog} onClick={handleSubmit}>Add to log</button>
         </>
     )
 }

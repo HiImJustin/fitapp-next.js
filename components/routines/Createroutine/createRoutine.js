@@ -6,33 +6,20 @@ import {useRouter} from 'next/router'
 export default function CreateRoutine() {
 
     const [exerciseOptions, setExercuseOptions] = React.useState("") 
-
     function handleChange(e) {
         setExercuseOptions(e.target.value.toLowerCase())
     }
     
     const filter = exercises.filter(filter => filter.includes(exerciseOptions))
-    const results = filter.map(exercise => <div key={exercise}>{exercise}</div>)
+    const results = filter.map(exercise => <div key={exercise} onClick={selectExercise}>{exercise}</div>)
 
     //Manage what has been selected from the results variable
     const [selectedExercise, setSelectedExercise] = React.useState([])
-    
     function selectExercise(e) {
         let selected = e.target.textContent
         setSelectedExercise(prevState => {
             return [...prevState, selected]
         })
-        console.log(selected)
-    }
-    console.log(selectedExercise.length)
-
-    let selectedExercisesElement = ""
-    for(let i=0; i < selectedExercise.length; i++) {
-        selectedExercisesElement = selectedExercise.map(data => 
-            <p key={data}>
-                {data}
-            </p>
-            )
     }
 
     function deleteExercise(e) {
@@ -44,6 +31,12 @@ export default function CreateRoutine() {
             })
         }
     }
+    let selectedExercisesElement = selectedExercise.map(data => 
+            <p key={data} onClick={deleteExercise}>
+                {data}
+            </p>
+        )
+
 
     const router = useRouter()
     function submit(event) {
@@ -53,28 +46,28 @@ export default function CreateRoutine() {
 
     return (
         <>
-        <form className={classes.routineBuilder}>
-            <h2>Routine builder</h2>
-            <label>Search Exercises</label>
-            <input 
-                type="text" 
-                name="exercise" 
-                onChange={handleChange}
-            />
-            {exerciseOptions.length > 0 && results.length > 0 && 
-            <div onClick={selectExercise} className={classes.results}>
-                {results}
-            </div>}
+            <h2 className={classes.title}>Routine builder</h2>
+            <form className={classes.routineBuilder}>
+                <input 
+                    type="text" 
+                    name="exercise" 
+                    placeholder="Search Exercises"
+                    onChange={handleChange}
+                />
+                {exerciseOptions.length > 0 && results.length > 0 && 
+                <div className={classes.results}>
+                    {results}
+                </div>}
 
-            {selectedExercise.length > 0 && 
-            <div 
-                className={classes.selectedExercise} 
-                onClick={deleteExercise}>
-                {selectedExercisesElement}
-            </div>
-            }
-            <button onClick={submit}>Finish</button>
-        </form>         
+                {selectedExercise.length > 0 && 
+                <div 
+                    className={classes.selectedExercise} >
+                    {selectedExercisesElement}
+                </div>
+                }
+
+            </form>         
+            <button className={classes.addExercise} onClick={submit}>Save Routine</button>
         </>
     )
 }

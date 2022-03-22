@@ -1,11 +1,14 @@
+.title {
+    width: calc(100% + 1px);
+    border-bottom: solid 1px grey;
+    padding: 10px 0px 10px 20px;
+}
 .routineBuilder {
     display: flex;
     flex-direction: column;
-    width: 80%;
-    align-items: center;
-}
-.routineBuilder h2 {
-    margin: 10px;
+    width: 95%;
+    padding: 6px;
+    height: 80%;
 }
 .routineBuilder label {
     margin: 8px 0px;
@@ -15,7 +18,7 @@
     height: 40px;
     width: 100%;
     border: solid 1.5px black;
-    border-radius: 4px 4px 2px 2px;
+    border-radius: 4px 4px 4px 4px;
     text-indent: 4px;
     font-size: 16px;
     margin-top: 5px;
@@ -54,4 +57,14 @@
     text-indent: 2px;
     font-size: 16px;
     margin: 10px;
+}
+.addExercise{
+    width: 90%;
+    height: 45px;
+    border: solid 1px black;
+    border-radius: 4px;
+    background: #1976d2;
+    font-size: 18px;
+    font-weight: 600;
+    box-shadow: 1px 4px 1px -1px rgba(0, 0, 0, 0.2);
 }
