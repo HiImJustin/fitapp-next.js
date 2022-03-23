@@ -3,7 +3,7 @@ import classes from "./tdee.module.css"
 import Link from "next/link"
 
 //Function for calculating Total Daily Energy Expenditure
-export default function TDEE() {
+export default function TDEE(props) {
 
     //BMR (kcal / day) = 10 * weight (kg) + 6.25 * height (cm) – 5 * age (y) + s (kcal / day),
     // where s is +5 for males and -161 for females.
@@ -36,6 +36,8 @@ export default function TDEE() {
     }
     console.log(formValues)
 
+ 
+
     //Sort through state to find out what was selected
     function calculateTDEE(bmr) {
         if (formValues.activity === "sedentary") {
@@ -66,19 +68,18 @@ export default function TDEE() {
         }
     )
 
-function showResults(bmr, tdee) {
-    setResults(prevState => ({
-    ...prevState,
-        tdee: tdee,
-        bmr: bmr,
-        loseHalfKg: tdee - 500,
-        loseKg: tdee - 1000,
-        gainHalfKg: tdee + 500,
-        maintain: tdee
-    }))
-     console.log(tdee)
- 
-}
+    function showResults(bmr, tdee) {
+        setResults(prevState => ({
+        ...prevState,
+            tdee: tdee,
+            bmr: bmr,
+            loseHalfKg: tdee - 500,
+            loseKg: tdee - 1000,
+            gainHalfKg: tdee + 500,
+            maintain: tdee
+        }))
+    }
+    
     function calculateBMR(event) {
         event.preventDefault()
 
@@ -86,7 +87,6 @@ function showResults(bmr, tdee) {
             let femaleBmr = (10 * formValues.weight) + (6.25 * formValues.height);
             let bmr = (femaleBmr) - (5 * formValues.age)
             bmr = Math.round(bmr);
-            console.log(bmr)
 
             calculateTDEE(bmr);
             showResults(bmr, results.tdee);
@@ -95,12 +95,12 @@ function showResults(bmr, tdee) {
             let maleBmr = (10 * formValues.weight) + (6.25 * formValues.height);
             bmr = (maleBmr) + (5 * formValues.age)
             bmr + Math.round(bmr);
-            console.log(bmr);
             
             calculateTDEE(bmr);
             showResults(bmr, results.tdee);
         }
     }
+
 
 
     return (
@@ -158,7 +158,7 @@ function showResults(bmr, tdee) {
                     <p>To Gain half a Kg a week: {results.gainHalfKg} Cals</p>
                     <p>To maintain: {results.maintain} Cals</p>
                 </section>
-                <Link href='/Home'><button className={classes.button}>Finsh Registration</button></Link>
+                <button className={classes.button} onClick={() => submitUserData(props)} >Finsh Registration</button>
 
             </form>
             </>
