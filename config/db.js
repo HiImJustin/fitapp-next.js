@@ -14,7 +14,7 @@ pool.getConnection((err) => {
     console.log('Connected to db')
 });
 
-const executeQuery =(query, arraParams) => {
+const query =(query, arraParams) => {
     return new Promise((resolve, reject) => {
         try {
             pool.query(query, arraParams, (err, data) => {
@@ -30,4 +30,4 @@ const executeQuery =(query, arraParams) => {
     })
 }
 
-module.exports = { executeQuery }
+module.exports = { query }

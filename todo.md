@@ -75,3 +75,22 @@
 ## Still need to style it all properly ##
 
 
+## Proj 2 reqs  
+1. 4 Gets  get all users, get all exercises, get all foods, get all custom meals
+2. create user, create routine, create food log entry, create custom meal
+3. Integrates with a backend database for at least two (2) CRUD actions
+4. Logging feature that accounts for every request with IP, session,
+username, usertype, timestamp and action
+5. Rate limit Web Service to one request per second per user session
+6. Limit per session request to 1,000 in a 24hour period
+7. Domain lock web service to a whitelist of referrers
+PART B – Code Structure
+8. One custom written database object with all SQL actions
+9. Use request, response and session objects instead of their
+superglobals
+10. Use at least three response codes as well as 200
+11. Validation of GET and POST data before it is processed by any object
+12. response body is JSON in form
+PART C – Code Comments
+13. Denote where and explain why you instantiated the database and
+session objects in that location

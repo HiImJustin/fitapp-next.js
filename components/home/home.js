@@ -3,9 +3,14 @@ import Link from 'next/link'
 import Circle from './circle'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAppleWhole, faBook, faDumbbell, faPencil, faUser, faWrench } from "@fortawesome/free-solid-svg-icons"
+import { useSession } from 'next-auth/react'
 
 function Home() {
 
+    const { data: session, status } = useSession()
+    const loading = status === "loading"
+    console.log({session, loading})
+    
     return(
         <>  
             <section className={classes.topUi}>

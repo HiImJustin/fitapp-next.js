@@ -99,9 +99,20 @@ export default function TDEE(props) {
             calculateTDEE(bmr);
             showResults(bmr, results.tdee);
         }
+    }    
+    console.log(typeof formValues)
+    const submitUserData = async (e) => {
+        e.preventDefault();
+        const response = await fetch('/api/users/usersApi', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formValues)
+        })
+        const data = await response.json()
+        console.log(data)
     }
-
-
 
     return (
             <>
@@ -158,7 +169,7 @@ export default function TDEE(props) {
                     <p>To Gain half a Kg a week: {results.gainHalfKg} Cals</p>
                     <p>To maintain: {results.maintain} Cals</p>
                 </section>
-                <button className={classes.button} onClick={() => submitUserData(props)} >Finsh Registration</button>
+                <button className={classes.button} onClick={submitUserData} >Finsh Registration</button>
 
             </form>
             </>
