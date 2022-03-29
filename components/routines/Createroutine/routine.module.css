@@ -29,7 +29,9 @@
     border-top: none;
     border-radius: 0px 0px 4px 4px;
     margin-top: -3px;
-    padding: 8px 0px 8px 4px;
+    padding: 8px 0px 10px 4px;
+    display: flex;
+    flex-direction: column;
 }
 .routineBuilder input:focus {
     border: solid 2px black;
@@ -48,16 +50,6 @@
     margin-top: 20px;
     padding: 6px 0px 6px 4px;
 }
-
-.routineBuilder button {
-    width: 100%;
-    height: 40px;
-    border: solid 1px black;
-    border-radius: 4px;
-    text-indent: 2px;
-    font-size: 16px;
-    margin: 10px;
-}
 .addExercise{
     width: 90%;
     height: 45px;
@@ -66,6 +58,19 @@
     background: #1976d2;
     color: white;
     font-size: 18px;
+    font-weight: 600;
+    box-shadow: 1px 4px 1px -1px rgba(0, 0, 0, 0.2);
+}
+.addNewExercise{
+    width: 98%;
+    height: 35px;
+    margin: 8px 0px 0px 1px;
+    text-indent: 8px;
+    border: solid 1px black;
+    border-radius: 4px;
+    background: #1976d2;
+    color: white;
+    font-size: 16px;
     font-weight: 600;
     box-shadow: 1px 4px 1px -1px rgba(0, 0, 0, 0.2);
 }

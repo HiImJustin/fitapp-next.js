@@ -6,6 +6,17 @@ import { signOut, useSession } from 'next-auth/react'
 
 export default function settings() {
 
+    const Item = props => (
+        <div>
+          <div id={props.query.id} userIP={props.userIP} />
+        </div>
+      );
+      
+      Item.getInitialProps = async ({ req }) => {
+        const userIP = req.headers['x-real-ip'] || req.connection.remoteAddress
+        return { userIP }
+      }
+
     function logOut(e) {
         e.preventDefault()
         signOut()

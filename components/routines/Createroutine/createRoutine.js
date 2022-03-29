@@ -37,11 +37,78 @@ export default function CreateRoutine() {
             </p>
         )
 
-
+        
     const router = useRouter()
     function submit(event) {
         event.preventDefault()
         router.push("/Home")
+    }
+    
+    const [modal, setModal] = React.useState(false)
+    
+    const addCustomExercise = (e) => {
+        console.log("hello")
+        e.preventDefault()
+        setModal(prevState => !prevState)
+    }
+        
+    const exerciseStyle = {
+        width: "100%",
+        height: "100%",
+    }
+    
+
+
+    const CustomExerciseModal = () => {
+
+        const [formValues, setFormValues] = React.useState(
+            {
+                exerciseName: "",
+                avgCalBurned: ""
+            }
+        )
+    
+        function handleFormData(e) {
+            const {name, value, type, checked} = e.target
+            setFormValues(prevState => {
+                return {
+                    ...prevState,
+                    [name]: type === 'checkbox' ? checked : value
+                }
+            })
+        }
+        const submitExerciseData = async (event) => {
+            event.preventDefault()
+            const response = await fetch('/api/exercisesApi', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formValues)
+            })
+            const data = await response.json()
+            console.log(data)
+        }
+
+        return (
+            <div style={exerciseStyle}>
+               <input
+                    type="text"
+                    name="exerciseName"
+                    placeholder="Exercise Name"
+                    value={formValues.exerciseName}
+                    onChange={handleFormData}
+               /> 
+               <input
+                    type="text"
+                    name="avgCalBurned"
+                    placeholder="Avg calories burned"
+                    value={formValues.avgCalBurned}
+                    onChange={handleFormData}
+               />
+               <button onClick={submitExerciseData}>Add new exercise</button> 
+            </div>
+        )
     }
 
     return (
@@ -53,19 +120,21 @@ export default function CreateRoutine() {
                     name="exercise" 
                     placeholder="Search Exercises"
                     onChange={handleChange}
+                    autoComplete="off"
                 />
                 {exerciseOptions.length > 0 && results.length > 0 && 
                 <div className={classes.results}>
                     {results}
+                    <button className={classes.addNewExercise} onClick={addCustomExercise}>Add custom exercise</button>
                 </div>}
-
+                
                 {selectedExercise.length > 0 && 
                 <div 
                     className={classes.selectedExercise} >
                     {selectedExercisesElement}
                 </div>
                 }
-
+                    {modal && <CustomExerciseModal />}
             </form>         
             <button className={classes.addExercise} onClick={submit}>Save Routine</button>
         </>
