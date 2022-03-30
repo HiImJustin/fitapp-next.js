@@ -1,6 +1,5 @@
 import React from "react"
 import classes from "./tdee.module.css"
-import { RateLimiter } from "limiter";
 
 //Function for calculating Total Daily Energy Expenditure
 export default function TDEE(props) {
@@ -100,7 +99,6 @@ export default function TDEE(props) {
             showResults(bmr, results.tdee);
         }
     }    
-    console.log(typeof formValues)
     const submitUserData = async (event) => {
         event.preventDefault();
         const response = await fetch('/api/users/usersApi', {
@@ -112,21 +110,10 @@ export default function TDEE(props) {
         })
         const data = await response.json()
         console.log(data)
-        sendRequest()
     }
 
 
-    const limiter = new RateLimiter({ tokensPerInterval: 15, interval: "hour"});
 
-    async function sendRequest(e) {
-        // This call will throw if we request more than the maximum number of requests
-        // that were set in the constructor
-        // remainingRequests tells us how many additional requests could be sent
-        // right this moment
-        const remainingRequests = await limiter.removeTokens(1);
-        console.log('request sent')
-        console.log(remainingRequests)
-    }
 
     return (
             <>

@@ -17,9 +17,8 @@ export default function settings() {
         return { userIP }
       }
 
-    function logOut(e) {
-        e.preventDefault()
-        signOut()
+    function logOut() {
+        signOut({ callbackUrl: 'http://localhost:3000' })
     }
     const { data: session, status } = useSession()
     const loading = status === "loading"

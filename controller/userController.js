@@ -1,5 +1,6 @@
 const userModel = require('../model/userModel')
 import { getUsers } from '../model/userModel'
+import { addLog } from './loggingController'
 
 const getAllUsers = (req, res) => {
     getUsers()
@@ -13,9 +14,12 @@ const getAllUsers = (req, res) => {
 }
 
 const addUser = (req, res) => {
-    console.log(req.body);
-    let user = req.body
 
+    let user = req.body
+    
+    addLog(req, res)
+    console.log(req.body);
+    
         userModel.addUserModel(
             user.age,
             user.height,

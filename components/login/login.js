@@ -1,9 +1,9 @@
+import Head from 'next/head'
+import Link from "next/link";
 import classes from "./login.module.css";
 import React, { useEffect, useState } from 'react'
 import {useRouter} from 'next/router'
-import Link from "next/link";
 import { signIn, useSession, getSession } from 'next-auth/react'
-import Head from 'next/head'
 
 export default function Login() {
 
@@ -13,7 +13,7 @@ export default function Login() {
         {username: "", password: ""}
     )
     
-    function handleChange(event) {
+    function loginButton(event) {
         setFormData(prevFormData => {
             return {
                 ...prevFormData,
@@ -23,29 +23,14 @@ export default function Login() {
         router.push('/Home')
         event.preventDefault();
     }
-
-    function login(e) {
+    
+    
+    function nextLoginButton(e) {
         e.preventDefault()
-        signIn('github')
+        signIn('github', 'Credentails', {callbackUrl: 'http://localhost:3000/Home'})
     }
+    
 
-    const { data: session, status } = useSession()
-    console.log({session, status})
-
-
-    const [loading, setLoading] = useState(true)
-
-    useEffect(() => {
-        const securePage = async() => {
-            const session = await getSession()
-            if(!session) {
-                signIn()
-            } else {
-                setLoading(false)
-            }
-        }
-        securePage()
-    }, [])
     
     return (
         <>
@@ -65,10 +50,8 @@ export default function Login() {
                     id="password" name="password" type="text" placeholder="Password">
                 </input>
                     <p>Dont have an Account? <Link href="/Register">Register here!</Link></p>
-                    {!loading && !session && 
-                        <button className={classes.loginButton} onClick={login}>github</button>
-                    }
-                <button className={classes.loginButton} onClick={handleChange}>Login!</button>
+                        <button className={classes.loginButton} onClick={nextLoginButton}>github</button>
+                <button className={classes.loginButton} onClick={loginButton}>Login!</button>
             </form>
             
         </>
