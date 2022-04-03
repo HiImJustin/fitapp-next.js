@@ -26,7 +26,7 @@ export default handler
             user.sex
         )
         .then((results) => {
-            res.status(200).json(results)
+            res.status(201).json(results)
         })
         .catch((error) => {
             console.log(error)
