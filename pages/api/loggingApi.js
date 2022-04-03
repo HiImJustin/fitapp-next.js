@@ -1,7 +1,9 @@
 import nc from 'next-connect'
-import { addLog } from '../../controller/loggingController'
+import { addLog, checkLog } from '../../controller/loggingController'
 const handler = nc();
 
 handler.post(addLog)
+
+handler.get(checkLog)
 
 export default handler

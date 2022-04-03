@@ -1,36 +1,64 @@
 import Head from 'next/head'
 import Link from "next/link";
 import classes from "./login.module.css";
-import React, { useEffect, useState } from 'react'
-import {useRouter} from 'next/router'
+import React, { useEffect } from 'react'
 import { signIn, useSession, getSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import { JsonWebTokenError } from 'jsonwebtoken';
 
 export default function Login() {
-
+    
     const router = useRouter();
+
+    const { data: session, status } = useSession()
+    console.log({session, status})
+
+    useEffect(() => {
+        const securePage = async() => {
+            const session = await getSession()
+            if(!session) {
+                return console.log('please login')
+            } else {
+                router.push('/Home')
+            }
+        }
+        securePage()
+    }, [])
 
     const [formData, setFormData] = React.useState(
         {username: "", password: ""}
     )
     
     function loginButton(event) {
-        setFormData(prevFormData => {
-            return {
-                ...prevFormData,
-                [event.target.name]: event.target.value
-            }
-        })
-        router.push('/Home')
-        event.preventDefault();
-    }
-    
+            event.preventDefault();
+            setFormData(prevFormData => {
+                return {
+                    ...prevFormData,
+                    [event.target.name]: event.target.value
+                }
+            })
+            router.push('/Home')
+            fetch("/api/users/login", {
+                method: 'POST',
+                headers: {
+                    'Content-type': "application/json"
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(res => res.json())
+            .then(res => {
+                //handles the response from the server
+                console.log('login request sent')
+            })
+            .catch(err => {
+                console.log('login request failed ' + err)
+            })
+        }
     
     function nextLoginButton(e) {
         e.preventDefault()
-        signIn('github', 'Credentails', {callbackUrl: 'http://localhost:3000/Home'})
+        signIn('github', {callbackUrl: 'http://localhost:3000/Home'})
     }
-    
-
     
     return (
         <>

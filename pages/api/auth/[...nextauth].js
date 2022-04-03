@@ -13,38 +13,57 @@ export default NextAuth({
             synchronize: false,
         }),
         CredentialsProvider({
-                // The name to display on the sign in form (e.g. 'Sign in with...')
-            name: 'Credentials',
-                // The credentials is used to generate a suitable form on the sign in page.
-                // You can specify whatever fields you are expecting to be submitted.
-                // e.g. domain, username, password, 2FA token, etc.
-                // You can pass any HTML attribute to the <input> tag through the object.
+            name: 'credentials',
             credentials: {
-            username: { label: "Username", type: "text", placeholder: "jsmith" },
-            password: {  label: "Password", type: "password" }
+                email: { label: "username", type: "email"},
+                password: {  label: "password", type: "password" }
         },
-        async authorize(credentials, req) {
-            // You need to provide your own logic here that takes the credentials
-            // submitted and returns either a object representing a user or value
-            // that is false/null if the credentials are invalid.
-            // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
-            // You can also use the `req` object to obtain additional parameters
-            // (i.e., the request IP address)
-            const res = await fetch("/your/endpoint", {
+        
+        async authorize (credentials, req) {
+
+        const res = await fetch("http://localhost:3000/api/users/usersApi", {
                 method: 'POST',
-                body: JSON.stringify(credentials),
-                headers: { "Content-Type": "application/json" }
-            })
-            const user = await res.json()
-            
-            // If no error and we have user data, return it
-            if (res.ok && user) {
-                return user
+                headers: {
+                    'Content-type': "application/json"
+                },
+                body: JSON.stringify(credentials)
+            })  
+            let user = await res.json()
+
+            if(res) {
+                return user = {
+                    id: 2,
+                    email: user.email,
+                    name: user.userType,
+                }
             }
-            // Return null if user data could not be retrieved
-            return null
-            }
-        })
+            return console.log('bad')
+        }
+    })
     ],
+    callbacks: {
+        jwt: async ({ token, user}) => {
+            // first time jwt callback is run, user object is available
+            if(user) {
+                token.id = user.id
+            }
+            return token
+        },
+        session: ({ session, token }) => {
+            // if there is a session, add the token to it
+            if(token) {
+                session.id = token.id
+            }
+            return session;
+        }
+    },
     secret: process.env.JWT_SECRET,
+    jwt: {
+        secret: process.env.JWT_SECRET,
+        encryption: true,
+    },
+    pages: {
+        // signIn: ""
+    }
 })
+

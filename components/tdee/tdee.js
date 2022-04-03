@@ -101,7 +101,7 @@ export default function TDEE(props) {
     }    
     const submitUserData = async (event) => {
         event.preventDefault();
-        const response = await fetch('/api/users/usersApi', {
+        const response = await fetch('/api/users/registerApi', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -111,9 +111,6 @@ export default function TDEE(props) {
         const data = await response.json()
         console.log(data)
     }
-
-
-
 
     return (
             <>
