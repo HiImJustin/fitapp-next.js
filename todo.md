@@ -78,6 +78,7 @@
 ## Proj 2 reqs  
 
 1. 4 Gets  -  get all users, get all exercises, get all foods, get all custom meals
+
 2. 4 posts -  create user, create routine, create food log entry, create custom meal
 
 # done i guess

@@ -6,11 +6,12 @@ export default handler
 .get(async(req, res) => {
     userModel.getUsers()
     .then((results) => {
-        res.status(200).json(results)
-    })
-    .catch((error) => {
-        console.log(error)
-        res.status(500).json(error)
+        if(results.length > 0) {
+            console.log(results)
+            res.status(200).json(results)
+        } else {
+            res.status(404).json("failed to find users")
+        }
     })
 })
 .post(async (req, res) => {
@@ -18,7 +19,7 @@ export default handler
     userModel.getUserByUsername(login.email)
         .then((results) => {
             console.log(results[0])
-            if (results) {
+            if (results) {s
                 res.status(200).json(results[0])
             } else {
                 res.status(400).json("wrong username or password")

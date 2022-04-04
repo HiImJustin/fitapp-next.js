@@ -108,10 +108,9 @@ export default function TDEE(props) {
             },
             body: JSON.stringify(formValues)
         })
-        console.log(response)
-        // const data = await response.json()
-        // console.log(data)
-        // alert(data.insertId)
+        // console.log(response)
+        const data = await response.json()
+        console.log(data)
     }
 
     return (

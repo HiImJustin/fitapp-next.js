@@ -29,8 +29,8 @@ export default NextAuth({
                 body: JSON.stringify(credentials)
             })  
             let user = await res.json()
-
-            if(res) {
+            console.log(user)
+            if(credentials.email === user.email && credentials.password === user.password) {
                 return user = {
                     id: 2,
                     email: user.email,

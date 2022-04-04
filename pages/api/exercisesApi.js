@@ -1,11 +1,36 @@
-import nc from 'next-connect'
-import { addExercises, getExercises } from '../../controller/exerciseController'
-import { sendRequest } from '../../middleware/limiter';
+import handler from './handler'
+const exerciseModel = require('../../model/exerciseModel')
 
-const handler = nc();
-
-handler.get(getExercises)
-
-handler.post(addExercises, )
-sendRequest
 export default handler
+.get((req, res) => {
+    exerciseModel.getExercise()
+    .then((results) => {
+        if(results.length > 0) {
+            res.status(200).json(results)
+        } else {
+            res.status(404).json('exercises not found')
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+        res.json(500).json(error)
+    })
+})
+.post(async(req, res) => {
+    let exercise = req.body
+    exerciseModel.addExercise(
+        exercise.exerciseName,
+        exercise.avgCalBurned
+    )
+    .then((results) => {
+        if(results.affectedRows > 0) {
+            res.status(201).json(results)
+        } else {
+            res.status(404).jons('cannot add exercise')
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+        res.status(500).json("couldnt add exercise")
+    })
+})

@@ -1,5 +1,4 @@
 import nc from 'next-connect';
-import { addLog, checkLog } from '../../controller/loggingController'
 import {getSession} from 'next-auth/react'
 const loggingModel = require('../../model/loggingModel')
 import sendRequest from '../../middleware/limiter';

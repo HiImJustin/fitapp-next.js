@@ -3,21 +3,7 @@ import { addLog, checkLog } from '../../../controller/loggingController'
 const userModel = require('../../../model/userModel')
 
 export default handler
-.get(async(req, res) => {
-    userModel.getUsers()
-    .then((results) => {
-        console.log(results)
-        console.log('usersApi')
-        res.status(200).json(results)
-    })
-})
 .post(async(req, res) => {
-    // console.log(res.statusCode)
-    // if(res.statusCode === 401) {
-    //     console.log(res.statusCode)
-    //     res.status(401).json('too many requests')
-    //     return;
-    // } else {
         let user = req.body
         userModel.addUserModel(
             user.age,
@@ -26,7 +12,12 @@ export default handler
             user.sex
         )
         .then((results) => {
-            res.status(201).json(results)
+            if(results.affectedRows > 0) {
+                console.log(results)
+                res.status(201).json(results)
+            } else {
+                res.stauts(404).json('user not created')
+            }
         })
         .catch((error) => {
             console.log(error)
