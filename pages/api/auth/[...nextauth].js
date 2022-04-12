@@ -20,7 +20,6 @@ export default NextAuth({
         },
         
         async authorize (credentials, req) {
-
         const res = await fetch("http://localhost:3000/api/users/usersApi", {
                 method: 'POST',
                 headers: {
@@ -29,7 +28,6 @@ export default NextAuth({
                 body: JSON.stringify(credentials)
             })  
             let user = await res.json()
-            console.log(user)
             if(credentials.email === user.email && credentials.password === user.password) {
                 return user = {
                     id: 2,
@@ -63,7 +61,7 @@ export default NextAuth({
         encryption: true,
     },
     pages: {
-        // signIn: ""
+        signIn: "/signin"
     }
 })
 

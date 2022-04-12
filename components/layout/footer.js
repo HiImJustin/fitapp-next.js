@@ -9,7 +9,7 @@ function footer() {
         <footer className={classes.footer}>
             
             <li>
-                <ActiveLink href="/Home"><FontAwesomeIcon icon={faHouse}/></ActiveLink>
+                <ActiveLink href="/"><FontAwesomeIcon icon={faHouse}/></ActiveLink>
             </li>
             <li>
                 <ActiveLink href="/profile"><FontAwesomeIcon icon={faUser} /></ActiveLink>

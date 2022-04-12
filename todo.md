@@ -1,8 +1,5 @@
 ## FIT app todo
 
-## Connect to the database
-- Create the database of which the data will be sent to
-
 ## App per page functionality
 
 # Register Page
@@ -74,52 +71,30 @@
 ## App done then maybe well just the functionality ##
 ## Still need to style it all properly ##
 
+## ux2 mobile app
 
-## Proj 2 reqs  
+## PART A
+- Implemented as a mobile-only app
+- Manifest file contains relevant objects the App will need
+- Use of custom design components that are initially devoid of user-requested data
+- Third Party interactive components used in implementation
+- User-selectable theme 
 
-1. 4 Gets  -  get all users, get all exercises, get all foods, get all custom meals
+## PART B
+- Form Validation of all input fields
+- AJAX implemented for at least four get and four post actions
+- Data interchange format between App and RESTful web service using JSON
+- Use of Fetch API to implement AJAX communication
+- localStorage demonstrated remembering user actions, and app reload is contextually remembered at least three (3)
+- Service Worker to cache HTML/CSS/JS objects in-browser, and able to load without the network being present
 
-2. 4 posts -  create user, create routine, create food log entry, create custom meal
+## PART C
+- Icon for app in manifest
+- Generous use of glyphs found in layout framework for forms and menus
+- Temporary loading screen (spinner) overlayed on display before JSON objects are rendered from Web Service
 
-# done i guess
-3. Integrates with a backend database for at least two (2) CRUD actions - 
-# done
-4. Logging feature that accounts for every request with IP, session,
-username, usertype, timestamp and action
-# Done
-5. Rate limit Web Service to one request per second per user session
-# Done
-6. Limit per session request to 1,000 in a 24hour period
-# Done
-7. Domain lock web service to a whitelist of referrers
-
-PART B – Code Structure
-# Done
-8. One custom written database object with all SQL actions
-# Done
-9. Use request, response and session objects instead of their
-superglobals
-# Done
-# Ive got 404(page not found) 401(unauthorized), 500(internal server error), 200(ok), 201(created)
-10. Use at least three response codes as well as 200 
-
-# NOT DONE, write if(results.length > 0)
-11. Validation of GET and POST data before it is processed by any object
-# Think im done
-12. response body is JSON in form
-
-
-PART C – Code Comments
-
-13. Denote where and explain why you instantiated the database and
-session objects in that location
-
-14. Explain the mathematics of either of your two rate limiting code.
-
-15. Note where you are checking if a session pre-exists, what are you doing if it does.
-
-16. Explain the code structure that checks all of the GET/POST structures
-
-17. Write a README file that explains how to setup and configure Web Service
-
-19. Write a test script that interacts with the web service to test all the known GET and POST requests as a part of Unit testing
+## PART D
+- Screen Shot of Performance tab in DevTools
+- Screen shot showing AJAX (network tab)
+- localStorage (application tab) inside devtools to prove app works
+- PWA audit completed under audits tab

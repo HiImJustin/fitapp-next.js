@@ -31,6 +31,7 @@
     height: 48px;
     border: solid 2px black;
     border-radius: 4px;
+    width: 100%;
 }
 .login p {
     margin-top:  10px;

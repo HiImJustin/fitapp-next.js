@@ -9,7 +9,7 @@ function AddFood() {
         setFoodOptions(e.target.value.toLowerCase())
     }
 
-    const filtered = foodData.filter(food => food.name.includes(foodOptions))
+    const filtered = foodData.filter(food => food.name.toLowerCase().includes(foodOptions))
     const results = filtered.map(food => <div key={food.key} onClick={selectedFood}>{food.name}</div>)
 
     //Manage state for the selected food options
@@ -41,8 +41,6 @@ function AddFood() {
         e.preventDefault();
     }
 
-
-        
     return(
         <>
             <h2 className={classes.title}>Log Food</h2>
@@ -65,7 +63,6 @@ function AddFood() {
                     <h3>Selected Foods:</h3>
                     {arrayElement}
                 </div>}
-                
                 
             </form>
             <button className={classes.addToLog} onClick={handleSubmit}>Add to log</button>
