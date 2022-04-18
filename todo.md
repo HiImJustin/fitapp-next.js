@@ -71,7 +71,7 @@
 ## App done then maybe well just the functionality ##
 ## Still need to style it all properly ##
 
-## ux2 mobile app
+## UX2 mobile app
 
 ## PART A
 - Implemented as a mobile-only app
