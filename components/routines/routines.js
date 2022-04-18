@@ -6,8 +6,8 @@ export default function routines() {
 
 
     const ele = routinesData.map(data => 
-    <Link href={`/Routines/${data.id}`}>
-        <div className={classes.routines} key={data.id}>
+    <Link key={data.id} href={`/Routines/${data.id}`}>
+        <div className={classes.routines} key={data.id} >
             {data.exerciseName}
         </div>
     </Link>)

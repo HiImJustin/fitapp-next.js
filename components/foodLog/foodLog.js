@@ -25,14 +25,14 @@ const bar4 = [
 
                         <label className={classes.label} htmlFor='calories'>Total Calories</label>
                         {bar1.map((item) => (
-                            <ProgressBar bgcolor={item.bgcolor} completed={item.completed} />
+                            <ProgressBar key={item.bgcolor} bgcolor={item.bgcolor} completed={item.completed} />
                         ))}
                     </section>
 
                     <section className={classes.section}>
                         <label className={classes.label} htmlFor='calories'>Total Protien</label>
-                        {bar2.map((item, id) => (
-                            <ProgressBar bgcolor={item.bgcolor} completed={item.completed} />
+                        {bar2.map((item) => (
+                            <ProgressBar key={item.bgcolor} bgcolor={item.bgcolor} completed={item.completed} />
                         ))}
 
                     </section>
@@ -40,14 +40,14 @@ const bar4 = [
                     <section className={classes.section}>
                         <label className={classes.label} htmlFor='calories'>Total Carbs</label>
                         {bar3.map((item) => (
-                            <ProgressBar bgcolor={item.bgcolor} completed={item.completed} />
+                            <ProgressBar key={item.bgcolor} bgcolor={item.bgcolor} completed={item.completed} />
                         ))}
                     </section>
 
                     <section className={classes.section}>
                         <label className={classes.label} htmlFor='calories'>Total Fat</label>
                         {bar4.map((item) => (
-                            <ProgressBar bgcolor={item.bgcolor} completed={item.completed} />
+                            <ProgressBar key={item.bgcolor} bgcolor={item.bgcolor} completed={item.completed} />
                         ))}
                     </section>
 

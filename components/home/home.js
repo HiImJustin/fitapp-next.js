@@ -30,8 +30,9 @@ function Home() {
                     <FontAwesomeIcon icon={faPencil}/>
                     <Link href='/Routines/Createroutine'>Create Routine</Link></li>
             </section>
+
             <section className={classes.links}>
-                <li>
+                <li >
                     <FontAwesomeIcon icon={faDumbbell} />
                     <Link href='/Routines'>Routines</Link>
                 </li>

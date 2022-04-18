@@ -13,7 +13,7 @@ function HomePage({ ip }) {
     useEffect(() => {
         const securePage = async() => {
             const session = await getSession()
-            if(!session) {
+            if(!session && !status) {
                 return router.push('/signin')
             } else {
                 console.log(session)
@@ -33,7 +33,7 @@ function HomePage({ ip }) {
         </>
     )
 }
-  export default HomePage;
+export default HomePage;
 
 
 export async function getServerSideProps({ req }) {

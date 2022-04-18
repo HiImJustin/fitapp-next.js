@@ -11,7 +11,7 @@ export default function StartWorkout() {
     let reduced = routine.slice(0,1)
     
     let workout = reduced.map(data => 
-        <div className={classes.exerciseContainer}>
+        <div key={data.id} className={classes.exerciseContainer}>
             <h2>{data.exerciseName}</h2>
 
             <section className={classes.exerciseData}>

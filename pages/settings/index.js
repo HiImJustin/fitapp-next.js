@@ -1,6 +1,6 @@
 import Settings from "../../components/settings/settings"
 
-export default function settingsPage() {
+export default function SettingsPage() {
     return (
         <Settings />
     )

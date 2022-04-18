@@ -29,16 +29,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 0px;
-    position: sticky;
+    padding: 12px 0px;
 }
-.header button {
-    position: absolute;
-    left: 18px;
-    margin-top: 8px;
+.headerButton {
+    position: absolute !important;
+    left: 16px;
+    margin-top: 2px;
     height: 30px;
     width: 70px;
     color: white;
+    background-color: #1976d2 !important;
 }
 @media (min-height: 800px) {
     .appContainer {
