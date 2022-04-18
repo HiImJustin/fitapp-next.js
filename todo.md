@@ -1,4 +1,4 @@
-## FIT app todo
+## FIT App Todo
 
 ## App per page functionality
 
