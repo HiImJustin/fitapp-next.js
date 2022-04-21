@@ -1,4 +1,4 @@
-import classes from './foodLog.module.css'
+import classes from './foodlog.module.css'
 import ProgressBar from '../progressbar/progressbar'
 
 export default function foodLog() {
