@@ -3,8 +3,7 @@ import GitHub from 'next-auth/providers/github'
 import CredentialsProvider from "next-auth/providers/credentials"
 
 //https://next-auth.js.org/getting-started/upgrade-v4
-//Login /api/auth/login
-//logout /api/auth/signout
+
 export default NextAuth({
     providers: [
         GitHub({
