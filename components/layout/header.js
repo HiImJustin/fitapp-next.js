@@ -37,7 +37,11 @@ function Header() {
     };
 
     return (
-        <header className={classes.header}>
+        <header
+            className="relative container mx-auto flex items-center justify-center bg-white w-full box-border border-b-[1px] border-black dark:text-white dark:bg-[#121212] dark:border-white
+            h-20
+        "
+        >
             {asPath.length > 1 && (
                 <Button
                     className={classes.headerButton}
@@ -47,12 +51,14 @@ function Header() {
                     <FontAwesomeIcon icon={faArrowLeftLong} />
                 </Button>
             )}
-            <h1 className="text-lg">FIT</h1>
+            <h1 className="text-3xl font-semibold text-center dark:white">
+                FIT
+            </h1>
             <button
-                className="absolute right-5"
+                className="absolute text-2xl right-6"
                 onClick={() => setTheme(theme === "light" ? "dark" : "light")}
             >
-            {renderThemeChange()}
+                {renderThemeChange()}
             </button>
         </header>
     );

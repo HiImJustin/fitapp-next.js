@@ -23,10 +23,14 @@ function HomePage({ ip }) {
 
     return (
         <>
-            {   session &&
-            <div>singed in as {session.user.email} ip: {ip}
-            <button><Link href="/admin">admin page</Link></button></div>
-        }
+            {session && (
+                <div className="w-11/12 mt-1">
+                    singed in as {session.user.email} ip: {ip}
+                    <button>
+                        <Link href="/admin">admin page</Link>
+                    </button>
+                </div>
+            )}
             {/* <pre>{JSON.stringify(users, null, 4)}</pre> */}
             <Home />
         </>
@@ -35,8 +39,10 @@ function HomePage({ ip }) {
 export default HomePage;
 
 export async function getServerSideProps({ req }) {
-    const forwarded = req.headers["x-forwarded-for"]
-    const ip = forwarded ? forwarded.split(/, /)[0] : req.connection.remoteAddress
-    console.log(ip)
-    return {props: {ip}}
+    const forwarded = req.headers["x-forwarded-for"];
+    const ip = forwarded
+        ? forwarded.split(/, /)[0]
+        : req.connection.remoteAddress;
+    console.log(ip);
+    return { props: { ip } };
 }
