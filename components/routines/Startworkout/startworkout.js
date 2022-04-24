@@ -1,16 +1,16 @@
-import classes from './workout.module.css'
-import routine from '../routinesData'
-import RepCounter from './repcounter'
-import { useRouter } from 'next/router'
+import classes from "./workout.module.css";
+import routine from "../routinesData";
+import RepCounter from "./repcounter";
+import { useRouter } from "next/router";
 
 export default function StartWorkout() {
-    
-    const router = useRouter()
-    let url = router.asPath
+    const router = useRouter();
+    let url = router.asPath;
 
-    let reduced = routine.slice(0,1)
-    
-    let workout = reduced.map(data => 
+    let reduced = routine.filter((routine) => routine !== "Chest");
+    console.log(reduced);
+    let workout = reduced.map((data) => (
+        
         <div key={data.id} className={classes.exerciseContainer}>
             <h2>{data.exerciseName}</h2>
 
@@ -19,7 +19,7 @@ export default function StartWorkout() {
                 <RepCounter />
             </section>
 
-            <section className={classes.exerciseData}>
+            {/* <section className={classes.exerciseData}>
                 <div key={data.id}>{data.exercise3}</div>
                 <RepCounter />
             </section>
@@ -27,14 +27,14 @@ export default function StartWorkout() {
             <section className={classes.exerciseData}>
                 <div key={data.id}>{data.exercise4}</div>
                 <RepCounter />
-            </section>
-        </div>)
-    
+            </section> */}
+        </div>
+    ));
 
     return (
         <section className={classes.workout}>
             {workout}
             <button> Finish Workout </button>
         </section>
-    )
+    );
 }
