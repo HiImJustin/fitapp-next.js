@@ -82,53 +82,50 @@
 
 ## Still need to style it all properly
 
+
 ## UX2 mobile app
 
 ## PART A
 
-## Implemented as a mobile-only app
-
--   Tailwind layout for mobile only
-
 ## Manifest file contains relevant objects the App will need
 
--   Cache the needed files - Nextjs framework Next-pwa handles that
--   One logo is needed in two mobile friendly sizes
--   Read the docs on how to customise it, fairly certain app needs to run in offline mode
+-   Change the icon image
 
 ## Use of custom design components that are initially devoid of user-requested data
 
 -   Components that dont use hard coded data
-
-## Third Party interactive components used in implementation || external css framework
-
--   Use tailwind css and mui design
+- Looks up a food api to use
 
 ## User-selectable theme
 
 -   Implement dark mode, for tailwind add dark: to components i want to change
+-  Make it look better
+
 
 ## PART B
 
 ## Form Validation of all input fields
 
 -   setup client side validation on inputs - Need to look this up for react
+- setup server side validation
 
 ## fetch implemented for at least four get and four post actions
 
 -   Posts
 
-1. Login
-2. Create User
-3. Add Food
-4. Add Exercise
+1. Login - Done
+2. Create User - Done
+3. Add Food - Adds to database
+4. Add Exercise - Adds to database
+5. Create routine - not implemented yet
 
 -   Gets
 
 1. Get user routines
-2. Get food from api
-3. Get exercises from api/database
-4. Get user TDEE
+2. Get food from api - Gets the results from the database, NEED to use the database values insteadof hard coded values 
+3. Get exercises from api/database - Change to using the database values
+4. Get user TDEE - 
+
 
 ## localStorage demonstrated remembering user actions, and app reload is contextually remembered at least three (3)
 
@@ -141,26 +138,18 @@
 ## Service Worker to cache HTML/CSS/JS objects in-browser, and able to load without the network being present##
 
 -   Next-pwa to cahce files to run in ofline mode
+- Test caching logo img
 
 ## # PART C
 
-## Icon for app in manifest
-
--   Done
-
-## Generous use of glyphs found in layout framework for forms and menus
-
--   Done
 
 ## Temporary loading screen (spinner) overlayed on display before JSON objects are rendered from Web Service##
 
--   Make a loading spinner when app is launching
+-   Make a loading spinner when app is launching and on any request that sends data 
 
 ## # PART D
 
 ## Screen Shot of Performance tab in DevTools
-
-## Screen shot showing AJAX (network tab)
 
 ## localStorage (application tab) inside devtools to prove app works
 
