@@ -2,7 +2,7 @@ import handler from './handler'
 const exerciseModel = require('../../model/exerciseModel')
 
 export default handler
-.get((req, res) => {
+.(get(req, res) => {
     exerciseModel.getExercise()
     .then((results) => {
         if(results.length > 0) {
