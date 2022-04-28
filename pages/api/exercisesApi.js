@@ -3,7 +3,8 @@ const exerciseModel = require("../../model/exerciseModel");
 
 export default handler
     .get(async (req, res) => {
-        exerciseModel.getExercise()
+        exerciseModel
+            .getExercise()
             .then((results) => {
                 if (results.length > 0) {
                     res.status(200).json(results);
