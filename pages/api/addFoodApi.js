@@ -1,7 +1,7 @@
-const db = require("../../../config/db");
-import { addFood, getAllFood } from "../../../model/foodModel";
-import handler from "../handler";
-const foodModel = require("../../../model/foodModel");
+const db = require("../../lib/db");
+import { addFood, getAllFood } from "../../model/foodModel";
+import handler from "./handler";
+const foodModel = require("../../model/foodModel");
 
 export default handler
     .get(async (req, res) => {
@@ -10,7 +10,7 @@ export default handler
                 if (results.length > 0) {
                     res.status(200).json(results);
                 } else {
-                    res.status(404).json("exercises not found");
+                    res.status(404).json("food not found");
                 }
             })
             .catch((error) => {
@@ -24,7 +24,7 @@ export default handler
         foodModel
             .addFood(
                 food.foodName,
-                food.caloriesPer100grams,
+                food.calPer100,
                 food.protien,
                 food.carbs,
                 food.fat

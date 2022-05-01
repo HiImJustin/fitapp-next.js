@@ -1,4 +1,4 @@
-const db = require('../config/db')
+const db = require('../lib/db')
 
 module.exports.addNewLog = (email, userType, action, ip, request) => (
     db.query("Insert into logging(email, userType, action, ip, request)"

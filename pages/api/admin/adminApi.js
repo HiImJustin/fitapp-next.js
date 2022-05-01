@@ -1,15 +1,15 @@
-import { getSession } from 'next-auth/react'
+import { getSession } from "next-auth/react";
 
 export default async (req, res) => {
-    const session = await getSession({req})
+    const session = await getSession({ req });
 
-    if(session) {
+    if (session) {
         res.send({
-            content: "admin page"
+            content: "admin page",
         });
     } else {
         res.send({
-            error: "you need to be an admin"
-        })
+            error: "you need to be an admin",
+        });
     }
-}
+};

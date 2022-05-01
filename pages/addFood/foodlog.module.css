@@ -2,14 +2,16 @@
     width: calc(100% + 1px);
     margin-left: 1px;
     border-bottom: solid 1px grey;
-    padding: 10px 0px 10px 20px;
+    padding: 10px 20px 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .searchBar {
     display: flex;
     flex-direction: column;
     width: 95%;
     padding: 6px;
-    height: 80%;
 }
 .searchBar label {
     margin-top: 4px;
@@ -29,7 +31,7 @@
     outline: none;
     border: solid 2px black;
 }
-.input:focus + .foodOptions{
+.input:focus + .foodOptions {
     outline: none;
     border: solid 2px black;
     border-top: none;
@@ -59,7 +61,7 @@
 .selected {
     padding: 1px 0px;
 }
-.addToLog{
+.addToLog {
     width: 92%;
     height: 45px;
     border: solid 1px black;
@@ -68,5 +70,16 @@
     color: white;
     font-size: 18px;
     font-weight: 600;
+    box-shadow: 1px 4px 1px -1px rgba(0, 0, 0, 0.2);
+}
+.newItem {
+    height: 35px;
+    padding: 4px;
+    border: solid 1px rgb(7, 7, 7);
+    border-radius: 4px;
+    background: #1976d2;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
     box-shadow: 1px 4px 1px -1px rgba(0, 0, 0, 0.2);
 }

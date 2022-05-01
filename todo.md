@@ -78,9 +78,6 @@
 -   Language and notifications are a lie
 -   Add a function in here that - if user is admin - toggle admin pannel on? option
 
-## App done then maybe well just the functionality
-
-## Still need to style it all properly
 
 
 ## UX2 mobile app
@@ -113,7 +110,7 @@
 
 -   Posts
 
-1. Login - Done
+1. Login - Done 
 2. Create User - Done
 3. Add Food - Adds to database
 4. Add Exercise - Adds to database
@@ -154,3 +151,9 @@
 ## localStorage (application tab) inside devtools to prove app works
 
 ## PWA audit completed under audits tab
+
+
+## Current function to work on
+
+For food data use my databases - DONE
+- Make it post data to db - Done

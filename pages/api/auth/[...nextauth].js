@@ -1,6 +1,6 @@
-import NextAuth from 'next-auth'
-import GitHub from 'next-auth/providers/github'
-import CredentialsProvider from "next-auth/providers/credentials"
+import NextAuth from "next-auth";
+import GitHub from "next-auth/providers/github";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 //https://next-auth.js.org/getting-started/upgrade-v4
 
@@ -12,47 +12,50 @@ export default NextAuth({
             synchronize: false,
         }),
         CredentialsProvider({
-            name: 'credentials',
+            name: "credentials",
             credentials: {
-                email: { label: "username", type: "email"},
-                password: {  label: "password", type: "password" }
-        },
-        
-        async authorize (credentials, req) {
-        const res = await fetch("http://localhost:3000/api/users/usersApi", {
-                method: 'POST',
-                headers: {
-                    'Content-type': "application/json"
-                },
-                body: JSON.stringify(credentials)
-            })  
-            let user = await res.json()
-            if(credentials.email === user.email && credentials.password === user.password) {
-                return user = {
-                    id: 2,
-                    email: user.email,
-                    name: user.userType,
+                email: { label: "username", type: "email" },
+                password: { label: "password", type: "password" },
+            },
+
+            async authorize(credentials, req) {
+                const res = await fetch("http://localhost:3000/api/usersApi", {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                    body: JSON.stringify(credentials),
+                });
+                let user = await res.json();
+                if (
+                    credentials.email === user.email &&
+                    credentials.password === user.password
+                ) {
+                    return (user = {
+                        id: 2,
+                        email: user.email,
+                        name: user.userType,
+                    });
                 }
-            }
-            return console.log('bad')
-        }
-    })
+                return console.log("bad");
+            },
+        }),
     ],
     callbacks: {
-        jwt: async ({ token, user}) => {
+        jwt: async ({ token, user }) => {
             // first time jwt callback is run, user object is available
-            if(user) {
-                token.id = user.id
+            if (user) {
+                token.id = user.id;
             }
-            return token
+            return token;
         },
         session: ({ session, token }) => {
             // if there is a session, add the token to it
-            if(token) {
-                session.id = token.id
+            if (token) {
+                session.id = token.id;
             }
             return session;
-        }
+        },
     },
     secret: process.env.JWT_SECRET,
     jwt: {
@@ -60,7 +63,6 @@ export default NextAuth({
         encryption: true,
     },
     pages: {
-        signIn: "/signin"
-    }
-})
-
+        signIn: "/signin",
+    },
+});

@@ -1,4 +1,4 @@
-const db = require('../config/db')
+const db = require('../lib/db')
 
 module.exports.addExercise = ( exerciseName, avgCalBurned) => (
     db.query('Insert into exercises(exerciseName, avgCalBurned)'

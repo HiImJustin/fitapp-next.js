@@ -1,7 +1,6 @@
 const withPWA = require("next-pwa");
 
 module.exports = withPWA({
-    reactStrictMode: true,
     pwa: {
         // cacheOnFrontEndNav: true,
         dest: "public",
@@ -10,5 +9,4 @@ module.exports = withPWA({
         // skipWaiting: true,
         disable: process.env.NODE_ENV === "development",
     },
-    reactStrictMode: true,
 });
