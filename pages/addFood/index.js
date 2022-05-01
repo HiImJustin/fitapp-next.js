@@ -157,10 +157,10 @@ export default function AddFood({ foodDataProps }) {
                     onChange={handleFormData}
                     name="servingType"
                 >
-                    <option value={"grams"}>grams</option>
-                    <option value={"kg"}>kg's</option>
-                    <option value={"ml"}>ml's</option>
-                    <option value={"l"}>L's</option>
+                    <option value="grams">grams</option>
+                    <option value="kg">kg's</option>
+                    <option value="ml">ml's</option>
+                    <option value="l">L's</option>
                 </select>
 
                 <h3 className="text-xl font-semibold text-sky-500 pb-1 mt-4">
