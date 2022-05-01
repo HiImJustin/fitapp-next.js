@@ -15,7 +15,6 @@ import { useSession } from "next-auth/react";
 function Home() {
     const { data: session, status } = useSession();
     const loading = status === "loading";
-    console.log({ session, loading });
 
     return (
         <>
@@ -46,7 +45,7 @@ const Items = ({ icon, href, name }) => {
               dark:bg-[#121212] dark:shadow-slate-500 dark:shadow-sm dark:hover:bg-purple-900 "
             >
                 <FontAwesomeIcon
-                    className="absolute left-4 text-3xl dark:text-blue-400"
+                    className="absolute left-4 w-[36px] h-[36px] dark:text-blue-400"
                     icon={icon}
                 />
                 <p>{name}</p>

@@ -9,23 +9,22 @@ function HomePage({ ip }) {
     const { data: session, status } = useSession();
 
     //If not logged in redirects to the signin page
-    useEffect(() => {
-        const securePage = async () => {
-            const session = await getSession();
-            if (!session && !status) {
-                return router.push("/signin");
-            } else {
-                console.log(session);
-            }
-        };
-        securePage();
-    }, []);
+    // useEffect(() => {
+    //     const securePage = async () => {
+    //         const session = await getSession();
+    //         if (!session && !status) {
+    //             return router.push("/signin");
+    //         } else {
+    //             console.log(session);
+    //         }
+    //     };
+    //     securePage();
+    // }, []);
 
     return (
         <>
             {session && (
                 <div className="w-11/12 mt-1">
-                    singed in as {session.user.email} ip: {ip}
                     <button>
                         <Link href="/admin">admin page</Link>
                     </button>
@@ -38,11 +37,11 @@ function HomePage({ ip }) {
 }
 export default HomePage;
 
-export async function getServerSideProps({ req }) {
-    const forwarded = req.headers["x-forwarded-for"];
-    const ip = forwarded
-        ? forwarded.split(/, /)[0]
-        : req.connection.remoteAddress;
-    console.log(ip);
-    return { props: { ip } };
-}
+// export async function getServerSideProps({ req }) {
+//     const forwarded = req.headers["x-forwarded-for"];
+//     const ip = forwarded
+//         ? forwarded.split(/, /)[0]
+//         : req.connection.remoteAddress;
+//     console.log(ip);
+//     return { props: { ip } };
+// }
