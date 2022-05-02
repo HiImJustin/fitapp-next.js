@@ -16,3 +16,8 @@ module.exports.addToLog = (foodID, calories, carbs, protien, fat, dateAdded, use
     db.query('insert into userDiet(foodID, calories, carbs, protien, fat, dateAdded, userID)'
     +"Values(?,?,?,?,?,?,?)", [foodID, calories, carbs, protien, fat, dateAdded, userID])
 )
+
+module.exports.getUserDiet = (email) => (
+    query("Select * from userDiet where userID = ?", [email])
+)
+// dateAdded > DATE_SUB(NOW(), INTERVAL 1 DAY) and 

@@ -11,15 +11,63 @@ import {
     faWrench,
 } from "@fortawesome/free-solid-svg-icons";
 import { useSession } from "next-auth/react";
+import React, { useEffect } from "react";
 
-function Home() {
+export async function getServerSideProps(context) {
+    return {
+        props: {
+            session: await getSession(context),
+        },
+    };
+}
+
+function Home({ tdee }) {
     const { data: session, status } = useSession();
     const loading = status === "loading";
 
+    const [userState, setUserState] = React.useState({
+        name: "",
+        age: "",
+        weight: "",
+        height: "",
+        gender: "",
+        activity: "",
+        tdee: "",
+        bmr: "",
+    });
+
+    useEffect(() => {
+        if (status !== "loading" && status === "authenticated")
+            fetch(
+                "http://localhost:3000/api/getUserByEmail/" + session.user.email
+            )
+                .then((res) => res.json())
+                .then((users) => {
+                    let user = users[0];
+                    setUserState((prevState) => {
+                        return {
+                            ...prevState,
+                            name: user.name,
+                            age: user.age,
+                            weight: user.weight,
+                            height: user.height,
+                            gender: user.gender,
+                            activity: user.activity,
+                            tdee: user.tdee,
+                            bmr: user.bmr,
+                        };
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+    }, [session]);
+    console.log(userState);
+
     return (
-        <>
+        <main className="w-full flex flex-col items-center mb-2">
             <section className={`${classes.topUi} dark:bg-[#121212]`}>
-                <Circle />
+                <Circle tdee={userState.tdee} />
             </section>
             <Items icon={faAppleWhole} href={"/addFood"} name="Add Food" />
             <Items icon={faBook} href={"/foodLog"} name="Food Log" />
@@ -31,7 +79,7 @@ function Home() {
             <Items icon={faDumbbell} href={"/Routines"} name="Routines" />
             <Items icon={faUser} href={"/profile"} name="Profile" />
             <Items icon={faWrench} href={"/settings"} name="Settings" />
-        </>
+        </main>
     );
 }
 export default Home;

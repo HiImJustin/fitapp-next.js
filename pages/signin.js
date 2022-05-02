@@ -5,12 +5,13 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useSession, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 export default function SignIn({ providers, csrfToken }) {
     const router = useRouter();
 
     const { data: session, status } = useSession();
-    console.log({ session, status });
 
     //If logged in redirects to the home page
     useEffect(() => {
@@ -25,21 +26,30 @@ export default function SignIn({ providers, csrfToken }) {
         securePage();
     }, []);
 
-    const [formData, setFormData] = React.useState({
-        email: "",
-        password: "",
+    const validateFields = Yup.object().shape({
+        email: Yup.string()
+            .required("The username field cannot be blank")
+            .max(30, "email must be less than 30 characters"),
+        password: Yup.string()
+            .required("Please enter a password")
+            .max(30, "password must be less than 30 characters")
+            .min(6, "password must be more than 6 characters")
+            .matches(
+                /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$/,
+                "password must contain one number, capital and special character"
+            ),
     });
-    console.log(formData);
 
-    function handleChange(e) {
-        const { name, value } = e.target;
-        setFormData((prevFormData) => {
-            return {
-                ...prevFormData,
-                [name]: value,
-            };
-        });
-    }
+    let formik = useFormik({
+        initialValues: {
+            email: "",
+            password: "",
+        },
+        validationSchema: validateFields,
+        onSubmit: (values) => {
+            alert("form submitted");
+        },
+    });
 
     return (
         <>
@@ -58,24 +68,43 @@ export default function SignIn({ providers, csrfToken }) {
                     type="hidden"
                     defaultValue={csrfToken}
                 />
-                <label htmlFor="username">Username</label>
+                <label htmlFor="email">email</label>
                 <input
-                    id="username"
+                    id="email"
                     name="email"
                     type="email"
-                    placeholder="Username"
-                    value={formData.username}
-                    onChange={handleChange}
+                    placeholder="email"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.email}
                 />
+
+                {/* Condtionally runs error fields */}
+                {formik.errors.email && formik.touched.email ? (
+                    <p className="text-red-600">{formik.errors.email}</p>
+                ) : null}
                 <label htmlFor="password">Password</label>
                 <input
                     id="password"
                     name="password"
                     type="password"
                     placeholder="Password"
-                    onChange={handleChange}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.username}
                 />
-                <button className={classes.loginButton}>Sign in</button>
+
+                {formik.errors.password && formik.touched.password ? (
+                    <p className="text-red-600">{formik.errors.password}</p>
+                ) : null}
+
+                <button
+                    className={classes.loginButton}
+                    //If either form field has an error button is disabled
+                    disabled={formik.errors.password || formik.errors.email}
+                >
+                    Sign in
+                </button>
 
                 <button
                     className={classes.loginButton}

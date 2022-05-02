@@ -153,7 +153,3 @@
 ## PWA audit completed under audits tab
 
 
-## Current function to work on
-
-For food data use my databases - DONE
-- Make it post data to db - Done

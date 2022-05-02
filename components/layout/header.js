@@ -22,12 +22,14 @@ function Header() {
     function handleNav() {
         router.back();
     }
-    const { systemTheme, theme, setTheme } = useTheme();
+
+    const { theme, setTheme } = useTheme();
 
     const renderThemeChange = () => {
         if (!mounted) return null;
 
-        const currentTheme = theme === "system" ? systemTheme : theme;
+        const currentTheme = localStorage.getItem("theme");
+        console.log(theme);
 
         if (currentTheme === "dark") {
             return <FontAwesomeIcon icon={faSun} />;
@@ -35,6 +37,15 @@ function Header() {
             return <FontAwesomeIcon icon={faMoon} />;
         }
     };
+    function changeTheme() {
+        if (theme === "light") {
+            setTheme("dark");
+            localStorage.setItem("theme", "dark");
+        } else {
+            setTheme("light");
+            localStorage.setItem("theme", "light");
+        }
+    }
 
     return (
         <header
@@ -54,10 +65,7 @@ function Header() {
             <h1 className="text-3xl font-semibold text-center dark:white">
                 FIT
             </h1>
-            <button
-                className="absolute text-2xl right-6"
-                onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            >
+            <button className="absolute text-2xl right-6" onClick={changeTheme}>
                 {renderThemeChange()}
             </button>
         </header>

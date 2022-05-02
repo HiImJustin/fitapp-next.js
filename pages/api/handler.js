@@ -13,9 +13,8 @@ const handler = nc({
     },
 }).use(async (req, res, next) => {
     const session = await getSession({ req });
-    console.log(session);
 
-    await sendRequest();
+    // await sendRequest();
 
     if (session) {
         await loggingModel
@@ -44,7 +43,6 @@ const handler = nc({
                         request
                     );
                 }
-                console.log("before next");
                 next();
             });
     } else {

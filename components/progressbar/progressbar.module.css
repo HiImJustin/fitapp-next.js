@@ -1,0 +1,16 @@
+.containerStyles {
+    height: 20px;
+    width: 96%;
+    background-color: "#e0e0de";
+    border-radius: 50;
+    display: flexbox;
+    margin: "0 auto";
+    margin-top: 4;
+    margin-bottom: 20;
+}
+
+.labelStyles {
+    padding: 5px;
+    color: "white";
+    font-weight: "bold";
+}
