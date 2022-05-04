@@ -35,7 +35,8 @@ function Home({ tdee }) {
         tdee: "",
         bmr: "",
     });
-
+    
+    const [isLoaded, setIsLoaded] = React.useState();
     useEffect(() => {
         if (status !== "loading" && status === "authenticated")
             fetch(

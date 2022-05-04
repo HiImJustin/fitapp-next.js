@@ -12,9 +12,9 @@ module.exports.addCustomMeal = (customMealName, calPer100, protien, carbs, fat) 
 module.exports.getAllFood = () => (
     query("Select * from food")
 )
-module.exports.addToLog = (foodID, calories, carbs, protien, fat, dateAdded, userID) => (
-    db.query('insert into userDiet(foodID, calories, carbs, protien, fat, dateAdded, userID)'
-    +"Values(?,?,?,?,?,?,?)", [foodID, calories, carbs, protien, fat, dateAdded, userID])
+module.exports.addToLog = (foodID, calories, carbs, protien, fat, dateAdded) => (
+    db.query('insert into userDiet(foodID, calories, carbs, protien, fat, dateAdded)'
+    +"Values(?,?,?,?,?,?)", [foodID, calories, carbs, protien, fat, dateAdded])
 )
 
 module.exports.getUserDiet = (email) => (

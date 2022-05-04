@@ -1,6 +1,6 @@
 import Home from "../components/home/home";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -9,11 +9,11 @@ import { Temporal, Intl, toTemporalInstant } from "@js-temporal/polyfill";
 function HomePage({ ip }) {
     const router = useRouter();
     const { data: session, status } = useSession();
-    //If not logged in redirects to the signin page
+    // If not logged in redirects to the signin page
     // useEffect(() => {
     //     const securePage = async () => {
     //         const session = await getSession();
-    //         if (!session && !status) {
+    //         if (status === "unauthenticated" && status !== "loading") {
     //             return router.push("/signin");
     //         } else {
     //             console.log(session);
@@ -21,6 +21,7 @@ function HomePage({ ip }) {
     //     };
     //     securePage();
     // }, []);
+
     const now = Temporal.Now.plainDateISO();
     const date = now;
     const month = date.toLocaleString("en", { month: "long" });

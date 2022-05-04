@@ -3,6 +3,12 @@ import React, { useEffect } from "react";
 import { query } from "../../lib/db";
 import { Temporal, Intl, toTemporalInstant } from "@js-temporal/polyfill";
 import { useRouter } from "next/router";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+import { BounceLoader } from "react-spinners";
+toast.configure();
 
 export async function getServerSideProps() {
     let foodDataProps = await query("select * from food");
@@ -27,9 +33,9 @@ export default function AddFood({ foodDataProps }) {
             food.foodName.toLowerCase().includes(foodName)
         );
     }
-    const filtered = filterItems(foodOptions);
 
     //Map the fitered array into results variable along with the onlick
+    const filtered = filterItems(foodOptions);
     const results = filtered.map((food) => (
         <div key={food.foodID} onClick={selectedItem} className="my-1">
             {food.foodName}
@@ -44,6 +50,8 @@ export default function AddFood({ foodDataProps }) {
         protien: "",
         fat: "",
     });
+
+    const [openModal, setOpenModal] = React.useState(false);
 
     function selectedItem(e) {
         const selected = filterItems(e.target.textContent);
@@ -61,29 +69,30 @@ export default function AddFood({ foodDataProps }) {
         });
         setOpenModal(true);
     }
-    const [openModal, setOpenModal] = React.useState(false);
 
-    const [formValues, setFormValues] = React.useState({
-        servingSize: "100",
-        servingType: "grams",
+    const validateFields = Yup.object().shape({
+        servingSize: Yup.number()
+            .required("serving size must not be blank")
+            .max(10000, "Please use kgs or a lower ammount"),
+        servingType: Yup.string().required("serving type must not be blank"),
     });
-
-    function handleFormData(e) {
-        const { name, value } = e.target;
-        setFormValues((prevState) => {
-            return {
-                ...prevState,
-                [name]: value,
-            };
-        });
-    }
+    let formik = useFormik({
+        initialValues: {
+            servingSize: "100",
+            servingType: "grams",
+        },
+        validationSchema: validateFields,
+        onSubmit: (values) => {
+            alert("form submitted");
+        },
+    });
     // A = item info value always in grams
     // B = serving size
     // If not in ml or grams do math for kg/litre
     function math(a, b) {
         if (
-            formValues.servingType === "ml" ||
-            formValues.servingType === "grams"
+            formik.values.servingType === "ml" ||
+            formik.values.servingType === "grams"
         ) {
             return (a / 100) * b;
         } else {
@@ -104,19 +113,30 @@ export default function AddFood({ foodDataProps }) {
         setNutritionTotals((prevState) => ({
             ...prevState,
             foodID: itemInfo.foodID,
-            calories: math(itemInfo.calPer100, formValues.servingSize),
-            carbs: math(itemInfo.carbs, formValues.servingSize),
-            protien: math(itemInfo.protien, formValues.servingSize),
-            fat: math(itemInfo.fat, formValues.servingSize),
-            // userID: session.id, makes it very hard to test
+            calories: math(itemInfo.calPer100, formik.values.servingSize),
+            carbs: math(itemInfo.carbs, formik.values.servingSize),
+            protien: math(itemInfo.protien, formik.values.servingSize),
+            fat: math(itemInfo.fat, formik.values.servingSize),
             dateAdded: now.toString(),
+            // userID: session.id, makes it very hard to test
         }));
-    }, [itemInfo, formValues]);
+    }, [itemInfo, formik.values]);
 
     const now = Temporal.Now.plainDateTimeISO();
     const month = now.toLocaleString("en", { month: "long" });
 
+    const [loading, setLoading] = React.useState(false);
+
+    function notify() {
+        toast(itemInfo.foodName + " added to log", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 5000,
+            pauseOnHover: false,
+        });
+    }
+    
     function submitData() {
+        setLoading(true);
         fetch("/api/addToFoodLog", {
             method: "POST",
             headers: {
@@ -127,15 +147,24 @@ export default function AddFood({ foodDataProps }) {
             .then((res) => res.json())
             .then((res) => {
                 console.log("add to food log");
+                notify();
             })
             .catch((err) => {
                 console.log("failed" + err);
             });
+        setLoading(false);
     }
+
     let nuritionInfo = (
         <main className="flex flex-col">
-            <h1 className="text-2xl font-semibold text-sky-500 my-2 pl-4 pb-1">
+            <h1 className="text-2xl font-semibold text-sky-500 my-2 pl-4 pb-1 flex justify-between">
                 {itemInfo.foodName}
+                <button
+                    onClick={() => setOpenModal(false)}
+                    className="text-base my-2 mr-6 w-20 h-8 rounded-lg border"
+                >
+                    Cancel?
+                </button>
             </h1>
             <form className="flex flex-col px-4 mb-4">
                 <label className="font-semibold py-1 indent-1">
@@ -145,23 +174,33 @@ export default function AddFood({ foodDataProps }) {
                     type={"number"}
                     placeholder="100"
                     className="indent-1"
-                    onChange={handleFormData}
                     name="servingSize"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.servingSize}
                 />
+                {formik.errors.servingSize && formik.touched.servingSize ? (
+                    <p className="text-red-600">{formik.errors.servingSize}</p>
+                ) : null}
 
                 <label className="font-semibold py-1 indent-1">
                     Serving type
                 </label>
                 <select
                     className=""
-                    onChange={handleFormData}
                     name="servingType"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.servingType}
                 >
                     <option value="grams">grams</option>
                     <option value="kg">kgs</option>
                     <option value="ml">mls</option>
                     <option value="l">Litres</option>
                 </select>
+                {formik.errors.servingType && formik.touched.servingType ? (
+                    <p className="text-red-600">{formik.errors.servingType}</p>
+                ) : null}
 
                 <h3 className="text-xl font-semibold text-sky-500 pb-1 mt-4">
                     Totals
@@ -201,6 +240,7 @@ export default function AddFood({ foodDataProps }) {
             >
                 Add To food Log
             </button>
+            <BounceLoader loading={loading} />
         </main>
     );
 
@@ -238,7 +278,7 @@ export default function AddFood({ foodDataProps }) {
                     )}
                 </form>
             )}
-            {openModal && (
+            {openModal && !addNewFood && (
                 <fieldset className="w-full">{nuritionInfo}</fieldset>
             )}
 
@@ -263,23 +303,38 @@ export default function AddFood({ foodDataProps }) {
 }
 
 const CustomFoodOption = () => {
-    function handleFormData(e) {
-        const { name, value } = e.target;
-        setFormValues((prevState) => {
-            return {
-                ...prevState,
-                [name]: value,
-            };
-        });
-    }
-    const [formValues, setFormValues] = React.useState({
-        foodName: "",
-        calPer100: "",
-        protien: "",
-        carbs: "",
-        fat: "",
+    //
+    const validateFields = Yup.object().shape({
+        foodName: Yup.string()
+            .required("Food name cannot be empty")
+            .max(30, "must be less than 30 characters"),
+        calPer100: Yup.number()
+            .min(1, "your food has more calories than 1 per 100grams")
+            .max(10000, "Please a value less than Ten thousand")
+            .required("this field cannot be blank"),
+        protien: Yup.string()
+            .required(" protien field cannot be blank")
+            .max(6, "protien can only contain 6 characters"),
+        carbs: Yup.number()
+            .required(" carbs field cannot be blank")
+            .min(0, "value must be more than 0")
+            .max(10000, "value cannot be more than 10,000"),
+        fat: Yup.string().required("fats cannot be blank"),
     });
-    console.log(formValues);
+    let formik = useFormik({
+        initialValues: {
+            foodName: "",
+            calPer100: "",
+            protien: "",
+            carbs: "",
+            fat: "",
+        },
+        validationSchema: validateFields,
+        onSubmit: (values) => {
+            alert("form submitted");
+        },
+    });
+    console.log(formik.values);
     const router = useRouter();
 
     const submitNewFoodData = async (event) => {
@@ -290,47 +345,70 @@ const CustomFoodOption = () => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(formValues),
+            body: JSON.stringify(formik.values),
         });
         const data = await response.json();
         console.log(data);
         router.push("/addFood");
     };
+    console.log(formik.touched.name);
     return (
         <>
             <main className="flex flex-col w-11/12 text-lg my-4">
                 <FoodInputs
                     name={"foodName"}
-                    placeholder={"Food Name"}
-                    onChange={handleFormData}
-                    value={formValues.foodName}
+                    placeholder="Food Name"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.foodName}
                 />
+                {formik.errors.foodName && formik.touched.foodName ? (
+                    <p className="text-red-600">{formik.errors.foodName}</p>
+                ) : null}
                 <FoodInputs
                     name={"calPer100"}
-                    placeholder={"calories"}
-                    onChange={handleFormData}
-                    value={formValues.calPer100}
+                    placeholder="calories"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.calPer100}
                 />
+                {formik.errors.calPer100 && formik.touched.calPer100 ? (
+                    <p className="text-red-600">{formik.errors.calPer100}</p>
+                ) : null}
                 <FoodInputs
                     name={"protien"}
                     placeholder={"Protien"}
-                    onChange={handleFormData}
-                    value={formValues.protien}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.protien}
                 />
+                {formik.errors.protien && formik.touched.protien ? (
+                    <p className="text-red-600">{formik.errors.protien}</p>
+                ) : null}
                 <FoodInputs
                     name={"carbs"}
                     placeholder={"carbs"}
-                    value={formValues.carbs}
-                    onChange={handleFormData}
+                    value={formik.values.carbs}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
                 />
+                {formik.errors.carbs && formik.touched.carbs ? (
+                    <p className="text-red-600">{formik.errors.carbs}</p>
+                ) : null}
                 <FoodInputs
                     name={"fat"}
                     placeholder={"fat"}
-                    onChange={handleFormData}
-                    value={formValues.fat}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.fat}
                 />
+                {formik.errors.fat && formik.touched.fat ? (
+                    <p className="text-red-600">{formik.errors.fat}</p>
+                ) : null}
+
                 <button
                     onClick={submitNewFoodData}
+                    disabled={!formik.isValid}
                     className={`${classes.addToLog} mx-auto my-6`}
                 >
                     Add new item
@@ -340,15 +418,16 @@ const CustomFoodOption = () => {
     );
 };
 
-const FoodInputs = ({ name, placeholder, onChange, value }) => {
+const FoodInputs = ({ onBlur, name, placeholder, onChange, value }) => {
     return (
         <input
             className="my-1 py-2 rounded-sm bg-gray-200 indent-2 text-base placeholder-black focus:placeholder-transparent"
             onChange={onChange}
             type="text"
-            name={name}
             placeholder={placeholder}
             value={value}
+            name={name}
+            onBlur={onBlur}
         />
     );
 };

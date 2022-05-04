@@ -17,7 +17,6 @@ export default NextAuth({
                 email: { label: "username", type: "email" },
                 password: { label: "password", type: "password" },
             },
-
             async authorize(credentials, req) {
                 const res = await fetch("http://localhost:3000/api/usersApi", {
                     method: "POST",
@@ -63,6 +62,6 @@ export default NextAuth({
         encryption: true,
     },
     pages: {
-        signIn: "/signin",
+        signIn: "/",
     },
 });

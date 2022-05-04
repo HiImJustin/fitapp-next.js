@@ -11,7 +11,6 @@ export default handler.post(async (req, res) => {
         food.protien,
         food.fat,
         food.dateAdded,
-        food.userID
     )
         .then((results) => {
             if (results.affectedRows > 0) {

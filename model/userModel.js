@@ -16,6 +16,14 @@ module.exports.addUserModel = (
         [age, height, weight, gender, activity, name, bmr, tdee]
     );
 };
+
+module.exports.createNewUser = (email, password) => {
+    return db.query(
+        "Insert into userDetails(email, password)" + "Values(?,?)",
+        [email, password]
+    );
+};
+
 module.exports.getUsers = () => db.query("Select * from users");
 
 module.exports.getUserByUsername = (email) => {
