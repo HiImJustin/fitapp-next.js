@@ -18,13 +18,16 @@ export default NextAuth({
                 password: { label: "password", type: "password" },
             },
             async authorize(credentials, req) {
-                const res = await fetch("http://localhost:3000/api/usersApi", {
-                    method: "POST",
-                    headers: {
-                        "Content-type": "application/json",
-                    },
-                    body: JSON.stringify(credentials),
-                });
+                const res = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/usersApi`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-type": "application/json",
+                        },
+                        body: JSON.stringify(credentials),
+                    }
+                );
                 let user = await res.json();
                 if (
                     credentials.email === user.email &&
