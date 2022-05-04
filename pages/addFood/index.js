@@ -134,7 +134,7 @@ export default function AddFood({ foodDataProps }) {
             pauseOnHover: false,
         });
     }
-    
+
     function submitData() {
         setLoading(true);
         fetch("/api/addToFoodLog", {
@@ -153,6 +153,7 @@ export default function AddFood({ foodDataProps }) {
                 console.log("failed" + err);
             });
         setLoading(false);
+        setOpenModal(false);
     }
 
     let nuritionInfo = (

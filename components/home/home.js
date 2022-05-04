@@ -13,6 +13,7 @@ import {
 import { useSession } from "next-auth/react";
 import React, { useEffect } from "react";
 
+
 export async function getServerSideProps(context) {
     return {
         props: {
@@ -35,13 +36,11 @@ function Home({ tdee }) {
         tdee: "",
         bmr: "",
     });
-    
+
     const [isLoaded, setIsLoaded] = React.useState();
     useEffect(() => {
         if (status !== "loading" && status === "authenticated")
-            fetch(
-                "http://localhost:3000/api/getUserByEmail/" + session.user.email
-            )
+            fetch("/api/getUserByEmail/" + session.user.email)
                 .then((res) => res.json())
                 .then((users) => {
                     let user = users[0];
@@ -62,7 +61,7 @@ function Home({ tdee }) {
                 .catch((error) => {
                     console.log(error);
                 });
-    }, [session]);
+    }, []);
     console.log(userState);
 
     return (

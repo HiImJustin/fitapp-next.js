@@ -27,7 +27,8 @@ export default function Profile() {
     useEffect(() => {
         if (status !== "loading" && status === "authenticated") {
             fetch(
-                "http://localhost:3000/api/getUserByEmail/" + session.user.email
+                `${process.env.NEXT_PUBLIC_API_URL}/getUserByEmail/` +
+                    session.user.email
             )
                 .then((res) => res.json())
                 .then((users) => {
