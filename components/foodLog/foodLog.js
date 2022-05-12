@@ -10,6 +10,7 @@ export async function getServerSideProps(context) {
         },
     };
 }
+
 export default function FoodLog({ calories, protien, carbs, fat }) {
     const { data: session, status } = useSession();
     console.log(session);

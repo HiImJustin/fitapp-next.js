@@ -311,6 +311,13 @@ export default function AddFood({ food }) {
 
 // This function creates a new food item
 const CustomFoodOption = () => {
+    function notify() {
+        toast(formik.values.foodName + " added to log", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            pauseOnHover: false,
+        });
+    }
     //
     const validateFields = Yup.object().shape({
         foodName: Yup.string()
@@ -360,12 +367,12 @@ const CustomFoodOption = () => {
             .then((res) => res.json())
             .then((res) => {
                 console.log("request sent");
-                alert(res);
+                notify();
+                router.push("/");
             })
             .catch((err) => {
                 console.log(err);
             });
-        router.push("/addFood");
     };
 
     return (
