@@ -43,91 +43,90 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String?   @unique
+  id            String        @id @default(cuid())
+  email         String?       @unique
   emailVerified DateTime?
   name          String?
-  admin         Boolean?  @default(false)
+  admin         Boolean?      @default(false)
   image         String?
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  createdAt     DateTime      @default(now()) @map(name: "created_at")
+  updatedAt     DateTime      @updatedAt @map(name: "updated_at")
   userDetails   UserDetails[]
   activityLog   activityLog[]
   accounts      Account[]
   sessions      Session[]
+
   @@map(name: "users")
 }
 
 model UserDetails {
-  id        String    @default(cuid()) @id
-  name      String
-  age       Int
-  height    Int
-  weight    Int
-  gender    String
-  tdee      Int
-  bmr       Int
-  activity  String
-  user      User? @relation(fields: [userEmail], references: [email])
-  userEmail String?
-  customMeals   customMeals[]
-  exercises     exercises[]
+  id          String        @id @default(cuid())
+  name        String
+  age         Int
+  height      Int
+  weight      Int
+  gender      String
+  tdee        Int
+  bmr         Int
+  activity    String
+  user        User?         @relation(fields: [userEmail], references: [email])
+  userEmail   String?
+  customMeals customMeals[]
+  exercises   exercises[]
 }
 
 model Food {
-  id  Int @default(autoincrement()) @id
+  id        Int    @id @default(autoincrement())
   foodName  String
   calPer100 Int
-  protien Int
-  carbs Int
-  fat Int
+  protien   Int
+  carbs     Int
+  fat       Int
 }
 
 model customMeals {
-  id Int @default(autoincrement()) @id
-  mealName String
+  id        Int          @id @default(autoincrement())
+  mealName  String
   calPer100 Int
-  protien Int?
-  carbs Int?
-  fat Int?
-  user UserDetails? @relation(fields: [userID], references: [id])
-  userID String
+  protien   Int?
+  carbs     Int?
+  fat       Int?
+  user      UserDetails? @relation(fields: [userID], references: [id])
+  userID    String
 }
 
 model exercises {
-  id Int @default(autoincrement()) @id
+  id           Int          @id @default(autoincrement())
   exerciseName String
   avgCalBurned Int?
-  user UserDetails? @relation(fields: [userID], references: [id])
-  userID String
+  user         UserDetails? @relation(fields: [userID], references: [id])
+  userID       String
 }
 
 model customRoutine {
-  id Int @default(autoincrement()) @id
+  id          Int    @id @default(autoincrement())
   routineName String
-  exercises String
+  exercises   String
 }
 
-model userDiet {
-  id Int @default(autoincrement()) @id
+model UserDiet {
+  id         Int      @id @default(autoincrement())
   foodLogged String
-  calories Int
-  protien Int?
-  carbs Int?
-  fat Int?
-  dateAdded DateTime @default(now())
+  calories   Int
+  protien    Int?
+  carbs      Int?
+  fat        Int?
+  dateAdded  DateTime @default(now())
 }
 
 model activityLog {
-  id Int @default(autoincrement()) @id
-  user String
-  action String
-  ip String
+  id        Int      @id @default(autoincrement())
+  user      String
+  action    String
+  ip        String
   timeStamp DateTime @default(now())
-  userEmail User? @relation(fields: [user], references: [email])
+  userEmail User?    @relation(fields: [user], references: [email])
 }
-
-
 
 model VerificationToken {
   identifier String

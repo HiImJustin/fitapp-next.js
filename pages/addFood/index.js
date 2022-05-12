@@ -106,23 +106,22 @@ export default function AddFood({ food }) {
     }
     const [nutritionTotals, setNutritionTotals] = React.useState({
         foodID: "",
+        foodName: "",
         calories: "",
         carbs: "",
         protien: "",
         fat: "",
-        userID: "",
-        dateAdded: "",
     });
-
+    console.log(nutritionTotals);
     useEffect(() => {
         setNutritionTotals((prevState) => ({
             ...prevState,
             foodID: itemInfo.foodID,
+            foodName: itemInfo.foodName,
             calories: math(itemInfo.calPer100, formik.values.servingSize),
             carbs: math(itemInfo.carbs, formik.values.servingSize),
             protien: math(itemInfo.protien, formik.values.servingSize),
             fat: math(itemInfo.fat, formik.values.servingSize),
-            dateAdded: now.toString(),
             // userID: session.id, makes it very hard to test
         }));
     }, [itemInfo, formik.values]);
@@ -139,8 +138,9 @@ export default function AddFood({ food }) {
             pauseOnHover: false,
         });
     }
-
-    function submitData() {
+    console.log(nutritionTotals);
+    function submitData(e) {
+        e.preventDefault();
         setLoading(true);
         fetch("/api/addToFoodLog", {
             method: "POST",
@@ -153,9 +153,10 @@ export default function AddFood({ food }) {
             .then((res) => {
                 console.log("add to food log");
                 notify();
+                console.log(res);
             })
             .catch((err) => {
-                console.log("failed" + err);
+                console.log(err);
             });
         setLoading(false);
         setOpenModal(false);
@@ -344,8 +345,8 @@ const CustomFoodOption = () => {
     const router = useRouter();
     console.log(formik.values);
 
-    const submitNewFoodData = async (event) => {
-        event.preventDefault();
+    const submitNewFoodData = (e) => {
+        e.preventDefault();
         // const { foodName, calPer100, protien, carbs, fat } = formik.values;
         // const body = { foodName, calPer100, protien, carbs, fat };
         // console.log(body);
