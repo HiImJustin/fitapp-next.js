@@ -1,4 +1,4 @@
-const db = require("../lib/db");
+import db from "../lib/db";
 import { query } from "../lib/db";
 
 module.exports.addFood = (foodName, calPer100, protien, carbs, fat) =>

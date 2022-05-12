@@ -13,7 +13,6 @@ import {
 import { useSession } from "next-auth/react";
 import React, { useEffect } from "react";
 
-
 export async function getServerSideProps(context) {
     return {
         props: {
@@ -62,7 +61,6 @@ function Home({ tdee }) {
                     console.log(error);
                 });
     }, []);
-    console.log(userState);
 
     return (
         <main className="w-full flex flex-col items-center mb-2">

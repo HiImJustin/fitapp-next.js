@@ -5,10 +5,18 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Temporal, Intl, toTemporalInstant } from "@js-temporal/polyfill";
+import prisma from "../lib/prisma";
 
-function HomePage({ ip }) {
+export const getStaticProps = async () => {
+    const feed = await prisma.user.findMany({});
+    let user = JSON.stringify(feed);
+    return { props: { user } };
+};
+
+function HomePage({ ip, user }) {
     const router = useRouter();
     const { data: session, status } = useSession();
+    console.log(user);
     // If not logged in redirects to the signin page
     // useEffect(() => {
     //     const securePage = async () => {
@@ -21,7 +29,6 @@ function HomePage({ ip }) {
     //     };
     //     securePage();
     // }, []);
-
     const now = Temporal.Now.plainDateISO();
     const date = now;
     const month = date.toLocaleString("en", { month: "long" });

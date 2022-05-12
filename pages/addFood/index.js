@@ -1,6 +1,6 @@
 import classes from "./foodlog.module.css";
 import React, { useEffect } from "react";
-import { query } from "../../lib/db";
+// import { query } from "../../lib/db";
 import { Temporal, Intl, toTemporalInstant } from "@js-temporal/polyfill";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
@@ -9,16 +9,18 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { BounceLoader } from "react-spinners";
 toast.configure();
+import prisma from "../../lib/prisma";
 
-export async function getServerSideProps() {
-    let foodDataProps = await query("select * from food");
-    return { props: { foodDataProps } };
-}
+export const getStaticProps = async () => {
+    const foodItems = await prisma.food.findMany({});
+    let food = JSON.stringify(foodItems);
+    return { props: { food } };
+};
 
-export default function AddFood({ foodDataProps }) {
+export default function AddFood({ food }) {
     //Get server side props populates this with data from the food table
-    const foodData = foodDataProps;
-
+    const foodData = JSON.parse(food);
+    console.log(foodData);
     //Set state for the search bar
     //On change the state now equals what is in the search bar
     const [foodOptions, setFoodOptions] = React.useState("");
@@ -30,14 +32,17 @@ export default function AddFood({ foodDataProps }) {
     //Any value in foodData that matches the parameter is put in the new array
     function filterItems(foodName) {
         return foodData.filter((food) =>
-            food.foodName.toLowerCase().includes(foodName)
+            food.foodName.toLowerCase().includes(foodName.toLowerCase())
         );
     }
-
+    const test = filterItems("Apple");
+    console.log(test);
     //Map the fitered array into results variable along with the onlick
     const filtered = filterItems(foodOptions);
+    console.log(filtered);
+
     const results = filtered.map((food) => (
-        <div key={food.foodID} onClick={selectedItem} className="my-1">
+        <div key={food.id} onClick={selectedItem} className="my-1">
             {food.foodName}
         </div>
     ));
@@ -59,7 +64,7 @@ export default function AddFood({ foodDataProps }) {
         setItemInfo((prevState) => {
             return {
                 ...prevState,
-                foodID: selected[0].foodID,
+                foodID: selected[0].id,
                 foodName: selected[0].foodName,
                 calPer100: selected[0].calPer100,
                 carbs: selected[0].carbs,
@@ -303,6 +308,7 @@ export default function AddFood({ foodDataProps }) {
     );
 }
 
+// This function creates a new food item
 const CustomFoodOption = () => {
     //
     const validateFields = Yup.object().shape({
@@ -335,24 +341,32 @@ const CustomFoodOption = () => {
             alert("form submitted");
         },
     });
-    console.log(formik.values);
     const router = useRouter();
+    console.log(formik.values);
 
     const submitNewFoodData = async (event) => {
         event.preventDefault();
-        //CHANGE THIS
-        const response = await fetch("/api/addFoodApi", {
+        // const { foodName, calPer100, protien, carbs, fat } = formik.values;
+        // const body = { foodName, calPer100, protien, carbs, fat };
+        // console.log(body);
+        fetch("/api/addFoodApi", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(formik.values),
-        });
-        const data = await response.json();
-        console.log(data);
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log("request sent");
+                alert(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
         router.push("/addFood");
     };
-    console.log(formik.touched.name);
+
     return (
         <>
             <main className="flex flex-col w-11/12 text-lg my-4">
