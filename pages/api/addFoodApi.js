@@ -1,8 +1,6 @@
-const db = require("../../lib/db");
-import { addFood, getAllFood } from "../../model/foodModel";
 import handler from "./handler";
-const foodModel = require("../../model/foodModel");
 import prisma from "../../lib/prisma";
+import * as Yup from "yup";
 
 // export default handler
 //     .get(async (req, res) => {
@@ -55,7 +53,8 @@ import prisma from "../../lib/prisma";
 //         });
 // });
 
-export default async function handle(req, res) {
+export default handler.post(async (req, res) => {
+    // export default async function handle(req, res) {
     // const { foodName, calPer100, protien, carbs, fat } = req.body;
     let food = req.body;
     const result = await prisma.food.create({
@@ -67,5 +66,6 @@ export default async function handle(req, res) {
             protien: parseInt(food.protien),
         },
     });
-    res.json(result);
-}
+    res.status(201).json(result);
+    // }
+});

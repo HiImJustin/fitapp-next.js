@@ -1,6 +1,5 @@
 import nc from "next-connect";
 import { getSession } from "next-auth/react";
-const loggingModel = require("../../model/loggingModel");
 import sendRequest from "../../middleware/limiter";
 
 const handler = nc({
@@ -12,10 +11,8 @@ const handler = nc({
         res.status(404).end("Page is not found");
     },
 }).use(async (req, res, next) => {
-    const session = await getSession({ req });
-
+    // const session = await getSession({ req });
     // await sendRequest();
-
     // if (session) {
     //     await loggingModel
     //         .checkTotalRequests(session.user.email)
@@ -34,7 +31,6 @@ const handler = nc({
     //                 const ip = forwarded
     //                     ? forwarded.split(/, /)[0]
     //                     : req.ip || req.connection.remoteAddress;
-
     //                 loggingModel.addNewLog(
     //                     session.user.email,
     //                     session.user.name,
@@ -49,6 +45,21 @@ const handler = nc({
     //     console.log("no session");
     //     next();
     // }
+    console.log("yay");
+    next();
 });
 
 export default handler;
+
+// export function validate(handler) {
+//     return async (req, res) => {
+//         if (["POST", "PUT"].incdlues(req.method)) {
+//             try {
+//                 req.body = await schema.validate(req.body);
+//             } catch (error) {
+//                 return res.status(400).json(error);
+//             }
+//         }
+//         await handler(res, res);
+//     };
+// }

@@ -1,6 +1,5 @@
 import classes from "./foodlog.module.css";
 import React, { useEffect } from "react";
-// import { query } from "../../lib/db";
 import { Temporal, Intl, toTemporalInstant } from "@js-temporal/polyfill";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
@@ -8,8 +7,8 @@ import * as Yup from "yup";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { BounceLoader } from "react-spinners";
-toast.configure();
 import prisma from "../../lib/prisma";
+toast.configure();
 
 export const getStaticProps = async () => {
     const foodItems = await prisma.food.findMany({});
@@ -20,7 +19,6 @@ export const getStaticProps = async () => {
 export default function AddFood({ food }) {
     //Get server side props populates this with data from the food table
     const foodData = JSON.parse(food);
-    console.log(foodData);
     //Set state for the search bar
     //On change the state now equals what is in the search bar
     const [foodOptions, setFoodOptions] = React.useState("");
@@ -36,10 +34,8 @@ export default function AddFood({ food }) {
         );
     }
     const test = filterItems("Apple");
-    console.log(test);
     //Map the fitered array into results variable along with the onlick
     const filtered = filterItems(foodOptions);
-    console.log(filtered);
 
     const results = filtered.map((food) => (
         <div key={food.id} onClick={selectedItem} className="my-1">
@@ -446,3 +442,6 @@ const FoodInputs = ({ onBlur, name, placeholder, onChange, value }) => {
         />
     );
 };
+
+
+

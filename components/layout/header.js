@@ -29,7 +29,6 @@ function Header() {
         if (!mounted) return null;
 
         const currentTheme = localStorage.getItem("theme");
-        console.log(theme);
 
         if (currentTheme === "dark") {
             return <FontAwesomeIcon icon={faSun} />;

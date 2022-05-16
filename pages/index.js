@@ -16,7 +16,6 @@ export const getStaticProps = async () => {
 function HomePage({ ip, user }) {
     const router = useRouter();
     const { data: session, status } = useSession();
-    console.log(user);
     // If not logged in redirects to the signin page
     // useEffect(() => {
     //     const securePage = async () => {
@@ -37,7 +36,6 @@ function HomePage({ ip, user }) {
 
     useEffect(() => {
         let lastHere = localStorage.getItem("lastVisited");
-        console.log(lastHere);
 
         if (lastHere === date) {
             setlastVisited(lastHere);
