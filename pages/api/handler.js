@@ -1,6 +1,7 @@
 import nc from "next-connect";
 import { getSession } from "next-auth/react";
 import sendRequest from "../../middleware/limiter";
+import prisma from "../../lib/prisma";
 
 const handler = nc({
     onError: (err, req, res, next) => {
@@ -45,21 +46,58 @@ const handler = nc({
     //     console.log("no session");
     //     next();
     // }
+    await addLog(req, res);
+    await checkLog(req, res);
     console.log("yay");
     next();
 });
 
 export default handler;
 
-// export function validate(handler) {
-//     return async (req, res) => {
-//         if (["POST", "PUT"].incdlues(req.method)) {
-//             try {
-//                 req.body = await schema.validate(req.body);
-//             } catch (error) {
-//                 return res.status(400).json(error);
-//             }
-//         }
-//         await handler(res, res);
-//     };
-// }
+const addLog = async (req, res) => {
+    let action = req.method;
+    const session = await getSession({ req });
+
+    const forwarded = req.headers["x-forwarded-for"];
+    const ip = forwarded
+        ? forwarded.split(/, /)[0]
+        : req.ip || req.connection.remoteAddress;
+
+    prisma.activityLog
+        .create({
+            data: {
+                user: session.user.email,
+                action: action,
+                ip: ip,
+                user: session.user.email,
+            },
+        })
+        .then((result) => {
+            if (result) {
+                console.log("new log created");
+            } else {
+                console.log(result);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500).json("failed to create log");
+        });
+};
+
+const checkLog = async (req, res) => {
+    const session = await getSession({ req });
+
+    const results = await prisma.activityLog.findMany({
+        where: {
+            user: session.user.email,
+        },
+    });
+    console.log("log checked");
+    console.log(results.length);
+    if (results.length > 200) {
+        return res.status(400).json("Too many requests made");
+    } else {
+        console.log("request made");
+    }
+};

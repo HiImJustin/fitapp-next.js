@@ -37,30 +37,29 @@ function Home({ tdee }) {
     });
 
     const [isLoaded, setIsLoaded] = React.useState();
-    useEffect(() => {
-        if (status !== "loading" && status === "authenticated")
-            fetch("/api/getUserByEmail/" + session.user.email)
-                .then((res) => res.json())
-                .then((users) => {
-                    let user = users[0];
-                    setUserState((prevState) => {
-                        return {
-                            ...prevState,
-                            name: user.name,
-                            age: user.age,
-                            weight: user.weight,
-                            height: user.height,
-                            gender: user.gender,
-                            activity: user.activity,
-                            tdee: user.tdee,
-                            bmr: user.bmr,
-                        };
-                    });
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-    }, []);
+    // useEffect(() => {
+    //     if (status !== "loading" && status === "authenticated")
+    //             .then((res) => res.json())
+    //             .then((users) => {
+    //                 let user = users[0];
+    //                 setUserState((prevState) => {
+    //                     return {
+    //                         ...prevState,
+    //                         name: user.name,
+    //                         age: user.age,
+    //                         weight: user.weight,
+    //                         height: user.height,
+    //                         gender: user.gender,
+    //                         activity: user.activity,
+    //                         tdee: user.tdee,
+    //                         bmr: user.bmr,
+    //                     };
+    //                 });
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error);
+    //             });
+    // }, []);
 
     return (
         <main className="w-full flex flex-col items-center mb-2">

@@ -122,8 +122,9 @@ export default function AddFood({ food }) {
         }));
     }, [itemInfo, formik.values]);
 
-    const now = Temporal.Now.plainDateTimeISO();
+    const now = Temporal.Now.plainDateTimeISO().toString();
     const month = now.toLocaleString("en", { month: "long" });
+    console.log(now);
 
     const [loading, setLoading] = React.useState(false);
 
@@ -149,7 +150,7 @@ export default function AddFood({ food }) {
             .then((res) => {
                 console.log("add to food log");
                 notify();
-                console.log(res);
+                res.status(201).json(res);
             })
             .catch((err) => {
                 console.log(err);
@@ -270,7 +271,7 @@ export default function AddFood({ food }) {
                         placeholder="Search Foods"
                     />
 
-                    {foodOptions.length > 0 && (
+                    {foodOptions.length > 0 && results.length > 0 && (
                         <>
                             <div
                                 className={`${classes.foodOptions} font-medium py-1`}
@@ -350,9 +351,7 @@ const CustomFoodOption = () => {
 
     const submitNewFoodData = (e) => {
         e.preventDefault();
-        // const { foodName, calPer100, protien, carbs, fat } = formik.values;
-        // const body = { foodName, calPer100, protien, carbs, fat };
-        // console.log(body);
+
         fetch("/api/addFoodApi", {
             method: "POST",
             headers: {
@@ -364,6 +363,7 @@ const CustomFoodOption = () => {
             .then((res) => {
                 console.log("request sent");
                 notify();
+                res.status(201).json(res);
                 router.push("/");
             })
             .catch((err) => {
@@ -450,6 +450,3 @@ const FoodInputs = ({ onBlur, name, placeholder, onChange, value }) => {
         />
     );
 };
-
-
-

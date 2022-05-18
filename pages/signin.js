@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-export default function SignIn({ providers, csrfToken }) {
+export default function SignIn({ providers }) {
     const router = useRouter();
 
     const { data: session, status } = useSession();
@@ -50,6 +50,7 @@ export default function SignIn({ providers, csrfToken }) {
             alert("form submitted");
         },
     });
+    console.log(providers);
 
     return (
         <>
@@ -57,7 +58,13 @@ export default function SignIn({ providers, csrfToken }) {
                 <title>Login page</title>
             </Head>
             <h1 className={classes.title}>Welcome</h1>
-
+            {Object.values(providers).map((provider) => (
+                <div key={provider.name}>
+                    <button onClick={() => signIn(provider.id)}>
+                        Sign in with {provider.name}
+                    </button>
+                </div>
+            ))}
             <form
                 className={classes.login}
                 method="post"
@@ -66,7 +73,7 @@ export default function SignIn({ providers, csrfToken }) {
                 <input
                     name="csrfToken"
                     type="hidden"
-                    defaultValue={csrfToken}
+                    // defaultValue={csrfToken}
                 />
                 <label htmlFor="email">email</label>
                 <input
@@ -122,8 +129,8 @@ export default function SignIn({ providers, csrfToken }) {
 }
 
 export async function getServerSideProps(context) {
-    const csrfToken = await getCsrfToken(context);
+    const providers = await getProviders();
     return {
-        props: { csrfToken },
+        props: { providers },
     };
 }

@@ -55,23 +55,24 @@ export default function RegisterPage() {
     async function submit(e) {
         e.preventDefault();
         setLoading(true);
-        const response = await fetch("api/createNewUser", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formik.values),
-        });
+        // const response = await fetch("api/createNewUser", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify(formik.values),
+        // });
         await sleep(1000);
-        const data = await response.json();
+        // const data = await response.json();
         notify();
         await sleep(1000);
 
-        console.log(data);
+        // console.log(data);
         setLoading(false);
         setPart1(true);
     }
     console.log(formik.values);
+
     return (
         <main className="flex flex-col w-11/12 items-center">
             {!part1 && (

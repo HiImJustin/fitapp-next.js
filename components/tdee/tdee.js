@@ -40,11 +40,11 @@ export default function TDEE({ name, value }) {
             )
             .max(200, "Please choose age under 200")
             .required("The age field cannot be blank"),
-        weight: Yup.string()
+        weight: Yup.number()
             .required("The weight field cannot be blank")
-            .max(6, "Weight can only contain 6 characters")
-            .matches(
-                /^(([1-3]\d{2}|\d{1,2})|(([1-6]\d{2}|\d{1,2}).\d{1,2}))$/,
+            .min(1, "please weight something")
+            .max(
+                700,
                 "you dont weigh more than 700kgs, if you do contact someone to claim a world record"
             ),
         height: Yup.number()
@@ -153,7 +153,6 @@ export default function TDEE({ name, value }) {
             weight: formik.values.weight,
             sex: formik.values.sex,
             activity: formik.values.activity,
-            email: value,
         }));
     }, [results]);
     console.log(submitData);
@@ -216,7 +215,7 @@ export default function TDEE({ name, value }) {
                     <p className="text-red-600">{formik.errors.height}</p>
                 ) : null}
                 <input
-                    type="text"
+                    type="number"
                     name="weight"
                     placeholder="Weight"
                     onBlur={formik.handleBlur}
@@ -286,5 +285,3 @@ export default function TDEE({ name, value }) {
         </>
     );
 }
-
-import { useFormik } from "formik";

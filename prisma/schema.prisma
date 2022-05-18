@@ -55,7 +55,8 @@ model User {
   activityLog   activityLog[]
   accounts      Account[]
   sessions      Session[]
-
+  userDiet      UserDiet[]
+  
   @@map(name: "users")
 }
 
@@ -112,11 +113,13 @@ model customRoutine {
 model UserDiet {
   id         Int      @id @default(autoincrement())
   foodLogged String
-  calories   Int
+  calories   Float?
   protien    Int?
   carbs      Int?
   fat        Int?
   dateAdded  DateTime @default(now())
+  userEmail  User?   @relation(fields: [user], references: [email])
+  user       String
 }
 
 model activityLog {
