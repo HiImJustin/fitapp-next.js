@@ -46,8 +46,8 @@ const handler = nc({
     //     console.log("no session");
     //     next();
     // }
-    await addLog(req, res);
     await checkLog(req, res);
+    await addLog(req, res);
     console.log("yay");
     next();
 });
@@ -95,7 +95,7 @@ const checkLog = async (req, res) => {
     });
     console.log("log checked");
     console.log(results.length);
-    if (results.length > 200) {
+    if (results.length > 500) {
         return res.status(400).json("Too many requests made");
     } else {
         console.log("request made");

@@ -6,17 +6,19 @@ export default handler.post(async (req, res) => {
     const session = await getSession({ req });
 
     let user = req.body;
-    const result = await prisma.userDetails.create({
+    const result = await prisma.userDetails.update({
+        where: {
+            userEmail: session.user.email,
+        },
         data: {
             name: user.name,
             age: user.age,
             height: user.height,
             weight: user.weight,
             gender: user.sex,
-            tdee: Math.round(user.tdee),
-            bmr: Math.round(user.bmr),
+            tdee: parseInt(user.tdee),
+            bmr: parseInt(user.bmr),
             activity: user.activity,
-            userEmail: session.user.email,
         },
     });
     res.status(201).json(result);

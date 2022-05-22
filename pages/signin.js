@@ -7,6 +7,7 @@ import { useSession, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+const url = process.env.NEXT_PUBLIC_API_URL;
 
 export default function SignIn({ providers }) {
     const router = useRouter();
@@ -18,7 +19,16 @@ export default function SignIn({ providers }) {
         const securePage = async () => {
             const session = await getSession();
             if (session) {
-                router.push("/");
+                fetch(`${url}/getUserByEmail`)
+                    .then((res) => res.json())
+                    .then((user) => {
+                        console.log(user);
+                        if (user.userDetails.length < 1) {
+                            router.push("/Register");
+                        } else {
+                            router.push("/");
+                        }
+                    });
             } else {
                 return console.log("please login");
             }
@@ -57,73 +67,19 @@ export default function SignIn({ providers }) {
             <Head>
                 <title>Login page</title>
             </Head>
-            <h1 className={classes.title}>Welcome</h1>
+            <h1 className={classes.title}>Welcome to FIT</h1>
+
             {Object.values(providers).map((provider) => (
                 <div key={provider.name}>
-                    <button onClick={() => signIn(provider.id)}>
-                        Sign in with {provider.name}
+                    <button
+                        className={classes.loginButton}
+                        onClick={() => signIn(provider.id)}
+                    >
+                        Sign in or Register with {provider.name}
                     </button>
                 </div>
             ))}
-            <form
-                className={classes.login}
-                method="post"
-                action="/api/auth/callback/credentials"
-            >
-                <input
-                    name="csrfToken"
-                    type="hidden"
-                    // defaultValue={csrfToken}
-                />
-                <label htmlFor="email">email</label>
-                <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="email"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
-                />
-
-                {/* Condtionally runs error fields */}
-                {formik.errors.email && formik.touched.email ? (
-                    <p className="text-red-600">{formik.errors.email}</p>
-                ) : null}
-                <label htmlFor="password">Password</label>
-                <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.username}
-                />
-
-                {formik.errors.password && formik.touched.password ? (
-                    <p className="text-red-600">{formik.errors.password}</p>
-                ) : null}
-
-                <button
-                    className={classes.loginButton}
-                    //If either form field has an error button is disabled
-                    disabled={formik.errors.password || formik.errors.email}
-                >
-                    Sign in
-                </button>
-
-                <button
-                    className={classes.loginButton}
-                    onClick={() => signIn("github")}
-                >
-                    Sign with github
-                </button>
-                <p>
-                    Dont have an Account?{" "}
-                    <Link href="/Register">Register here!</Link>
-                </p>
-            </form>
+            <form className={classes.login}></form>
         </>
     );
 }

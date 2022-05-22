@@ -75,6 +75,8 @@
 .newItem {
     height: 35px;
     padding: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
     border: solid 1px rgb(7, 7, 7);
     border-radius: 4px;
     background: #1976d2;
@@ -82,4 +84,9 @@
     font-size: 16px;
     font-weight: 500;
     box-shadow: 1px 4px 1px -1px rgba(0, 0, 0, 0.2);
+}
+.label,
+.label ~ label {
+    font-size: 16px;
+    font-weight: 600;
 }

@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { BounceLoader } from "react-spinners";
 import prisma from "../../lib/prisma";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 toast.configure();
 
 export const getStaticProps = async () => {
@@ -19,6 +20,7 @@ export const getStaticProps = async () => {
 export default function AddFood({ food }) {
     //Get server side props populates this with data from the food table
     const foodData = JSON.parse(food);
+    console.log(foodData);
     //Set state for the search bar
     //On change the state now equals what is in the search bar
     const [foodOptions, setFoodOptions] = React.useState("");
@@ -118,13 +120,15 @@ export default function AddFood({ food }) {
             carbs: math(itemInfo.carbs, formik.values.servingSize),
             protien: math(itemInfo.protien, formik.values.servingSize),
             fat: math(itemInfo.fat, formik.values.servingSize),
-            // userID: session.id, makes it very hard to test
+            servingType: formik.values.servingType,
+            servingSize: formik.values.servingSize,
+            dateAdded: date,
         }));
     }, [itemInfo, formik.values]);
 
-    const now = Temporal.Now.plainDateTimeISO().toString();
+    const date = Temporal.Now.plainDateTimeISO();
+    const now = Temporal.Now.plainDateISO().toString();
     const month = now.toLocaleString("en", { month: "long" });
-    console.log(now);
 
     const [loading, setLoading] = React.useState(false);
 
@@ -150,7 +154,7 @@ export default function AddFood({ food }) {
             .then((res) => {
                 console.log("add to food log");
                 notify();
-                res.status(201).json(res);
+                setFoodOptions("");
             })
             .catch((err) => {
                 console.log(err);
@@ -161,23 +165,23 @@ export default function AddFood({ food }) {
 
     let nuritionInfo = (
         <main className="flex flex-col">
-            <h1 className="text-2xl font-semibold text-sky-500 my-2 pl-4 pb-1 flex justify-between">
+            <h1 className="text-2xl items-center font-semibold text-sky-500 py-2 pl-4 flex justify-between align-middle border-b border-black box-border dark:border-gray-300">
                 {itemInfo.foodName}
                 <button
                     onClick={() => setOpenModal(false)}
-                    className="text-base my-2 mr-6 w-20 h-8 rounded-lg border"
+                    className="text-base font-semibold my-2 mr-6 w-24 h-9 rounded-lg border border-black dark:border-gray-50"
                 >
-                    Cancel?
+                    Cancel
                 </button>
             </h1>
-            <form className="flex flex-col px-4 mb-4">
+            <form className="flex flex-col px-4 mb-4 mt-2">
                 <label className="font-semibold py-1 indent-1">
                     Serving Size
                 </label>
                 <input
                     type={"number"}
                     placeholder="100"
-                    className="indent-1"
+                    className="indent-1 py-1"
                     name="servingSize"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -191,7 +195,7 @@ export default function AddFood({ food }) {
                     Serving type
                 </label>
                 <select
-                    className=""
+                    className="py-1 indent-1"
                     name="servingType"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -212,9 +216,17 @@ export default function AddFood({ food }) {
                 <div className="font-semibold">
                     Calories: {nutritionTotals.calories} cals
                 </div>
-                <div className="font-semibold pt-2">
-                    {month} {now.day}
+                <div className="font-semibold">
+                    Protien: {nutritionTotals.protien}{" "}
+                    {formik.values.servingType}
                 </div>
+                <div className="font-semibold">
+                    Carbs: {nutritionTotals.carbs} {formik.values.servingType}
+                </div>
+                <div className="font-semibold">
+                    Fat: {nutritionTotals.fat} {formik.values.servingType}
+                </div>
+                <div className="font-semibold pt-2">{month}</div>
             </form>
 
             <h2 className="text-lg font-semibold text-sky-500 pt-4 pl-4 border-t-2 border-black">
@@ -252,13 +264,15 @@ export default function AddFood({ food }) {
     function addNew() {
         setAddNewFood((prevState) => !prevState);
     }
+    console.log(addNew);
+    const [help, setHelp] = React.useState(false);
 
     return (
         <>
             <h2 className={`${classes.title} text-md font-semibold`}>
                 Log Food
                 <button onClick={addNew} className={classes.newItem}>
-                    Add custom Food?
+                    {addNewFood ? `Cancel` : `Add custom Food?`}
                 </button>
             </h2>
 
@@ -291,12 +305,10 @@ export default function AddFood({ food }) {
                     <h1 className="my-1 text-base font-medium flex justify-between w-11/12">
                         Add your new custom food below
                         <button
-                            className="mr-2"
-                            onClick={() => {
-                                setAddNewFood(false);
-                            }}
+                            className="font-semibold text-lg"
+                            onClick={() => setHelp((prevState) => !prevState)}
                         >
-                            Cancel?
+                            ?{help && <Help />}
                         </button>
                     </h1>
                     <CustomFoodOption />
@@ -319,19 +331,19 @@ const CustomFoodOption = () => {
     const validateFields = Yup.object().shape({
         foodName: Yup.string()
             .required("Food name cannot be empty")
-            .max(30, "must be less than 30 characters"),
+            .max(30, "Must be less than 30 characters"),
         calPer100: Yup.number()
-            .min(1, "your food has more calories than 1 per 100grams")
+            .min(1, "Your food has more calories than 1 per 100grams")
             .max(10000, "Please a value less than Ten thousand")
-            .required("this field cannot be blank"),
+            .required("This field cannot be blank"),
         protien: Yup.string()
-            .required(" protien field cannot be blank")
-            .max(6, "protien can only contain 6 characters"),
+            .required(" Protien field cannot be blank")
+            .max(6, "Protien can only contain 6 characters"),
         carbs: Yup.number()
-            .required(" carbs field cannot be blank")
-            .min(0, "value must be more than 0")
-            .max(10000, "value cannot be more than 10,000"),
-        fat: Yup.string().required("fats cannot be blank"),
+            .required(" Carbs field cannot be blank")
+            .min(0, "Value must be more than 0")
+            .max(10000, "Value cannot be more than 10,000"),
+        fat: Yup.string().required("Fats cannot be blank"),
     });
     let formik = useFormik({
         initialValues: {
@@ -363,7 +375,6 @@ const CustomFoodOption = () => {
             .then((res) => {
                 console.log("request sent");
                 notify();
-                res.status(201).json(res);
                 router.push("/");
             })
             .catch((err) => {
@@ -373,8 +384,10 @@ const CustomFoodOption = () => {
 
     return (
         <>
-            <main className="flex flex-col w-11/12 text-lg my-4">
+            <main className="flex flex-col w-11/12 text-lg my-2">
+                <label className={classes.label}>Food Name</label>
                 <FoodInputs
+                    type={"text"}
                     name={"foodName"}
                     placeholder="Food Name"
                     onBlur={formik.handleBlur}
@@ -382,9 +395,13 @@ const CustomFoodOption = () => {
                     value={formik.values.foodName}
                 />
                 {formik.errors.foodName && formik.touched.foodName ? (
-                    <p className="text-red-600">{formik.errors.foodName}</p>
+                    <p className="text-red-600 text-base font-medium">
+                        {formik.errors.foodName}
+                    </p>
                 ) : null}
+                <label>Calories per 100 grams</label>
                 <FoodInputs
+                    type={"number"}
                     name={"calPer100"}
                     placeholder="calories"
                     onBlur={formik.handleBlur}
@@ -392,9 +409,13 @@ const CustomFoodOption = () => {
                     value={formik.values.calPer100}
                 />
                 {formik.errors.calPer100 && formik.touched.calPer100 ? (
-                    <p className="text-red-600">{formik.errors.calPer100}</p>
+                    <p className="text-red-600 text-base font-medium">
+                        {formik.errors.calPer100}
+                    </p>
                 ) : null}
+                <label>Protien per 100 grams</label>
                 <FoodInputs
+                    type={"number"}
                     name={"protien"}
                     placeholder={"Protien"}
                     onBlur={formik.handleBlur}
@@ -402,9 +423,13 @@ const CustomFoodOption = () => {
                     value={formik.values.protien}
                 />
                 {formik.errors.protien && formik.touched.protien ? (
-                    <p className="text-red-600">{formik.errors.protien}</p>
+                    <p className="text-red-600 text-base font-medium">
+                        {formik.errors.protien}
+                    </p>
                 ) : null}
+                <label>Carbs per 100 grams</label>
                 <FoodInputs
+                    type={"number"}
                     name={"carbs"}
                     placeholder={"carbs"}
                     value={formik.values.carbs}
@@ -412,9 +437,13 @@ const CustomFoodOption = () => {
                     onChange={formik.handleChange}
                 />
                 {formik.errors.carbs && formik.touched.carbs ? (
-                    <p className="text-red-600">{formik.errors.carbs}</p>
+                    <p className="text-red-600 text-base font-medium">
+                        {formik.errors.carbs}
+                    </p>
                 ) : null}
+                <label>Fats per 100 grams</label>
                 <FoodInputs
+                    type={"number"}
                     name={"fat"}
                     placeholder={"fat"}
                     onBlur={formik.handleBlur}
@@ -422,9 +451,10 @@ const CustomFoodOption = () => {
                     value={formik.values.fat}
                 />
                 {formik.errors.fat && formik.touched.fat ? (
-                    <p className="text-red-600">{formik.errors.fat}</p>
+                    <p className="text-red-600 text-base font-medium">
+                        {formik.errors.fat}
+                    </p>
                 ) : null}
-
                 <button
                     onClick={submitNewFoodData}
                     disabled={!formik.isValid}
@@ -437,16 +467,24 @@ const CustomFoodOption = () => {
     );
 };
 
-const FoodInputs = ({ onBlur, name, placeholder, onChange, value }) => {
+const FoodInputs = ({ onBlur, name, placeholder, onChange, value, type }) => {
     return (
         <input
-            className="my-1 py-2 rounded-sm bg-gray-200 indent-2 text-base placeholder-black focus:placeholder-transparent"
+            className="my-1 py-2 rounded-md border border-black bg-gray-200 indent-2 text-base placeholder-black focus:placeholder-transparent"
             onChange={onChange}
-            type="text"
+            type={type}
             placeholder={placeholder}
             value={value}
             name={name}
             onBlur={onBlur}
         />
+    );
+};
+
+const Help = () => {
+    return (
+        <div className="absolute h-[60%] top-[70px] bg-gray-200 w-[98%] left-1">
+            <img className="mx-auto w-[94%]" src="helpgif.gif" />
+        </div>
     );
 };

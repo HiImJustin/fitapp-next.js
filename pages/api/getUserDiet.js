@@ -9,13 +9,12 @@ const oneDay = now.add({ days: -1 });
 console.log(now);
 console.log(oneDay.toString());
 
-export default handler.get(async (req, res) => {
+export default async function handle(req, res) {
     const session = await getSession({ req });
 
     const result = await prisma.userDiet.findMany({
         where: {
-            // user: session.user.email,
-            dateAdded: new Date() - oneDay.toString(),
+            user: session.user.email,
         },
         include: {
             userEmail: {
@@ -24,4 +23,4 @@ export default handler.get(async (req, res) => {
         },
     });
     res.status(201).json(result);
-});
+}

@@ -70,8 +70,8 @@ model UserDetails {
   tdee        Int
   bmr         Int
   activity    String
-  user        User?         @relation(fields: [userEmail], references: [email])
-  userEmail   String?
+  user        User?         @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  userEmail   String?       @unique
   customMeals customMeals[]
   exercises   exercises[]
 }
@@ -92,7 +92,7 @@ model customMeals {
   protien   Int?
   carbs     Int?
   fat       Int?
-  user      UserDetails? @relation(fields: [userID], references: [id])
+  user      UserDetails? @relation(fields: [userID], references: [id], onDelete: Cascade)
   userID    String
 }
 
@@ -100,7 +100,7 @@ model exercises {
   id           Int          @id @default(autoincrement())
   exerciseName String
   avgCalBurned Int?
-  user         UserDetails? @relation(fields: [userID], references: [id])
+  user         UserDetails? @relation(fields: [userID], references: [id], onDelete: Cascade)
   userID       String
 }
 
@@ -117,8 +117,10 @@ model UserDiet {
   protien    Int?
   carbs      Int?
   fat        Int?
+  servingType String?
+  servingSize Int?
   dateAdded  DateTime @default(now())
-  userEmail  User?   @relation(fields: [user], references: [email])
+  userEmail  User?   @relation(fields: [user], references: [email], onDelete: Cascade)
   user       String
 }
 
@@ -128,7 +130,7 @@ model activityLog {
   action    String
   ip        String
   timeStamp DateTime @default(now())
-  userEmail User?    @relation(fields: [user], references: [email])
+  userEmail User?    @relation(fields: [user], references: [email], onDelete: Cascade)
 }
 
 model VerificationToken {

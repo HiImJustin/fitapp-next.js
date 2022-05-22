@@ -39,6 +39,9 @@ export default handler.post(async (req, res) => {
             fat: parseInt(food.fat),
             protien: parseInt(food.protien),
             user: session.user.email,
+            dateAdded: new Date(food.dateAdded),
+            servingType: food.servingType,
+            servingSize: food.servingSize,
         },
     });
     res.status(201).json(result);

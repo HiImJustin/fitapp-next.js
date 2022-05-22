@@ -10,7 +10,14 @@ import { useState } from "react";
 toast.configure();
 
 //Function for calculating Total Daily Energy Expenditure
-export default function TDEE({ name, value }) {
+export default function TDEE({
+    userName,
+    userAge,
+    userWeight,
+    userHeight,
+    userSex,
+    userActivity,
+}) {
     //BMR (kcal / day) = 10 * weight (kg) + 6.25 * height (cm) – 5 * age (y) + s (kcal / day),
     // where s is +5 for males and -161 for females.
     // Options of those measurments not made yet
@@ -26,8 +33,22 @@ export default function TDEE({ name, value }) {
             pauseOnHover: false,
         });
     }
+    function notify2() {
+        toast("your information has been updated " + submitData.name, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 5000,
+            pauseOnHover: false,
+        });
+    }
     const router = useRouter();
     let [loading, setLoading] = useState(false);
+
+    let user = userName !== undefined ? userName : "";
+    let age = userAge !== undefined ? userAge : "";
+    let weight = userWeight !== undefined ? userWeight : "";
+    let height = userHeight !== undefined ? userHeight : "";
+    let sex = userSex !== undefined ? userSex : "";
+    let activity = userActivity !== undefined ? userActivity : "";
 
     const validateFields = Yup.object().shape({
         name: Yup.string()
@@ -57,18 +78,19 @@ export default function TDEE({ name, value }) {
     });
     let formik = useFormik({
         initialValues: {
-            name: "",
-            age: "",
-            height: "",
-            weight: "",
-            sex: "",
-            activity: "",
+            name: user,
+            age: age,
+            height: height,
+            weight: weight,
+            sex: sex,
+            activity: activity,
         },
         validationSchema: validateFields,
         onSubmit: (values) => {
             alert("form submitted");
         },
     });
+    console.log(formik.values);
 
     function calculateTDEE(bmr) {
         if (formik.values.activity === "sedentary") {
@@ -158,28 +180,44 @@ export default function TDEE({ name, value }) {
     console.log(submitData);
 
     const submitUserData = async (event) => {
-        event.preventDefault();
         setLoading(true);
-        const response = await fetch("/api/registerApi", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(submitData),
-        });
-        // console.log(response)
-        const data = await response.json();
-        notify();
-        console.log(data);
-        setLoading(false);
-        router.push("/signin");
+        event.preventDefault();
+        if (router.pathname === "/profile") {
+            fetch("/api/updateUserDetails", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(submitData),
+            })
+                .then((res) => res.json())
+                .then((user) => {
+                    notify2();
+                    console.log(user + " created");
+                    setLoading(false);
+                    router.push("/signin");
+                });
+        } else
+            fetch("/api/registerApi", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(submitData),
+            })
+                .then((res) => res.json())
+                .then((user) => {
+                    notify();
+                    console.log(user + " created");
+                    setLoading(false);
+                    router.push("/signin");
+                });
     };
 
     return (
         <>
             <form className={classes.detailsForm}>
                 <h2>Personal Information</h2>
-                <input type="hidden" name={name} value={value} />
                 <input
                     type="text"
                     name="name"

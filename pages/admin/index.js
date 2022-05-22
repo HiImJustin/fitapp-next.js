@@ -1,24 +1,38 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { Admin } from "../../components/oop";
 
 export default function AdminPage() {
     const { data: session, status } = useSession();
 
-    const [content, setContent] = useState();
+    const [content, setContent] = useState({
+        email: "",
+        name: "",
+        admin: "",
+    });
+    console.log(content);
 
     useEffect(() => {
         const fetchData = async () => {
             const res = await fetch("/api/admin/adminApi");
             const json = await res.json();
 
-            if (json.content) {
-                setContent(json.content);
+            if (json) {
+                setContent((prevState) => ({
+                    ...prevState,
+                    email: json.email,
+                    name: json.name,
+                    admin: json.admin,
+                }));
             }
         };
         fetchData();
     }, [session]);
 
-    if (!session) {
+    const user = new Admin(content.email, content.name, content.admin);
+    console.log(user);
+
+    if (!session && !user.admin) {
         return (
             <main>
                 <div>
@@ -30,8 +44,15 @@ export default function AdminPage() {
     return (
         <main>
             <div>
-                <h1>protected page</h1>
-                <p>{content}</p>
+                <div>
+                    {user.admin
+                        ? "welcome admin user"
+                        : "Howd you even get in here!"}
+                </div>
+
+                <h1>Admin page</h1>
+                <div>{user.getEmail()}</div>
+                <div>{user.getName()}</div>
             </div>
         </main>
     );

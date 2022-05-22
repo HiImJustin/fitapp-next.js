@@ -68,14 +68,14 @@ function Home({ tdee }) {
             </section>
             <Items icon={faAppleWhole} href={"/addFood"} name="Add Food" />
             <Items icon={faBook} href={"/foodLog"} name="Food Log" />
+            <Items icon={faUser} href={"/profile"} name="Profile" />
+            <Items icon={faWrench} href={"/settings"} name="Settings" />
             <Items
                 icon={faPencil}
                 href={"/Routines/Createroutine"}
                 name="Create Routine"
             />
             <Items icon={faDumbbell} href={"/Routines"} name="Routines" />
-            <Items icon={faUser} href={"/profile"} name="Profile" />
-            <Items icon={faWrench} href={"/settings"} name="Settings" />
         </main>
     );
 }

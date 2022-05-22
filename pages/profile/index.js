@@ -1,6 +1,11 @@
 import classes from "./profile.module.css";
 import { useSession, getSession } from "next-auth/react";
 import React, { useEffect } from "react";
+import { height } from "@mui/system";
+const url = process.env.NEXT_PUBLIC_API_URL;
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import TDEE from "../../components/tdee/tdee";
 
 export async function getServerSideProps(context) {
     return {
@@ -11,9 +16,8 @@ export async function getServerSideProps(context) {
 }
 export default function Profile() {
     const { data: session, status } = useSession();
-    console.log(session);
 
-    const [userState, setUserState] = React.useState({
+    const [user, setUser] = React.useState({
         name: "",
         age: "",
         weight: "",
@@ -25,82 +29,120 @@ export default function Profile() {
     });
 
     useEffect(() => {
-        if (status !== "loading" && status === "authenticated") {
-            fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/getUserByEmail/` +
-                    session.user.email
-            )
-                .then((res) => res.json())
-                .then((users) => {
-                    let user = users[0];
-                    setUserState((prevState) => {
-                        return {
-                            ...prevState,
-                            name: user.name,
-                            age: user.age,
-                            weight: user.weight,
-                            height: user.height,
-                            gender: user.gender,
-                            activity: user.activity,
-                            tdee: user.tdee,
-                            bmr: user.bmr,
-                        };
-                    });
-                })
-                .catch((error) => {
-                    console.log(error);
+        fetch("http://localhost:3000/api/getUserByEmail")
+            .then((res) => res.json())
+            .then((user) => {
+                setUser((prevState) => {
+                    return {
+                        ...prevState,
+                        name: user.userDetails[0].name,
+                        age: user.userDetails[0].age,
+                        weight: user.userDetails[0].weight,
+                        height: user.userDetails[0].height,
+                        gender: user.userDetails[0].gender,
+                        activity: user.userDetails[0].activity,
+                        tdee: user.userDetails[0].tdee,
+                        bmr: user.userDetails[0].bmr,
+                    };
                 });
-        } else {
-            console.log("still loading");
-        }
-    }, [session]);
-    console.log(userState);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
+    function deleteData() {
+        fetch(`${url}/deleteUser`)
+            .then((res) => res.json())
+            .then((user) => {
+                console.log("deleted");
+                setConfirmation(false);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+    function submitData() {}
+
+    const [update, setUpdate] = React.useState(false);
+    const [confirmation, setConfirmation] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
 
     return (
         <section className={classes.profile}>
-            <h2>Update Personal Information</h2>
-            <UserData
-                name={userState.name}
-                age={userState.age}
-                weight={userState.weight}
-                height={userState.height}
-                gender={userState.gender}
-                activity={userState.activity}
-                tdee={userState.tdee}
-                bmr={userState.bmr}
-            />
+            {!confirmation && !update && (
+                <>
+                    <h2>Your Information</h2>
+                    <div>
+                        <div>Display Name</div>
+                        <p>{user.name}</p>
+                        <div>Age</div>
+                        <p>{user.age}</p>
+                        <div>Weight</div>
+                        <p>{user.weight}</p>
+                        <div>Height</div>
+                        <p>{user.height}</p>
+                        <div>Gender</div>
+                        <p>{user.gender}</p>
+                        <div>Activity level</div>
+                        <p>{user.activity}</p>
+                        <div>Total Daily energy Expendeture</div>
+                        <p>{user.tdee}</p>
+                        <div>Base metabolic rate</div>
+                        <p>{user.bmr}</p>
+                        {user.name !== "" && (
+                            <div className="flex ">
+                                <button
+                                    className={`${classes.addToLog} mt-5 mr-[5%] bg-[#1976d2]`}
+                                    onClick={() => setUpdate(true)}
+                                >
+                                    Update Details
+                                </button>
+                                <button
+                                    className={`${classes.addToLog}  mt-5 bg-red-600`}
+                                    onClick={() => setConfirmation(true)}
+                                    disabled={loading}
+                                >
+                                    Delete Account
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </>
+            )}
+            {confirmation && (
+                <div>
+                    Are you sure you want to delete your Account? All user data
+                    will be deleted and require you to reauth through github
+                    <div>
+                        <button
+                            className={`${classes.addToLog} mt-5 mr-[4%] bg-[#1976d2]`}
+                            onClick={deleteData}
+                        >
+                            Yes
+                        </button>
+                        <button
+                            className={`${classes.addToLog}  mt-5 bg-red-600`}
+                            onClick={() => setConfirmation(false)}
+                        >
+                            No
+                        </button>
+                    </div>
+                </div>
+            )}
+            {update && (
+                <>
+                    <button onClick={() => setUpdate(false)}>cancel</button>
+                    <TDEE
+                        userName={user.name}
+                        userAge={user.age}
+                        userHeight={user.height}
+                        userWeight={user.weight}
+                        userSex={user.gender}
+                        userActivity={user.activity}
+                    />
+                </>
+            )}
         </section>
     );
 }
-
-const UserData = ({
-    name,
-    age,
-    weight,
-    height,
-    gender,
-    activity,
-    tdee,
-    bmr,
-}) => {
-    return (
-        <div>
-            <div>Display Name</div>
-            <p>{name}</p>
-            <div>Age</div>
-            <p>{age}</p>
-            <div>Weight</div>
-            <p>{weight}</p>
-            <div>Height</div>
-            <p>{height}</p>
-            <div>Gender</div>
-            <p>{gender}</p>
-            <div>Activity level</div>
-            <p>{activity}</p>
-            <div>Total Daily energy Expendeture</div>
-            <p>{tdee}</p>
-            <div>Base metabolic rate</div>
-            <p>{bmr}</p>
-        </div>
-    );
-};

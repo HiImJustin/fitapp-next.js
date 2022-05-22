@@ -16,22 +16,23 @@ export const getStaticProps = async () => {
 function HomePage({ ip, user }) {
     const router = useRouter();
     const { data: session, status } = useSession();
+
     // If not logged in redirects to the signin page
-    // useEffect(() => {
-    //     const securePage = async () => {
-    //         const session = await getSession();
-    //         if (status === "unauthenticated" && status !== "loading") {
-    //             return router.push("/signin");
-    //         } else {
-    //             console.log(session);
-    //         }
-    //     };
-    //     securePage();
-    // }, []);
+    useEffect(() => {
+        const securePage = async () => {
+            const session = await getSession();
+            if (status === "unauthenticated" && status !== "loading") {
+                return router.push("/signin");
+            } else {
+                console.log(session);
+            }
+        };
+        securePage();
+    }, []);
+
     const now = Temporal.Now.plainDateISO();
     const date = now;
     const month = date.toLocaleString("en", { month: "long" });
-
     const [lastVisited, setlastVisited] = useState();
 
     useEffect(() => {
@@ -52,8 +53,6 @@ function HomePage({ ip, user }) {
         if (status !== "loading" && status !== "unauthenticated") {
             setName(username);
             localStorage.setItem("name", JSON.stringify(session.user.email));
-        } else {
-            console.log("not logged in");
         }
     });
 
