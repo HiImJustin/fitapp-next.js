@@ -1,12 +1,15 @@
-import handler from "./handler";
 import prisma from "../../lib/prisma";
-import { foodSchema } from "../../middleware/validator";
 
-export default handler.post(async (req, res) => {
+export default async function handle(req, res) {
+    let food = req.body;
+
     try {
         let food = req.body;
         try {
-            const result = await prisma.food.create({
+            const result = await prisma.food.update({
+                where: {
+                    id: food.id,
+                },
                 data: {
                     foodName: food.foodName,
                     calPer100: parseInt(food.calPer100),
@@ -23,4 +26,4 @@ export default handler.post(async (req, res) => {
     } catch (error) {
         return res.status(400).json({ message: error.message });
     }
-});
+}

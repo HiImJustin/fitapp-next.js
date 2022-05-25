@@ -1,11 +1,7 @@
 .title {
     color: black;
     font-size: 24px;
-    margin-top: 15px;
-}
-.title + div {
-    margin-bottom: 20px;
-    border-bottom: black 2px solid;
+    margin-top: 20px;
 }
 .login {
     display: flex;
@@ -28,7 +24,7 @@
     font-size: 16px;
 }
 .loginButton {
-    margin: 20px 0px;
+    margin: 30px 0px;
     height: 48px;
     border: solid 2px black;
     border-radius: 8px;

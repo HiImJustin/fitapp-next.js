@@ -1,6 +1,4 @@
 import classes from "./foodlog.module.css";
-// import {ProgressBar} from "../../components/progressbar";
-import { useSession, getSession } from "next-auth/react";
 import React, { useEffect } from "react";
 const url = process.env.NEXT_PUBLIC_API_URL;
 import { Temporal, Intl, toTemporalInstant } from "@js-temporal/polyfill";

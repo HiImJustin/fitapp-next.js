@@ -34,7 +34,7 @@ export default function SignIn({ providers }) {
             }
         };
         securePage();
-    }, []);
+    }, [signIn]);
 
     const validateFields = Yup.object().shape({
         email: Yup.string()
@@ -62,6 +62,9 @@ export default function SignIn({ providers }) {
     });
     console.log(providers);
 
+    function navigate() {
+        router.push("/");
+    }
     return (
         <>
             <Head>
@@ -70,16 +73,17 @@ export default function SignIn({ providers }) {
             <h1 className={classes.title}>Welcome to FIT</h1>
 
             {Object.values(providers).map((provider) => (
-                <div key={provider.name}>
+                <div key={provider.name} className="w-5/6">
                     <button
                         className={classes.loginButton}
-                        onClick={() => signIn(provider.id)}
+                        onClick={() => {
+                            signIn(provider.id);
+                        }}
                     >
                         Sign in or Register with {provider.name}
                     </button>
                 </div>
             ))}
-            <form className={classes.login}></form>
         </>
     );
 }

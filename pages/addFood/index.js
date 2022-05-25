@@ -35,7 +35,6 @@ export default function AddFood({ food }) {
             food.foodName.toLowerCase().includes(foodName.toLowerCase())
         );
     }
-    const test = filterItems("Apple");
     //Map the fitered array into results variable along with the onlick
     const filtered = filterItems(foodOptions);
 
@@ -89,9 +88,11 @@ export default function AddFood({ food }) {
             alert("form submitted");
         },
     });
+
     // A = item info value always in grams
     // B = serving size
     // If not in ml or grams do math for kg/litre
+
     function math(a, b) {
         if (
             formik.values.servingType === "ml" ||
@@ -319,7 +320,7 @@ export default function AddFood({ food }) {
 }
 
 // This function creates a new food item
-const CustomFoodOption = () => {
+export const CustomFoodOption = () => {
     function notify() {
         toast(formik.values.foodName + " added to log", {
             position: toast.POSITION.TOP_CENTER,
@@ -363,7 +364,6 @@ const CustomFoodOption = () => {
 
     const submitNewFoodData = (e) => {
         e.preventDefault();
-
         fetch("/api/addFoodApi", {
             method: "POST",
             headers: {
@@ -373,9 +373,13 @@ const CustomFoodOption = () => {
         })
             .then((res) => res.json())
             .then((res) => {
-                console.log("request sent");
-                notify();
-                router.push("/");
+                if (res.message) {
+                    alert(res.message);
+                } else {
+                    console.log("request sent");
+                    notify();
+                    setAddNewFood(false);
+                }
             })
             .catch((err) => {
                 console.log(err);

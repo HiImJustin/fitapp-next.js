@@ -1,10 +1,7 @@
 import classes from "./profile.module.css";
 import { useSession, getSession } from "next-auth/react";
 import React, { useEffect } from "react";
-import { height } from "@mui/system";
 const url = process.env.NEXT_PUBLIC_API_URL;
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import TDEE from "../../components/tdee/tdee";
 
 export async function getServerSideProps(context) {
@@ -62,7 +59,6 @@ export default function Profile() {
                 console.log(error);
             });
     }
-    function submitData() {}
 
     const [update, setUpdate] = React.useState(false);
     const [confirmation, setConfirmation] = React.useState(false);

@@ -23,12 +23,33 @@ function HomePage({ ip, user }) {
             const session = await getSession();
             if (status === "unauthenticated" && status !== "loading") {
                 return router.push("/signin");
-            } else {
-                console.log(session);
             }
         };
         securePage();
     }, []);
+
+    const [content, setContent] = useState({
+        email: "",
+        name: "",
+        admin: "",
+    });
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await fetch("/api/admin/adminApi");
+            const json = await res.json();
+            console.log(json);
+            if (json) {
+                setContent((prevState) => ({
+                    ...prevState,
+                    email: json.email,
+                    name: json.name,
+                    admin: json.admin,
+                }));
+            }
+        };
+        fetchData();
+    }, [session]);
 
     const now = Temporal.Now.plainDateISO();
     const date = now;
@@ -58,18 +79,18 @@ function HomePage({ ip, user }) {
 
     return (
         <>
+            <div className="w-11/12">
+                Welcome back {name} you last visited on the {lastVisited}
+            </div>
             <Home />
-            <div className="w-11/12 dark:bg-[#121212] py-2 px-2">
-                {session && (
-                    <div className="w-11/12 mt-1">
-                        <button>
-                            <Link href="/admin">admin page</Link>
+            <div className="w-[95%] h-22 dark:bg-[#121212] px-2">
+                {session && content.admin && (
+                    <div className="w-full h-16 bg-white flex my-2 justify-center border rounded-md text-center p-2 mt-1  shadow-[1px_1.5px_4px_3px] shadow-gray-400">
+                        <button className="font-semibold text-lg">
+                            <Link href="/admin">Admin page</Link>
                         </button>
                     </div>
                 )}
-                <div>
-                    Welcome back {name} you last visited on the {lastVisited}
-                </div>
             </div>
             {/* <pre>{JSON.stringify(users, null, 4)}</pre> */}
         </>

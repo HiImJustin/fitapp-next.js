@@ -74,6 +74,7 @@ model UserDetails {
   userEmail   String?       @unique
   customMeals customMeals[]
   exercises   exercises[]
+  food        Food[]
 }
 
 model Food {
@@ -83,6 +84,8 @@ model Food {
   protien   Int
   carbs     Int
   fat       Int
+  user      String?
+  userEmail UserDetails? @relation(fields: [user], references: [userEmail], onDelete: Cascade)
 }
 
 model customMeals {
@@ -140,4 +143,8 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verificationtokens")
+}
+model allowdIps {
+  ip String @id @unique
+  allowed Boolean 
 }
