@@ -22,9 +22,8 @@
     border-radius: 50%;
     display: flex;
     justify-content: center;
+    background-color: rgba(120, 235, 255, 0.7);
     align-items: center;
-    /* background-color: rgb(215, 243, 246); */
-    background-color: rgba(120, 235, 255, 0.6);
 }
 .innerCircle {
     border-radius: 50%;
@@ -88,13 +87,13 @@
     cursor: pointer;
     box-shadow: 1px 1.5px 4px 3px rgb(151, 151, 151);
 }
-.links:hover a{
+.links:hover a {
     color: #fff;
     font-weight: bold;
 }
 
 @media (min-height: 800px) {
     .links {
-    margin-top: 0px;
+        margin-top: 0px;
     }
 }

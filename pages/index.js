@@ -20,7 +20,7 @@ function HomePage({ ip, user }) {
     // If not logged in redirects to the signin page
     useEffect(() => {
         const securePage = async () => {
-            const session = await getSession();
+            const session = getSession();
             if (status === "unauthenticated" && status !== "loading") {
                 return router.push("/signin");
             }
@@ -38,7 +38,6 @@ function HomePage({ ip, user }) {
         const fetchData = async () => {
             const res = await fetch("/api/admin/adminApi");
             const json = await res.json();
-            console.log(json);
             if (json) {
                 setContent((prevState) => ({
                     ...prevState,
@@ -92,17 +91,7 @@ function HomePage({ ip, user }) {
                     </div>
                 )}
             </div>
-            {/* <pre>{JSON.stringify(users, null, 4)}</pre> */}
         </>
     );
 }
 export default HomePage;
-
-// export async function getServerSideProps({ req }) {
-//     const forwarded = req.headers["x-forwarded-for"];
-//     const ip = forwarded
-//         ? forwarded.split(/, /)[0]
-//         : req.connection.remoteAddress;
-//     console.log(ip);
-//     return { props: { ip } };
-// }

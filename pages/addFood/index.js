@@ -10,6 +10,7 @@ import { BounceLoader } from "react-spinners";
 import prisma from "../../lib/prisma";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 toast.configure();
+import Image from "next/image";
 
 export const getStaticProps = async () => {
     const foodItems = await prisma.food.findMany({});
@@ -488,7 +489,11 @@ const FoodInputs = ({ onBlur, name, placeholder, onChange, value, type }) => {
 const Help = () => {
     return (
         <div className="absolute h-[60%] top-[70px] bg-gray-200 w-[98%] left-1">
-            <img className="mx-auto w-[94%]" src="helpgif.gif" />
+            <Image
+                className="mx-auto w-[94%]"
+                src="helpgif.gif"
+                alt="help gif"
+            />
         </div>
     );
 };

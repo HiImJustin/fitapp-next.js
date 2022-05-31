@@ -233,7 +233,7 @@ export default function AdminPage() {
         },
         validationSchema: validateFields,
     });
-
+    console.log(selectedDetails);
     function editUser(e) {
         e.preventDefault();
         let userEmail = e.target.textContent;
@@ -253,17 +253,17 @@ export default function AdminPage() {
                 console.log(err);
             });
     }
-    function deleteUser(e) {
-        let selected = e.target.value;
+    function deleteUser() {
         fetch(`api/adminDeleteUser`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(selected),
+            body: JSON.stringify(selectedDetails.email),
         })
             .then((res) => res.json())
             .then((user) => {
+                console.log(user);
                 console.log("deleted");
                 setConfirmation(false);
             })
@@ -555,7 +555,10 @@ export default function AdminPage() {
                             {!addFood && !foodConfirm && !edit && (
                                 <div className="flex flex-col py-2 w-11/12">
                                     {foodData.map((e) => (
-                                        <div className="flex my-2 font-semibold flex-col w-full border border-black rounded-md p-2">
+                                        <div
+                                            key={e.id}
+                                            className="flex my-2 font-semibold flex-col w-full border border-black rounded-md p-2"
+                                        >
                                             <div>Food: {e.foodName}</div>
                                             <div>Per 100 Grams</div>
                                             <div>Calories: {e.calPer100}</div>

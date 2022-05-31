@@ -4,7 +4,7 @@ import { foodSchema } from "../../middleware/validator";
 
 export default handler.post(async (req, res) => {
     try {
-        let food = req.body;
+        let food = foodSchema.validate(req.body);
         try {
             const result = await prisma.food.create({
                 data: {
@@ -17,7 +17,7 @@ export default handler.post(async (req, res) => {
             });
             res.status(201).json(result);
         } catch (error) {
-            console.log("error in data sent");
+            console.log("error in data sent " + error);
             res.status(400).json(error);
         }
     } catch (error) {

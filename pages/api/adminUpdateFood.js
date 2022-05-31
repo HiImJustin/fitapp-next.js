@@ -1,10 +1,9 @@
 import prisma from "../../lib/prisma";
+import { foodSchema } from "../../middleware/validator";
 
 export default async function handle(req, res) {
-    let food = req.body;
-
     try {
-        let food = req.body;
+        let food = foodSchema.validate(req.body);
         try {
             const result = await prisma.food.update({
                 where: {
@@ -20,7 +19,7 @@ export default async function handle(req, res) {
             });
             res.status(201).json(result);
         } catch (error) {
-            console.log("error in data sent");
+            console.log("error in data sent " + error);
             res.status(400).json(error);
         }
     } catch (error) {

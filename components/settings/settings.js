@@ -1,4 +1,3 @@
-import classes from "./settings.module.css";
 import { Switch } from "@mui/material";
 import { signOut, useSession } from "next-auth/react";
 
@@ -22,12 +21,21 @@ export default function Settings() {
     console.log({ session, loading });
 
     return (
-        <section className={classes.settings}>
-            <h1 className={classes.title}>Settings</h1>
+        <section
+            className={`flex flex-col justify-start w-[96%] rounded-md h-[98%] mt-2 dark:bg-[#121212] font-semibold`}
+        >
+            <h1 className="p-3 mt-4">Settings</h1>
 
-            <p>Language</p>
-            <p>Notifications</p>
-            {session && <button onClick={logOut}>Logout</button>}
+            <p className="p-3 mt-2">Language</p>
+            <p className="p-3 mt-2">Notifications</p>
+            {session && (
+                <button
+                    className="border border-black w-[80%] mx-auto p-3 rounded-lg dark:bg-[#1976d2] mt-8 text-base font-semibold"
+                    onClick={logOut}
+                >
+                    Logout
+                </button>
+            )}
         </section>
     );
 }

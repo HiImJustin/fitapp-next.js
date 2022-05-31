@@ -26,7 +26,7 @@ export default function Profile() {
     });
 
     useEffect(() => {
-        fetch("http://localhost:3000/api/getUserByEmail")
+        fetch(`${url}/getUserByEmail`)
             .then((res) => res.json())
             .then((user) => {
                 setUser((prevState) => {

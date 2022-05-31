@@ -32,7 +32,7 @@ export default function FoodLog({}) {
                 console.log(error);
             });
     }, [openModal]);
-
+    console.log(userDiet);
     const now = Temporal.Now.plainDateISO();
     const [date, setDate] = React.useState(now);
 

@@ -1,4 +1,3 @@
-import handler from "./handler";
 import prisma from "../../lib/prisma";
 import { getSession } from "next-auth/react";
 
