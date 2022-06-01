@@ -43,8 +43,9 @@ export default function AdminPage() {
         const fetchData = async () => {
             const res = await fetch("/api/admin/allowedIp");
             const json = await res.json();
-            if (json.allowed) {
+            if (json) {
                 console.log(json);
+                console.log("allowed");
             } else {
                 alert("This ip address is not allowed");
                 router.push("/");
@@ -150,10 +151,9 @@ export default function AdminPage() {
         setWhiteList((prevState) => filtered);
         deleteIpData(selected);
     }
-
     function removeBlackList(e) {
         let selected = e.target.textContent;
-        let filtered = blacklist.filter((e) => !e.includes(selected));
+        let filtered = blacklist.filter((e) => !e.ip.includes(selected));
 
         setBlackList((prevState) => filtered);
         deleteIpData(selected);
@@ -194,10 +194,9 @@ export default function AdminPage() {
 
     //State for userDetails
     const [userDetailsOpen, setUserDetailsOpen] = React.useState(false);
-    const [userDetails, setUserDetails] = React.useState();
-
+    const [userDetails, setUserDetails] = React.useState({});
     function moderateUser() {
-        fetch("/api/getUserDetails")
+        fetch("/api/adminGetUsers")
             .then((res) => res.json())
             .then((userData) => {
                 console.log(userData);
@@ -233,7 +232,6 @@ export default function AdminPage() {
         },
         validationSchema: validateFields,
     });
-    console.log(selectedDetails);
     function editUser(e) {
         e.preventDefault();
         let userEmail = e.target.textContent;
@@ -375,7 +373,6 @@ export default function AdminPage() {
             };
         });
     }
-    console.log(itemInfo);
     const [edit, setEdit] = React.useState(false);
 
     return (
