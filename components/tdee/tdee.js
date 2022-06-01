@@ -181,6 +181,7 @@ export default function TDEE({
         setLoading(true);
         event.preventDefault();
         if (router.pathname === "/profile") {
+            console.log(router.pathname);
             fetch("/api/updateUserDetails", {
                 method: "POST",
                 headers: {
@@ -191,9 +192,9 @@ export default function TDEE({
                 .then((res) => res.json())
                 .then((user) => {
                     notify2();
-                    console.log(user + " created");
+                    console.log(user + " updated");
                     setLoading(false);
-                    router.push("/signin");
+                    router.push("/");
                 });
         } else
             fetch("/api/registerApi", {

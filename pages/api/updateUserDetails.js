@@ -6,7 +6,7 @@ import { registerSchema } from "../../middleware/validator";
 export default handler.post(async (req, res) => {
     const session = await getSession({ req });
     try {
-        let user = registerSchema.validate(req.body);
+        let user = await registerSchema.validate(req.body);
         try {
             const result = await prisma.userDetails.update({
                 where: {
