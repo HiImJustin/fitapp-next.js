@@ -336,9 +336,7 @@ export default function AdminPage() {
         })
             .then((res) => res.json())
             .then((res) => {
-                console.log(filtered);
                 setFoodConfirm(false);
-
                 alert(res.foodName + " Deleted");
             })
             .catch((error) => {
