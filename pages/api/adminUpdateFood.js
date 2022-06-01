@@ -3,7 +3,7 @@ import { foodSchema } from "../../middleware/validator";
 
 export default async function handle(req, res) {
     try {
-        let food = foodSchema.validate(req.body);
+        let food = await foodSchema.validate(req.body);
         try {
             const result = await prisma.food.update({
                 where: {

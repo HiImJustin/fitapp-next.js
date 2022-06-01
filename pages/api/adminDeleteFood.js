@@ -2,7 +2,7 @@ import prisma from "../../lib/prisma";
 
 export default async function handle(req, res) {
     try {
-        let food = req.body;
+        let food = await req.body;
         const result = await prisma.food.delete({
             where: {
                 id: parseInt(food),

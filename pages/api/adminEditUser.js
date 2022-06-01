@@ -1,7 +1,7 @@
 import prisma from "../../lib/prisma";
 
 export default async function handle(req, res) {
-    let user = req.body;
+    let user = await req.body;
     console.log(user);
 
     const result = await prisma.user.findUnique({

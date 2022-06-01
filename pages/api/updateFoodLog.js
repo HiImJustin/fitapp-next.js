@@ -5,7 +5,7 @@ import { getSession } from "next-auth/react";
 export default handler.post(async (req, res) => {
     const session = await getSession({ req });
 
-    let food = req.body;
+    let food =  await req.body;
     const result = await prisma.userDiet.update({
         where: {
             id: food.foodID,
