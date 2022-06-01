@@ -21,7 +21,6 @@ export const getStaticProps = async () => {
 export default function AddFood({ food }) {
     //Get server side props populates this with data from the food table
     const foodData = JSON.parse(food);
-    console.log(foodData);
     //Set state for the search bar
     //On change the state now equals what is in the search bar
     const [foodOptions, setFoodOptions] = React.useState("");
@@ -58,7 +57,6 @@ export default function AddFood({ food }) {
 
     function selectedItem(e) {
         const selected = filterItems(e.target.textContent);
-        console.log(selected);
         setItemInfo((prevState) => {
             return {
                 ...prevState,
@@ -112,7 +110,7 @@ export default function AddFood({ food }) {
         protien: "",
         fat: "",
     });
-    console.log(nutritionTotals);
+
     useEffect(() => {
         setNutritionTotals((prevState) => ({
             ...prevState,
@@ -141,7 +139,6 @@ export default function AddFood({ food }) {
             pauseOnHover: false,
         });
     }
-    console.log(nutritionTotals);
     function submitData(e) {
         e.preventDefault();
         setLoading(true);
@@ -266,7 +263,7 @@ export default function AddFood({ food }) {
     function addNew() {
         setAddNewFood((prevState) => !prevState);
     }
-    console.log(addNew);
+
     const [help, setHelp] = React.useState(false);
 
     return (
@@ -361,7 +358,6 @@ export const CustomFoodOption = () => {
         },
     });
     const router = useRouter();
-    console.log(formik.values);
 
     const submitNewFoodData = (e) => {
         e.preventDefault();

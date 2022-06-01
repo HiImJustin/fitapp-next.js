@@ -9,7 +9,6 @@ export default function RegisterPage() {
 
     const { data: session, status } = useSession();
     const router = useRouter();
-    console.log(session);
 
     //If not logged in redirects to the home page
     useEffect(() => {

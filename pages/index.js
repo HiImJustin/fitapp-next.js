@@ -5,28 +5,27 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Temporal, Intl, toTemporalInstant } from "@js-temporal/polyfill";
-import prisma from "../lib/prisma";
 
-export const getStaticProps = async () => {
-    const feed = await prisma.user.findMany({});
-    let user = JSON.stringify(feed);
-    return { props: { user } };
-};
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
 
-function HomePage({ ip, user }) {
-    const router = useRouter();
-    const { data: session, status } = useSession();
-
-    // If not logged in redirects to the signin page
-    useEffect(() => {
-        const securePage = async () => {
-            const session = getSession();
-            if (status === "unauthenticated" && status !== "loading") {
-                return router.push("/signin");
-            }
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/signin",
+                permanent: false,
+            },
         };
-        securePage();
-    }, []);
+    }
+
+    return {
+        props: { session },
+    };
+}
+function HomePage() {
+    const router = useRouter();
+
+    const { data: session, status } = useSession();
 
     const [content, setContent] = useState({
         email: "",

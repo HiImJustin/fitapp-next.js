@@ -57,7 +57,6 @@ export default function EditFood({
         },
     });
     const router = useRouter();
-    console.log(formik.values);
 
     const submitNewFoodData = (e) => {
         e.preventDefault();

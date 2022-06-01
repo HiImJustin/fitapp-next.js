@@ -10,9 +10,10 @@ import {
     faUser,
     faWrench,
 } from "@fortawesome/free-solid-svg-icons";
-import { useSession } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
 import React, { useEffect } from "react";
 import { Temporal, Intl, toTemporalInstant } from "@js-temporal/polyfill";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps(context) {
     return {
@@ -24,7 +25,10 @@ export async function getServerSideProps(context) {
 
 function Home({ tdee }) {
     //
+    const router = useRouter();
+
     const { data: session, status } = useSession();
+
     const [userState, setUserState] = React.useState({
         name: "",
         age: "",
@@ -35,7 +39,6 @@ function Home({ tdee }) {
         tdee: "",
         bmr: "",
     });
-    const [isLoaded, setIsLoaded] = React.useState();
 
     const [userDiet, setUserDiet] = React.useState([]);
     useEffect(() => {
@@ -43,7 +46,6 @@ function Home({ tdee }) {
             .then((res) => res.json())
             .then((users) => {
                 let user = users;
-                console.log(user);
                 setUserDiet((prevState) => user.userDiet);
                 setUserState((prevState) => {
                     return {
@@ -63,8 +65,6 @@ function Home({ tdee }) {
                 console.log(error);
             });
     }, []);
-    console.log(userState);
-    console.log(userDiet);
 
     const now = Temporal.Now.plainDateISO();
     const [date, setDate] = React.useState(now);
@@ -75,10 +75,8 @@ function Home({ tdee }) {
     useEffect(() => {
         const filtered = filterItems(date.toString());
         let calories = 0;
-        console.log(filtered);
         if (filtered.length === 0) {
             setTotals((prevState) => (prevState = 0));
-            console.log("function ran");
         } else {
             for (let i = 0; i < filtered.length; i++) {
                 setTotals((prevState) => {

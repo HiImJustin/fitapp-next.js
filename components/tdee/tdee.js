@@ -90,7 +90,6 @@ export default function TDEE({
             alert("form submitted");
         },
     });
-    console.log(formik.values);
 
     function calculateTDEE(bmr) {
         if (formik.values.activity === "sedentary") {
@@ -177,7 +176,6 @@ export default function TDEE({
             activity: formik.values.activity,
         }));
     }, [results]);
-    console.log(submitData);
 
     const submitUserData = async (event) => {
         setLoading(true);

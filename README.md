@@ -21,7 +21,7 @@
 -   Clone this repository to your local environment
 -   Open this project up in your IDE of choice
 
-## Initialise a repository or skip this step if you wish to only run locally
+## Initialise a repository or skip this step if you wish to only run locally and not make any changes
 
 -   follow the instructions at https://docs.github.com/en/get-started/importing-your-projects-to-github/importing-source-code-to-github/adding-locally-hosted-code-to-github
 
@@ -60,3 +60,100 @@
 -   if you have the knowledge or want to change parts of this project and deploy a new version
 -   Simply follow the steps on github on how to commit changes and push to your repository
 -   Vercel will then notice the change and build and deploy the new version pushed up
+
+Check final application in a Desktop version of Chrome & Firefox + IOS
+and Android phones
+
+2. Bring UX2, PROJ2 & PROJ3 together in one .zip, write a README
+   describing installation for operations staff
+
+3. Include in the README all the technologies used in the app, places
+   where they were used and versions you recommend
+
+Technologies used
+
+-   font awesome icons:
+
+    -   components/home/home.js
+
+    -   components/home/circle.js
+
+-   Temporal api
+
+    -   pages/addFood/index.js
+    -   pages/foodLog/index.js
+    -   pages/index.js
+
+-   Prisma
+
+    -   every api route
+
+-   formik
+
+    -   pages/addFood
+    -   pages/foodLog
+    -   pages/profile
+    -   pages/Register
+
+-   limiter
+
+    -   pages/api/handler.js
+
+-   next-auth
+
+    -   pages/api/auth/[...nextauth.ts]
+    -   pages/signin.js
+
+-   next-connect
+
+    -   pages/api/handler.js
+
+-   next-pwa
+
+    -   pages/\_doccument.js
+    -   service-worker.js
+
+-   next-themes
+
+    -   components/layout/header.js
+
+-   react-spinners
+
+    -   pages/addFood
+    -   pages/foodLog
+    -   pages/profile
+    -   pages/Register
+
+-   React-toastify
+
+    -   pages/addFood
+    -   pages/foodLog
+    -   pages/profile
+    -   pages/Register
+
+-   yup
+
+    -   pages/addFood
+    -   pages/foodLog
+    -   pages/profile
+    -   pages/Register
+    -   middleware/validator.js
+
+-   tailwind
+    -   all through the application
+
+4. Confirm functionality in relation to plan PROJ1 highlight areas that
+   changed, or were not implemented.
+
+Currently creating exercise routines and being able to enter in data for them is incomplete at this stage, along with connecting smart devices like a smartwatch to track steps and body vitals
+
+5. Write a roadmap section that confirms areas of development going
+   forward. What bugs do you want to fix or functionality to extend
+
+-   Going forward with development other features that will be implemented are the following
+
+-   Exercise Routine Builder Eta: 3-4 weeks
+-   Exercise Tracking such as starting a workout and tracking your reps, sets and weight Eta: 6 weeks
+-   Creating a custom meal made up of other custom foods Eta: 2 months
+-   Connecting smart devices for activity tracking such as daily steps: 3 months
+-   Sharing custom meals and exercises: 4 months

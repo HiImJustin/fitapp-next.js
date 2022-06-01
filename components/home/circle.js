@@ -7,6 +7,11 @@ import {
     faFireFlameCurved,
 } from "@fortawesome/free-solid-svg-icons";
 
+
+// This component here is used in the home.js file which is further used in index.js for the root of pages
+// This component is the three circles ui element on the main page
+// Props tdee and consumed are data from the databse comprised of userDiet totals for the current day
+// and userDetails tdee total
 function circle({ tdee, consumed }) {
     return (
         <>

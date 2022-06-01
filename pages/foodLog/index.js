@@ -114,7 +114,6 @@ export default function FoodLog({}) {
         let fats = 0;
         if (filtered.length === 0) {
             setTotals((prevState) => (prevState = 0));
-            console.log("function ran");
         } else {
             for (let i = 0; i < filtered.length; i++) {
                 setTotals((prevState) => {
@@ -147,7 +146,6 @@ export default function FoodLog({}) {
     // A is serving size b is total calories
     function reverseMath(a, b) {
         if (itemInfo.servingType === "kg" || itemInfo.servingType === "l") {
-            console.log("kg");
             return a / (b / 10);
         } else {
             return (a / b) * 100;
@@ -165,7 +163,6 @@ export default function FoodLog({}) {
         const selected = filtered.filter((food) =>
             food.foodLogged.includes(e.target.value)
         );
-        console.log(selected);
         setItemInfo((prevState) => {
             return {
                 ...prevState,
@@ -311,7 +308,6 @@ const NuritionInfo = ({
         protien: "",
         fat: "",
     });
-    console.log(nutritionTotals);
     useEffect(() => {
         setNutritionTotals((prevState) => ({
             ...prevState,
