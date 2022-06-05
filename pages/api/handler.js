@@ -12,6 +12,7 @@ const handler = nc({
         res.status(404).end("Page is not found");
     },
 }).use(async (req, res, next) => {
+    await sendRequest();
     await checkLog(req, res);
     await addLog(req, res);
     console.log("yay");

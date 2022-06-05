@@ -7,20 +7,27 @@ import * as Yup from "yup";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { BounceLoader } from "react-spinners";
-import prisma from "../../lib/prisma";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 toast.configure();
 import Image from "next/image";
 
-export const getStaticProps = async () => {
-    const foodItems = await prisma.food.findMany({});
-    let food = JSON.stringify(foodItems);
-    return { props: { food } };
-};
-
-export default function AddFood({ food }) {
+export default function AddFood() {
     //Get server side props populates this with data from the food table
-    const foodData = JSON.parse(food);
+
+    const [foodData, setFoodData] = React.useState([]);
+    useEffect(() => {
+        fetch("/api/getAllFoods")
+            .then((res) => res.json())
+            .then((food) => {
+                if (food.length > 0) {
+                    setFoodData((prevState) => food);
+                }
+            })
+            .catch((error) => {
+                alert("trouble finding foods");
+                console.log(error);
+            });
+    }, [addNew]);
+
     //Set state for the search bar
     //On change the state now equals what is in the search bar
     const [foodOptions, setFoodOptions] = React.useState("");
