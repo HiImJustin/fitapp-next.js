@@ -1,9 +1,9 @@
 import { RateLimiter } from "limiter";
 
 // 'second', 'minute', 'day', or a number of milliseconds
-const limiter = new RateLimiter({ tokensPerInterval: 1, interval: 1000 });
+const limiter = new RateLimiter({ tokensPerInterval: 1, interval: 500 });
 
 export default async function sendRequest() {
-    const remainingRequests = await limiter.removeTokens(0.5);
-    console.log(remainingRequests + " request left please wait one second");
+    const remainingRequests = await limiter.removeTokens(1);
+    console.log(remainingRequests + " request left please wait half a second");
 }

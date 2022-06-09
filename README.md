@@ -70,7 +70,8 @@ and Android phones
 3. Include in the README all the technologies used in the app, places
    where they were used and versions you recommend
 
-Technologies used
+
+## Technologies used
 
 -   font awesome icons:
 
@@ -146,6 +147,7 @@ Technologies used
    changed, or were not implemented.
 
 Currently creating exercise routines and being able to enter in data for them is incomplete at this stage, along with connecting smart devices like a smartwatch to track steps and body vitals
+
 
 5. Write a roadmap section that confirms areas of development going
    forward. What bugs do you want to fix or functionality to extend

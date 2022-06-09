@@ -34,7 +34,6 @@ export default function FoodLog({}) {
             });
     }, [openModal]);
     console.log(userDiet);
-    console.log(userDiet[0].dateAdded.toString());
 
     const now = Temporal.Now.plainDateISO();
 

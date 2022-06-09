@@ -55,16 +55,22 @@ const addLog = async (req, res) => {
 
 const checkLog = async (req, res) => {
     const session = await getSession({ req });
-
+    const now = Temporal.Now.plainDateISO();
+    console.log(now);
     const results = await prisma.activityLog.findMany({
         where: {
             user: session.user.email,
         },
     });
-
+    console.log(results[0].timeStamp.toISOString());
     console.log("log checked");
 
-    if (results.length > 500) {
+    const filtered = results.filter((date) =>
+        date.timeStamp.toISOString().includes(now.toString())
+    );
+
+    console.log(filtered.length);
+    if (filtered.length > 500) {
         return res.status(400).json("Too many requests made");
     } else {
         console.log("request made");
