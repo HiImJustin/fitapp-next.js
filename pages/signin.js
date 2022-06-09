@@ -8,25 +8,37 @@ import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 const url = process.env.NEXT_PUBLIC_API_URL;
+import { PacmanLoader } from "react-spinners";
+import { css } from "@emotion/react";
 
 export default function SignIn({ providers }) {
+    const override = css`
+        display: block;
+        margin: 0 auto;
+        color: yellow;
+    `;
     const router = useRouter();
 
     const { data: session, status } = useSession();
+    const [loading, setLoading] = React.useState(false);
 
     //If logged in redirects to the home page
     useEffect(() => {
+        console.log("loading");
         const securePage = async () => {
             const session = await getSession();
             if (session) {
+                setLoading(true);
                 fetch(`${url}/getUserByEmail`)
                     .then((res) => res.json())
                     .then((user) => {
                         console.log(user);
                         if (user.userDetails.length < 1) {
                             router.push("/Register");
+                            setLoading(false);
                         } else {
                             router.push("/");
+                            setLoading(false);
                         }
                     });
             } else {
@@ -62,9 +74,6 @@ export default function SignIn({ providers }) {
     });
     console.log(providers);
 
-    function navigate() {
-        router.push("/");
-    }
     return (
         <>
             <Head>
@@ -77,6 +86,7 @@ export default function SignIn({ providers }) {
                     <button
                         className={classes.loginButton}
                         onClick={() => {
+                            setLoading(true);
                             signIn(provider.id);
                         }}
                     >
@@ -84,6 +94,7 @@ export default function SignIn({ providers }) {
                     </button>
                 </div>
             ))}
+            <PacmanLoader color="yellow" loading={loading} />
         </>
     );
 }

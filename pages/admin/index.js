@@ -10,9 +10,16 @@ import * as Yup from "yup";
 import { CustomFoodOption } from "../addFood";
 import EditFood from "../../components/foodOptions";
 
+
 export default function AdminPage() {
     const { data: session, status } = useSession();
     const router = useRouter();
+
+    const override = css`
+        display: block;
+        margin: 0 auto;
+        border-color: yellow;
+    `;
 
     const [content, setContent] = useState({
         email: "",
@@ -216,6 +223,10 @@ export default function AdminPage() {
     const validateFields = Yup.object().shape({
         name: Yup.string()
             .required("The name field cannot be blank")
+            .matches(
+                /^[a-zA-Z0-9]+$/,
+                "Only alphanumeric characters are allowed for this field "
+            )
             .max(30, "Please choose a name with less than 30 characters"),
         email: Yup.string()
             .required("The email field cannot be blank")

@@ -1,11 +1,23 @@
 import { signOut, useSession } from "next-auth/react";
+import { PacmanLoader } from "react-spinners";
+import { css } from "@emotion/react";
+import React, { useEffect, useState } from "react";
 
 export default function Settings() {
+    //
+    const { data: session, status } = useSession();
+
+    const override = css`
+        display: block;
+        margin: 0 auto;
+        color: yellow;
+    `;
+
     function logOut() {
         signOut({ callbackUrl: "http://localhost:3000/signin" });
     }
-    const { data: session, status } = useSession();
-    const loading = status === "loading";
+
+    const [loading, setLoading] = React.useState(false);
 
     return (
         <section
@@ -18,11 +30,15 @@ export default function Settings() {
             {session && (
                 <button
                     className="border border-black w-[80%] mx-auto p-3 rounded-lg dark:bg-[#1976d2] mt-8 text-base font-semibold"
-                    onClick={logOut}
+                    onClick={() => {
+                        setLoading(true);
+                        logOut();
+                    }}
                 >
                     Logout
                 </button>
             )}
+            <PacmanLoader loading={loading} css={override} />
         </section>
     );
 }

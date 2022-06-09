@@ -82,7 +82,12 @@ export default function AddFood() {
         servingSize: Yup.number()
             .required("serving size must not be blank")
             .max(10000, "Please use kgs or a lower ammount"),
-        servingType: Yup.string().required("serving type must not be blank"),
+        servingType: Yup.string()
+            .required("serving type must not be blank")
+            .matches(
+                /^[a-zA-Z0-9]+$/,
+                "Only alphanumeric characters are allowed for this field "
+            ),
     });
     let formik = useFormik({
         initialValues: {
@@ -337,19 +342,27 @@ export const CustomFoodOption = () => {
     const validateFields = Yup.object().shape({
         foodName: Yup.string()
             .required("Food name cannot be empty")
+            .matches(
+                /^[a-zA-Z0-9]+$/,
+                "Only alphanumeric characters are allowed for this field "
+            )
             .max(30, "Must be less than 30 characters"),
         calPer100: Yup.number()
             .min(1, "Your food has more calories than 1 per 100grams")
             .max(10000, "Please a value less than Ten thousand")
             .required("This field cannot be blank"),
-        protien: Yup.string()
+        protien: Yup.number()
             .required(" Protien field cannot be blank")
-            .max(6, "Protien can only contain 6 characters"),
+            .min(0, "Protien cannot be a negative number")
+            .max(5000, "Please choose a number lower than 5000"),
         carbs: Yup.number()
             .required(" Carbs field cannot be blank")
             .min(0, "Value must be more than 0")
             .max(10000, "Value cannot be more than 10,000"),
-        fat: Yup.string().required("Fats cannot be blank"),
+        fat: Yup.number()
+            .min(0, "Value must be more than 0")
+            .max(10000, "Value cannot be more than 10,000")
+            .required("Fats cannot be blank"),
     });
     let formik = useFormik({
         initialValues: {

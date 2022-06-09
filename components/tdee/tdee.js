@@ -53,6 +53,10 @@ export default function TDEE({
     const validateFields = Yup.object().shape({
         name: Yup.string()
             .required("The name field cannot be blank")
+            .matches(
+                /^[a-zA-Z0-9]+$/,
+                "Only alphanumeric characters are allowed for this field "
+            )
             .max(30, "Please choose a name with less than 30 characters"),
         age: Yup.number()
             .min(
@@ -73,8 +77,18 @@ export default function TDEE({
             .required("The Height field cannot be blank")
             .min(50, "Please choose a heigh more than 50cm")
             .max(300, "Please choose a heigh less than 300cm"),
-        sex: Yup.string().required("The sex field cannot be blank"),
-        activity: Yup.string().required("The activity field cannot be blank"),
+        sex: Yup.string()
+            .required("The sex field cannot be blank")
+            .matches(
+                /^[a-zA-Z0-9]+$/,
+                "Only alphanumeric characters are allowed for this field "
+            ),
+        activity: Yup.string()
+            .required("The activity field cannot be blank")
+            .matches(
+                /^[a-zA-Z0-9]+$/,
+                "Only alphanumeric characters are allowed for this field "
+            ),
     });
     let formik = useFormik({
         initialValues: {
@@ -210,6 +224,14 @@ export default function TDEE({
                     console.log(user + " created");
                     setLoading(false);
                     router.push("/signin");
+                })
+                .catch((err) => {
+                    setLoading(false);
+                    console.log(err);
+                    alert(
+                        "if you have an account already please update via the profile page"
+                    );
+                    router.push("/profile");
                 });
     };
 

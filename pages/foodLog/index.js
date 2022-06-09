@@ -27,15 +27,19 @@ export default function FoodLog({}) {
             .then((food) => {
                 setUserDiet((prevState) => food);
                 setLoading(true);
+                console.log(userDiet[0].datedAdded.toString());
             })
             .catch((error) => {
                 console.log(error);
             });
     }, [openModal]);
     console.log(userDiet);
-    const now = Temporal.Now.plainDateISO();
-    const [date, setDate] = React.useState(now);
+    console.log(userDiet[0].dateAdded.toString());
 
+    const now = Temporal.Now.plainDateISO();
+
+    console.log(now.toString());
+    const [date, setDate] = React.useState(now);
     //Function to filter the items in state based on the current date and the date
     //That the users logged the food on
     function filterItems(date) {
@@ -287,7 +291,12 @@ const NuritionInfo = ({
             .required("serving size must not be blank")
             .min(1, "Serving size must have a value")
             .max(1000, "Please use kgs or a lower ammount"),
-        servingType: Yup.string().required("serving type must not be blank"),
+        servingType: Yup.string()
+            .required("serving type must not be blank")
+            .matches(
+                /^[a-zA-Z0-9]+$/,
+                "Only alphanumeric characters are allowed for this field "
+            ),
     });
     let formik = useFormik({
         initialValues: {

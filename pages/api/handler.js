@@ -2,6 +2,7 @@ import nc from "next-connect";
 import { getSession } from "next-auth/react";
 import sendRequest from "../../middleware/limiter";
 import prisma from "../../lib/prisma";
+import { Temporal, Intl, toTemporalInstant } from "@js-temporal/polyfill";
 
 const handler = nc({
     onError: (err, req, res, next) => {
@@ -60,8 +61,9 @@ const checkLog = async (req, res) => {
             user: session.user.email,
         },
     });
+
     console.log("log checked");
-    console.log(results.length);
+
     if (results.length > 500) {
         return res.status(400).json("Too many requests made");
     } else {
