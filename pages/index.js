@@ -37,7 +37,7 @@ function HomePage() {
         const fetchData = async () => {
             const res = await fetch("/api/admin/adminApi");
             const json = await res.json();
-            if (json) {
+            if (json.admin) {
                 setContent((prevState) => ({
                     ...prevState,
                     email: json.email,

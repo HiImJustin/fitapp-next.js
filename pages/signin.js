@@ -1,7 +1,6 @@
 import { getProviders, signIn, getCsrfToken } from "next-auth/react";
 import classes from "../styles/login.module.css";
 import Head from "next/head";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useSession, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -11,7 +10,9 @@ const url = process.env.NEXT_PUBLIC_API_URL;
 import { PacmanLoader } from "react-spinners";
 import { css } from "@emotion/react";
 
+// Props providers is from the getServerSideProps function
 export default function SignIn({ providers }) {
+    //Allows us to set custom css properties to the react-spinners package
     const override = css`
         display: block;
         margin: 0 auto;
@@ -61,7 +62,6 @@ export default function SignIn({ providers }) {
                 "password must contain one number, capital and special character"
             ),
     });
-
     let formik = useFormik({
         initialValues: {
             email: "",
@@ -72,33 +72,39 @@ export default function SignIn({ providers }) {
             alert("form submitted");
         },
     });
-    console.log(providers);
 
     return (
         <>
             <Head>
                 <title>Login page</title>
             </Head>
-            <h1 className={classes.title}>Welcome to FIT</h1>
 
-            {Object.values(providers).map((provider) => (
-                <div key={provider.name} className="w-5/6">
-                    <button
-                        className={classes.loginButton}
-                        onClick={() => {
-                            setLoading(true);
-                            signIn(provider.id);
-                        }}
-                    >
-                        Sign in or Register with {provider.name}
-                    </button>
+            <div className="w-full dark:bg-[#121212] h-full flex flex-col text-center  rounded-lg">
+                <h1 className={`${classes.title} dark:text-white`}>
+                    Welcome to FIT
+                </h1>
+                {Object.values(providers).map((provider) => (
+                    <div key={provider.name}>
+                        <button
+                            className={`${classes.loginButton} dark:border dark:border-white  rounded-md`}
+                            onClick={() => {
+                                setLoading(true);
+                                signIn(provider.id);
+                            }}
+                        >
+                            Sign in or Register with {provider.name}
+                        </button>
+                    </div>
+                ))}
+                <div className="mx-auto">
+                    <PacmanLoader color="yellow" loading={loading} />
                 </div>
-            ))}
-            <PacmanLoader color="yellow" loading={loading} />
+            </div>
         </>
     );
 }
-
+//Creates an array of service provides
+//that are avaliable from within the next-auth api configuration
 export async function getServerSideProps(context) {
     const providers = await getProviders();
     return {

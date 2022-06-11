@@ -1,47 +1,14 @@
-2 Crud actions for two tables Done
+## Todo List
 
-### userDetails table
+## Easy Fixes
 
-## Create
+-   Fix Styling on home page for smaller screens
+-   Create circular progress bars to track the amount of calories consumed compared to the daily calories needed for maintenance
 
--   Page: /pages/signin
--   api route /api/registerApi
+## Long term features
 
-## Read
-
--   Page: /pages/profile
--   api route - /api/getUserByEmail
-
-## Update
-
--   Page: /pages/profile
--   Api route: /api/updateUserDetails
-
-## Delete
-
--   Page: /pages/profile
--   Api route: /api/deleteUser
-
-### userDiet table
-
-## Create
-
--   Page: /pages/addFood
--   api route /api/addToFoodLog
-
-## Read
-
--   Page: /pages/foodLog
--   api route - /api/getUserDiet
-
-## Update
-
--   Page: /pages/foodLog
--   Api route: /api/updateFoodLog
-
-## Delete
-
--   Page: /pages/foodLog
--   Api route: /api/deleteFoodLog
-
-validate these, include a 404 for not found on the try catch
+-   Create the functionality so users can create a workout routine
+-   Create the workout routine tracker page
+-   Connect the searchable food table upto an external api to increase the amount of data
+-   Intergrate smart trackers into the app to track calories burned through activity
+-   Create a nutriton label scanner to allow users to upload food data easier
