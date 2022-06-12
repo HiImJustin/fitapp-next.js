@@ -19,10 +19,11 @@ function Header() {
         setMounted(true);
     }, []);
 
+    //Navigates to the last visited page
     function handleNav() {
         router.back();
     }
-
+    
     const { theme, setTheme } = useTheme();
 
     const renderThemeChange = () => {

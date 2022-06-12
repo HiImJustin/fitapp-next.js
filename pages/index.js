@@ -83,7 +83,7 @@ function HomePage() {
             <Home />
             <div className="w-[95%] h-22 dark:bg-[#121212] px-2">
                 {session && content.admin && (
-                    <div className="w-full h-16 bg-white flex my-2 justify-center border rounded-md text-center p-2 mt-1  shadow-[1px_1.5px_4px_3px] shadow-gray-400">
+                    <div className="w-full h-16 bg-white flex my-2 justify-center border rounded-md text-center p-2 mt-1  shadow-[1px_1.5px_4px_3px] shadow-gray-400 dark:bg-[#121212] dark:text-white">
                         <button className="font-semibold text-lg">
                             <Link href="/admin">Admin page</Link>
                         </button>
