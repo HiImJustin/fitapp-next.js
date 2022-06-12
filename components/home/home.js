@@ -28,7 +28,7 @@ function Home({ tdee }) {
     const router = useRouter();
 
     const { data: session, status } = useSession();
-
+    //Created state to store the user details when fetched
     const [userState, setUserState] = React.useState({
         name: "",
         age: "",
@@ -39,8 +39,10 @@ function Home({ tdee }) {
         tdee: "",
         bmr: "",
     });
-
+    //Creates state to store information of the user submitted food data
     const [userDiet, setUserDiet] = React.useState([]);
+
+    //Fetches the current user details and user diet information, sets it into state
     useEffect(() => {
         fetch("/api/getUserDetails")
             .then((res) => res.json())
@@ -65,15 +67,28 @@ function Home({ tdee }) {
                 console.log(error);
             });
     }, []);
-
+    //Stores the current data into a string
     const now = Temporal.Now.plainDateISO();
+    //State for storing the current data
     const [date, setDate] = React.useState(now);
+    //State to display the total amount of calories consumed for todays date
     const [total, setTotals] = React.useState({
         calories: "",
     });
 
+    //Function to filter the items in state based on the current date and the date
+    //userDiet is the state varible which is set in the earlier useEffect
+    function filterItems(date) {
+        return userDiet.filter((food) =>
+            food.dateAdded.toString().includes(date.toString())
+        );
+    }
+    //when userstate or userDiet changes we filter through the userDiet state
+    //returns the array of userDiet values that matches the current date
     useEffect(() => {
+        //Filter the array using the above function
         const filtered = filterItems(date.toString());
+        //Calories must = 0 in the event that there are no logged food data for the day
         let calories = 0;
         if (filtered.length === 0) {
             setTotals((prevState) => (prevState = 0));
@@ -89,15 +104,8 @@ function Home({ tdee }) {
         }
     }, [userState, userDiet]);
 
-    //Function to filter the items in state based on the current date and the date
-    //That the users logged the food on
-    function filterItems(date) {
-        return userDiet.filter((food) =>
-            food.dateAdded.toString().includes(date.toString())
-        );
-    }
-    //THIS HERE CONTAINS THE CURRENT FILTERED FOOD ITEMS
-    const filtered = filterItems(date.toString());
+    // //THIS HERE CONTAINS THE CURRENT FILTERED FOOD ITEMS
+    // const filtered = filterItems(date.toString());
 
     return (
         <main className="w-full flex flex-col items-center mb-2">

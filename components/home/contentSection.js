@@ -2,6 +2,7 @@ import classes from "./home.module.css";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+// used in the components/home/homes.js
 const Items = ({ icon, href, name }) => {
     return (
         <Link href={href}>
