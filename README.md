@@ -1,5 +1,7 @@
 ## About FIT
 
+-   https://fitapp-next-js.vercel.app/ - This is designed as a mobile first experience
+
 -   FIT is a fitness information tracker, this app is designed in a way that allows users to have an unrestricted experience to track their fitness results. Users can search a predefined database of food items or create their own custom food items to tailor the results for themselves and add them to their food log. Users can also do the same for creating exercise routines and tracking their weight, reps etc.
 
 -   This application has been built in Nextjs which utilises the react framework for building the frontend, next-auth, prisma and postgresql as the major frameworks involved.
